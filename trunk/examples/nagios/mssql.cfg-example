@@ -1,0 +1,106 @@
+
+define service {
+	use			check-mssql-template
+	name			check-mssql-CHANGEME	# Unique name for the service	
+	host_name		CHANGEME	# This is the host that will run the check
+        _MSSQL_HOSTNAME         CHANGEME	# This is the name of the SQL server
+        #_MSSQL_PORT             1433		# This is the Port the SQL Server is listening on
+        #_MSSQL_USERNAME         nagios		# The user that connects to SQL Server
+        #_MSSQL_PASSWORD         eftirl11t	# The password used to connect to sql server
+	register		0
+}
+	
+
+define service {
+        use                    check-mssql-CHANGEME,check-mssql-connect
+	#host_name		CHANGEME
+        #service_description     mssql Connect Time
+	#_MSSQL_MODE		connection-time
+	#_MSSQL_WARNING		5
+	#_MSSQL_CRITICAL		10
+        #_MSSQL_HOSTNAME         default-mssql-hostname
+        #_MSSQL_PORT             1433
+        #_MSSQL_USERNAME         nagios
+        #_MSSQL_PASSWORD         eftirl11t
+}
+
+
+
+
+define service {
+        use                    check-mssql-CHANGEME,check-mssql-transactions
+	#host_name		CHANGEME
+        #service_description     mssql transactions
+        #_MSSQL_MODE             transactions
+        #_MSSQL_WARNING          10000
+        #_MSSQL_CRITICAL         50000
+        #_MSSQL_HOSTNAME         default-mssql-hostname
+        #_MSSQL_PORT             1433
+        #_MSSQL_USERNAME         nagios
+        #_MSSQL_PASSWORD         eftirl11t
+}
+
+define service {
+        use                    check-mssql-CHANGEME,check-mssql-buffer-hit-ratio
+	#host_name		CHANGEME
+        #service_description     mssql buffer-hit-ratio
+        #_MSSQL_MODE             mem-pool-data-buffer-hit-ratio
+        #_MSSQL_WARNING          90:
+        #_MSSQL_CRITICAL         80:
+        #_MSSQL_HOSTNAME         default-mssql-hostname
+        #_MSSQL_PORT             1433
+        #_MSSQL_USERNAME         nagios
+        #_MSSQL_PASSWORD         eftirl11t
+}
+
+define service {
+        use                    check-mssql-CHANGEME,check-mssql-users
+	#host_name		CHANGEME
+        #service_description     mssql connected-users
+        #_MSSQL_MODE             connected-users
+        #_MSSQL_WARNING          600
+        #_MSSQL_CRITICAL         1000
+        #_MSSQL_HOSTNAME         default-mssql-hostname
+        #_MSSQL_PORT             1433
+        #_MSSQL_USERNAME         nagios
+        #_MSSQL_PASSWORD         eftirl11t
+}
+define service {
+        use                    check-mssql-CHANGEME,check-mssql-deadlocks
+	#host_name		CHANGEME
+        #service_description     mssql deadlocks
+        #_MSSQL_MODE             locks-deadlocks
+        #_MSSQL_WARNING          1
+        #_MSSQL_CRITICAL         5
+        #_MSSQL_HOSTNAME         default-mssql-hostname
+        #_MSSQL_PORT             1433
+        #_MSSQL_USERNAME         nagios
+        #_MSSQL_PASSWORD         eftirl11t
+}
+define service {
+        use                    check-mssql-CHANGEME,check-mssql-cpu-busy
+	#host_name		CHANGEME
+        #service_description     mssql cpu
+        #_MSSQL_MODE             cpu-busy
+        #_MSSQL_WARNING          80
+        #_MSSQL_CRITICAL         90
+        #_MSSQL_HOSTNAME         default-mssql-hostname
+        #_MSSQL_PORT             1433
+        #_MSSQL_USERNAME         nagios
+        #_MSSQL_PASSWORD         eftirl11t
+}
+define service {
+        use                    check-mssql-CHANGEME,check-mssql-io-busy
+	#host_name		CHANGEME
+        #service_description     mssql io
+        #_MSSQL_MODE             io-busy
+        #_MSSQL_WARNING          80
+        #_MSSQL_CRITICAL         90
+        #_MSSQL_HOSTNAME         default-mssql-hostname
+        #_MSSQL_PORT             1433
+        #_MSSQL_USERNAME         nagios
+        #_MSSQL_PASSWORD         eftirl11t
+}
+
+
+
