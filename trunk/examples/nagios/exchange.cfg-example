@@ -1,0 +1,34 @@
+
+
+define service {
+	use		exchange-pending-routing
+	host_name	HOSTNAME
+}
+
+
+
+
+define service {
+	use		exchange-remote-queue-length	
+	host_name	HOSTNAME
+}
+define service {
+	use		mail-check_bl
+	host_name	HOSTNAME
+}
+define service {
+	use		mail-check_imap
+	host_name	HOSTNAME
+}
+define service {
+	use		exchange-check_owa
+	host_name	HOSTNAME
+}
+define service {
+	use		exchange-check_owa_https
+	host_name	HOSTNAME
+}
+define service {
+	use		exchange-check_services
+	host_name	HOSTNAME
+}
