@@ -1,0 +1,24 @@
+
+
+define host {
+	use		default-host
+
+
+
+	host_name	HOSTNAME
+	#contact_groups	+
+	#hostgroups	+servers-prod-servers,servers-servers
+	address		IPADDR
+};
+
+
+define service{
+        use                             generic-service
+        host_name                       HOSTNAME
+        service_description             ping
+        check_command                   check_ping!100.0,20%!500.0,60%
+}
+
+
+
+

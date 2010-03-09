@@ -1,3 +1,5 @@
+# TODO: Remember to change default SNMP community of public!
+
 define host {
 	use 		generic-distribution-switch
 

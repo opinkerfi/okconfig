@@ -1,0 +1,49 @@
+
+define service {
+	use			windows-check_disks
+	#name			windows-check_disks
+	#service_description	disks
+	#check_command		check_disks!/C:10:5
+	#check_command		check_disks
+	host_name		HOSTNAME
+}
+
+
+define service {
+	use			windows-check_cpu
+	#name			windows_check_cpu
+	#service_description	cpu
+	#check_command		check_nrpe!CheckCpu -a warn=90 crit=99 time=10s
+	host_name		HOSTNAME
+}
+
+
+define service {
+	use			windows-check_uptime
+	#name			windows-check_uptime
+
+	#check_command		check_nrpe!CheckUptime -a MinWarn=1h
+	#service_description	uptime
+	host_name		HOSTNAME
+}
+
+
+define service {
+	use			windows-check_services
+	#name			windows-check_services
+
+	#check_command		check_nrpe!CheckServiceState -a CheckAll exclude=SysmonLog
+	#service_description	services
+	host_name		HOSTNAME
+}
+
+
+define service {
+        use                     windows-check_time
+        #name                    windows-check_time
+
+        #check_command           check_time
+        #service_description     time
+        host_name               HOSTNAME
+}
+

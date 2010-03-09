@@ -1,0 +1,35 @@
+
+
+define service {
+        use			cisco-check_cpu
+	host_name		HOSTNAME
+
+        check_command           check_cisco_cpu!lesabara!30,30,30!80,80,80
+        register                1
+}
+
+
+define service {
+        use			cisco-check_mem
+        host_name               HOSTNAME
+
+        check_command           check_cisco_mem!lesabara!90%!98%
+	register		1
+}
+
+define service {
+        use                     cisco-check_env
+        host_name               HOSTNAME
+
+        check_command           check_cisco_env!lesabara
+        register                1
+}
+
+
+define service {
+	use			cisco-check_int
+        host_name               HOSTNAME
+	check_command		check_cisco_int!lesabara!".*Ethernet.*"
+	service_description	interface
+	register		0
+}

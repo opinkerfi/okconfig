@@ -1,0 +1,64 @@
+
+define service {
+	use			linux-check_disks
+	host_name		HOSTNAME
+
+	#service_description	disks
+	#check_command		check_disks!/C:10:5
+	#check_command		check_disks
+}
+
+
+define service {
+	use			linux-check_load
+	host_name		HOSTNAME
+
+	#service_description	load
+	#check_command		check_nrpe!check_load -a 15,10,5 30,25,20
+}
+
+
+define service {
+	use			linux-check_uptime
+	host_name		HOSTNAME
+
+
+	#check_command		check_nrpe_status
+	#service_description	uptime
+}
+
+
+define service {
+	use			linux-check_procs
+
+	#check_command		check_nrpe!check_procs
+	#service_description	services
+}
+
+define service {
+        use                    linux-check_time
+	host_name		HOSTNAME
+
+
+        #check_command           check_time
+        #service_description     time
+}
+
+define service {
+        use                    linux-check_crond
+	host_name		HOSTNAME
+
+
+        #check_command           check_nrpe!check_procs -a 1: 0:10 crond
+        #service_description     proc crond
+}
+
+
+define service {
+        use                    linux-check_ssh
+	host_name		HOSTNAME
+
+
+        #check_command           check_ssh
+        #service_description     ssh
+}

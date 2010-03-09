@@ -1,4 +1,6 @@
 
+# TODO: Remember to change MSSQL username/password whith access to the SQL Server
+
 define service {
 	use			check-mssql-template
 	name			check-mssql-CHANGEME	; Unique name for the service	
