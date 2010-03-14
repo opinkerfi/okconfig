@@ -76,11 +76,8 @@ fi
 
 
 cat $TEMPLATE | sed "s/IPADDR/$ipaddress/g" | sed "s/HOSTNAME/$hostname/g" > $DESTINATION
-echo "Host $hostname successfully created"
+echo "Host $hostname ($ipaddress) successfully saved as $DESTINATION"
 
-echo "* hostname = $hostname"
-echo "* ipaddress = $ipaddress"
-echo "* configaddress = $DESTINATION"
 for template in $templates;  do
 	addtemplate --host $hostname --template $template $FORCE
 done

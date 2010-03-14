@@ -66,7 +66,7 @@ fi
 
 
 cat $TEMPLATE | sed "s/IPADDR/$ipaddress/g" | sed "s/HOSTNAME/$hostname/g" > $DESTINATION
-echo "Template $template successfully added to host $hostname"
+echo "Template $template successfully added to $DESTINATION"
 grep TODO $TEMPLATE
 
 #echo "* hostname = $hostname"
