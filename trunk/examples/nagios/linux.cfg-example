@@ -50,7 +50,7 @@ define service {
 
 
         #check_command           check_nrpe!check_procs -a 1: 0:10 crond
-        #service_description     proc crond
+        service_description     proc crond
 }
 
 

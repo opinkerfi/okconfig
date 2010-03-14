@@ -15,7 +15,7 @@ define service {
         #check_command           check_cisco_cpu!lesabara!30,30,30!80,80,80
 	#_WARNING		30,30,30
 	#_CRITICAL		80,80,80
-	_CISCO_TYPE		cisco
+	_CISCO_TYPE		casa
         register                1
 }
 
@@ -35,7 +35,7 @@ define service {
         host_name               HOSTNAME
 
         #check_command           check_cisco_env!lesabara
-        register                1
+        register                0
 }
 
 
