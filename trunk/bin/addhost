@@ -1,0 +1,86 @@
+#!/bin/sh
+
+
+TEMPLATE=/etc/nagios/examples/nagios/host.cfg-example
+DEST_DIRECTORY=`pwd`
+
+print_help() {
+      echo "nagmin version $VERSION"
+      echo "Usage: $0 --host <host> [--ip IPADDRESS] [--templates LIST] [--force]"
+      echo ""
+      echo "Example: Add a new windows host"
+      echo "# newhost --host myhostname --templates windows,mssql"
+}
+
+if [ $# -eq 0 ]; then
+     print_help ;
+     exit $UNKNOWN
+fi
+
+
+# Parse arguments
+while [ $# -gt 0 ]
+do
+  case $1
+  in
+    --host)
+      hostname=$2
+      shift 2
+    ;;
+    --force)
+	FORCE="--force"
+	shift 1
+    ;;
+
+
+    --ip)
+	ipaddress=$2
+	shift 2
+    ;;
+    --templates)
+	templates=`echo $2 | sed 's/,/ /g'`
+	shift 2;
+    ;;
+    --help)
+	print_help;
+	exit 0;
+    ;;
+    *)
+	print_help;
+	exit 1;
+    ;;
+  esac
+done
+
+# Locate an ipaddress for this host if none was provided
+if [ -z "$ipaddress" ]; then
+	TMP=`host $hostname | grep "has address"`
+	if [ $? -gt 0 ]; then
+		echo "could not locate ip address for host $hostname. Try using --ip paramater"
+		exit 1
+	fi
+	ipaddress=`echo $TMP | awk '{ print $4 }'`
+
+fi
+
+
+DESTINATION="$DEST_DIRECTORY/$hostname-host.cfg"
+
+if [ -z "$FORCE" ]; then
+	if [ -f $DESTINATION ]; then
+		echo "ERROR: File $DESTINATION already exists. Use --force to overwrite"
+		exit 1
+	fi
+fi
+
+
+
+cat $TEMPLATE | sed "s/IPADDR/$ipaddress/g" | sed "s/HOSTNAME/$hostname/g" > $DESTINATION
+echo "Host $hostname successfully created"
+
+echo "* hostname = $hostname"
+echo "* ipaddress = $ipaddress"
+echo "* configaddress = $DESTINATION"
+for template in $templates;  do
+	addtemplate --host $hostname --template $template $FORCE
+done
