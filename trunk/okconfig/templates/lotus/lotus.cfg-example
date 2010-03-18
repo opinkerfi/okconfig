@@ -1,0 +1,45 @@
+
+
+# General Mail Stuff
+
+# check if host responds to imap
+define service {
+        use                     lotus-check_imap
+	host_name		HOSTNAME
+}
+# Check if host responds to pop3 requests
+define service {
+        use                    lotus-check_pop
+	host_name		HOSTNAME
+	register		0
+}
+# Check if host responds to smtp
+define service {
+        use                     lotus-check_smtp
+	host_name		HOSTNAME
+}
+
+
+##
+##	Lotus Domino specific stuff
+##
+
+
+
+# Check if lotus notes windows services are up and running
+define service {
+	use			lotus-check_services
+	host_name		HOSTNAME
+}
+
+# Real time blacklisting
+define service {
+	use			lotus-check_bl
+	host_name		HOSTNAME
+}
+
+# Check if host responds to port 1352
+define service {
+	use			lotus-check_nrpc
+	host_name		HOSTNAME
+}	
