@@ -1,59 +1,10 @@
+
+
 ###########################################################
 # Check Hardware Health on Brocade SAN Switches
-
-# Production Load Average check
 define service {
-	name			check-generic-brocade-prod-health
-	use			check-generic-brocade-health
-
-	contact_groups		+brocade-prod-contacts
+	use			check-generic-brocade-prod-health
+	host_name		HOSTNAME
+	#__SNMP_COMMUNITY	public
 }
-
-
-###########################################################
-# Check PING on a Brocade SAN Switch
-define service {
-        name                    check-generic-brocade-ping
-        use                     generic-service
-
-        service_description     PING
-        check_command           check_ping!200.0,20%!600.0,60%
-        normal_check_interval   5
-        retry_check_interval    1
-
-	action_url		/pnp4nagios/graph?host=$HOSTNAME$&srv=$SERVICEDESC$
-
-        register                0
-}
-
-# Development service check
-define service {
-        name                    check-generic-brocade-dev-ping
-
-        use                     check-generic-brocade-ping
-
-        contact_groups          +brocade-dev-contacts
-        register                0
-}
-
-# Test service check
-define service {
-        name                    check-generic-brocade-test-ping
-
-        use                     check-generic-brocade-ping
-
-        contact_groups          +brocade-test-contacts
-        register                0
-}
-
-# Production service check
-define service {
-        name                    check-generic-brocade-prod-ping
-
-        use                     check-generic-brocade-ping
-
-        contact_groups          +brocade-prod-contacts
-        register                0
-}
-
 

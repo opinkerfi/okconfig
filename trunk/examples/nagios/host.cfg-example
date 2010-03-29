@@ -6,9 +6,10 @@ define host {
 
 
 	host_name	HOSTNAME
-	#contact_groups	+
-	#hostgroups	+servers-prod-servers,servers-servers
 	address		IPADDR
+
+        contact_groups  +office-admins,office-prod-admins
+        hostgroups      +office-prod-servers,office-servers
 };
 
 
