@@ -1,0 +1,19 @@
+
+
+# Generic SNMP Connectivity check
+define service {
+	use			hp-check_snmp_connectivity
+	host_name		HOSTNAME
+	#service_description	SNMP Connectivity
+
+	#_SNMP_COMMUNITY		public
+}
+
+# HP Hardware check via SNMP
+define service {
+	use			hp-check_hpasm
+	host_name		HOSTNAME
+	#service_description	Hardware Status
+
+	#_SNMP_COMMUNITY		public
+}
