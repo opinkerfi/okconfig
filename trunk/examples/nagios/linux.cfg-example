@@ -1,11 +1,13 @@
 
+# linux-check_disks
+# check disk usage on linux host
+# __EXTRAOPTS = Optional Extra arguments to pass into disks
 define service {
 	use			linux-check_disks
 	host_name		HOSTNAME
 
-	#service_description	disks
-	#check_command		check_disks!/C:10:5
-	#check_command		check_disks
+	#service_description	Disk Usage
+	#__EXTRAOPTS		-f /var:10:5,/boot:0:0
 }
 
 
@@ -13,8 +15,9 @@ define service {
 	use			linux-check_load
 	host_name		HOSTNAME
 
-	#service_description	load
-	#check_command		check_nrpe!check_load -a 15,10,5 30,25,20
+	#service_description	Load
+	#__WARNING		15,15,15
+	#__CRITICAL		30,30,30
 }
 
 
@@ -23,16 +26,16 @@ define service {
 	host_name		HOSTNAME
 
 
-	#check_command		check_nrpe_status
-	#service_description	uptime
+	#service_description	Uptime
+	#__WARNING		1h
 }
 
 
 define service {
 	use			linux-check_procs
 
+	#service_description	Running Processes
 	#check_command		check_nrpe!check_procs
-	#service_description	services
 }
 
 define service {
@@ -40,8 +43,9 @@ define service {
 	host_name		HOSTNAME
 
 
-        #check_command           check_time
-        #service_description     time
+        #service_description	Time
+	#__WARNING		60
+	#__CRITICAL		86400
 }
 
 define service {
@@ -49,8 +53,8 @@ define service {
 	host_name		HOSTNAME
 
 
+        service_description     Process crond
         #check_command           check_nrpe!check_procs -a 1: 0:10 crond
-        service_description     proc crond
 }
 
 
@@ -59,6 +63,6 @@ define service {
 	host_name		HOSTNAME
 
 
+        #service_description     SSH Connectivity
         #check_command           check_ssh
-        #service_description     ssh
 }

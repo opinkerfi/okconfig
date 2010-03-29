@@ -1,49 +1,61 @@
 
+# default windows-check_disks
+# warns if disk usage exceeds certain thresholds
+# __EXTRAOPTS = Use this to set thresholds for specific disks
+# Example: __EXTRAOPTS -f /C:10:5,/F:0:0
 define service {
 	use			windows-check_disks
-	#name			windows-check_disks
-	#service_description	disks
-	#check_command		check_disks!/C:10:5
-	#check_command		check_disks
 	host_name		HOSTNAME
+
+	#service_description	Disk Usage
+	#__EXTRAOPTS		-f /C:10:5
 }
 
 
+# default windows_check_cpu
+# Warns if cpu usage exceeds certain threshold
 define service {
 	use			windows-check_cpu
-	#name			windows_check_cpu
-	#service_description	cpu
-	#check_command		check_nrpe!CheckCpu -a warn=90 crit=99 time=10s
 	host_name		HOSTNAME
+
+	#service_description	CPU Utilization
+	#__WARNING		90
+	#__CRITICAL		101
+	#__TIME			10s
 }
 
 
+# windows-check_uptime
+# Warns if device has recently been rebooted
+# __WARNING = warning threshold (default = 1h)
 define service {
 	use			windows-check_uptime
-	#name			windows-check_uptime
-
-	#check_command		check_nrpe!CheckUptime -a MinWarn=1h
-	#service_description	uptime
 	host_name		HOSTNAME
+
+	#service_description	Uptime
+	#__WARNING		1h
 }
 
-
+# windows-check_services
+# Warns if any services are in inappropriate state
+# __EXTRAOPTS = Extra argumends to send to CheckServiceState
+# Example __EXTRAOPTS exclude=SysmonLog
 define service {
 	use			windows-check_services
-	#name			windows-check_services
-
-	#check_command		check_nrpe!CheckServiceState -a CheckAll exclude=SysmonLog
-	#service_description	services
 	host_name		HOSTNAME
+
+	#service_description	Running Services
+	#__EXTRAOPTS		exclude=OpenSSHd exclude=TBS
 }
 
-
+# windows-check_time
+# Warns if clock is incorrectly set on a windows host
 define service {
         use                     windows-check_time
-        #name                    windows-check_time
-
-        #check_command           check_time
-        #service_description     time
         host_name               HOSTNAME
+
+        #service_description    Time
+	#__WARNING		3600
+	#__CRITICAL		86400
 }
 

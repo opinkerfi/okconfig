@@ -1,15 +1,19 @@
 # TODO: Dont forget to set SNMP Community
 
 define service {
-	name			cisco-HOSTNAME
-	host_name		HOSTNAME
+	name			cisco-_HOSTNAME_
+	use			_ROLE_-_STAGE_
+
+	host_name		_HOSTNAME_
 	
-	#_SNMP_COMMUNITY		public
+	#_SNMP_COMMUNITY	public
 	check_command		check_snmp_connectivity
+	register		0
 }
 
+
 define service {
-        use			cisco-HOSTNAME,cisco-check_cpu
+	use			cisco-HOSTNAME,cisco-check_cpu
 	host_name		HOSTNAME
 
         #check_command           check_cisco_cpu
