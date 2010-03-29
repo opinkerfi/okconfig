@@ -28,9 +28,14 @@ define service {
 	use		exchange-check_owa_https
 	host_name	HOSTNAME
 }
+# exchange-check_services
+# __EXCHANGE_SKIP_SERVICES = Use this if any specific exchange services
+# are not supposed to be running.
 define service {
 	use		exchange-check_services
 	host_name	HOSTNAME
+
+	#__EXCHANGE_SKIP_SERVICES	exclude=MSExchangeImap4
 }
 
 
