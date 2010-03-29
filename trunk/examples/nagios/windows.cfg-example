@@ -59,3 +59,15 @@ define service {
 	#__CRITICAL		86400
 }
 
+# windows-check_mem
+# Checks windows memory usage
+define service {
+        use                     windows-check_mem
+        host_name               HOSTNAME
+
+        #service_description    Time
+        #__WARNING              80 	; warn if memory reaches 80%
+        #__CRITICAL             90	; crit if memory reaches 90%
+	#__type			page	; by default, check the pagefile
+}
+
