@@ -103,5 +103,25 @@ define service {
         #_MSSQL_PASSWORD         eftirl11t
 }
 
+define service {
+        use                   check-mssql-hades,check-mssql-backup-age
+        #_MSSQL_MODE             backup-age
+        #_MSSQL_WARNING          30
+        #_MSSQL_CRITICAL         50
+        #register                0
+}
+
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-backup-age
+        #host_name              HOSTNAME
+        #service_description     mssql backup-age
+        #_MSSQL_MODE             backup-age
+        #_MSSQL_WARNING          30
+        #_MSSQL_CRITICAL         100
+        #_MSSQL_HOSTNAME         default-mssql-hostname
+        #_MSSQL_PORT             1433
+        #_MSSQL_USERNAME         nagios
+        #_MSSQL_PASSWORD         eftirl11t
+}
 
 
