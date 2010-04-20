@@ -104,7 +104,7 @@ define service {
 }
 
 define service {
-        use                   check-mssql-hades,check-mssql-backup-age
+        use                   check-mssql-HOSTNAME,check-mssql-backup-age
         #_MSSQL_MODE             backup-age
         #_MSSQL_WARNING          30
         #_MSSQL_CRITICAL         50
