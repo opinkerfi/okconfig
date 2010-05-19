@@ -125,3 +125,125 @@ define service {
 }
 
 
+
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-full-scans
+        #service_description     MSSQL Table Scans
+        #_MSSQL_MODE             full-scans
+        #_MSSQL_WARNING          100
+        #_MSSQL_CRITICAL         500
+        host_name		HOSTNAME
+}
+
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-batch-requests
+        service_description     MSSQL Batch Requests
+        #_MSSQL_MODE             batch-requests
+        #_MSSQL_WARNING          100
+        #_MSSQL_CRITICAL         200
+        host_name		HOSTNAME
+}
+
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-latches-waits
+        service_description     MSSQL Unfulfilled Latch-Requests
+        #_MSSQL_MODE             latches-waits
+        #_MSSQL_WARNING          10
+        #_MSSQL_CRITICAL         50
+        host_name		HOSTNAME
+}
+
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-latches-wait-time
+        service_description     MSSQL Latch Request wait time
+        #_MSSQL_MODE             latches-wait-time
+        #_MSSQL_WARNING          1
+        #_MSSQL_CRITICAL         5
+        host_name		HOSTNAME
+}
+
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-locks-waits
+        service_description     MSSQL Unfulfilled Lock-Requests
+        #_MSSQL_MODE             locks-waits
+        #_MSSQL_WARNING          100
+        #_MSSQL_CRITICAL         500
+        host_name		HOSTNAME
+}
+
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-locks-timeouts
+        service_description     MSSQL Timed Out Lock-Requests
+        #_MSSQL_MODE             locks-timeouts
+        #_MSSQL_WARNING          1
+        #_MSSQL_CRITICAL         5
+        host_name		HOSTNAME
+}
+
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-sql-recompilations
+        service_description     MSSQL Re-Compilations
+        #_MSSQL_MODE             sql-recompilations
+        #_MSSQL_WARNING          100
+        #_MSSQL_CRITICAL         500
+        host_name		HOSTNAME
+}
+
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-sql-initcompilations
+        service_description     MSSQL Intial Compilations
+        #_MSSQL_MODE             sql-initcompilations
+        #_MSSQL_WARNING          100
+        #_MSSQL_CRITICAL         200
+        host_name		HOSTNAME
+}
+
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-lazy-writes
+        service_description     MSSQL Lazy Writes
+        #_MSSQL_MODE             lazy-writes
+        #_MSSQL_WARNING          20
+        #_MSSQL_CRITICAL         40
+        host_name		HOSTNAME
+}
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-page-life-expectancy
+        service_description     MSSQL Page Life Expectancy
+        #_MSSQL_MODE             page-life-expectancy
+        #_MSSQL_WARNING          300:
+        #_MSSQL_CRITICAL         180:
+        host_name		HOSTNAME
+}
+
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-checkpoint-pages
+        service_description     MSSQL Flushed Dirty Pages/sec
+        #_MSSQL_MODE             checkpoint-pages
+        #_MSSQL_WARNING          100
+        #_MSSQL_CRITICAL         500
+        host_name		HOSTNAME
+}
+
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-database-free
+        service_description     MSSQL Database Free space
+        #_MSSQL_MODE             database-free
+        #_MSSQL_WARNING          5%
+        #_MSSQL_CRITICAL         2%
+        host_name		HOSTNAME
+}
+
+
+
+
+# Custom SQL Statements
+define service {
+        use                     check-mssql-herkules.lt.is,check-mssql-sql
+        #_MSSQL_WARNING          500000000
+        #_MSSQL_CRITICAL         700000000
+        _MSSQL_NAME2            Custom SQL Statement
+        check_command           check_mssql!"--name=select * from dual"!--name2=$_SERVICEMSSQL_NAME2$
+        service_description     Size CII
+	register 0
+}
+
