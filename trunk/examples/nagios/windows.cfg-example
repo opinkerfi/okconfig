@@ -71,3 +71,23 @@ define service {
 	#__type			page	; by default, check the pagefile
 }
 
+
+# System Information
+define service {
+        use                     windows-systeminfo
+        host_name               HOSTNAME
+}
+
+# Gets a list of network interfaces for this server
+define service {
+        use                     windows-show_net
+        host_name               HOSTNAME
+}
+
+
+# Gets a list of logical disks with disk IO
+define service {
+        use                     windows-show_disks
+        host_name               HOSTNAME
+}
+
