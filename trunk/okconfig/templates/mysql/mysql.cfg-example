@@ -36,8 +36,8 @@ define service {
 	use			mysql-service-localhost,mysql-check_threads-connected
 	#service_description	MySQL Client Connection Threads
 
-	#_MYSQLWARNING		10  ; Default Threshold
-	#_MYSQLCRITICAL		20  ; Default threshold
+	#_MYSQLWARNING		20  ; Default 10
+	#_MYSQLCRITICAL		30  ; Default 20
 }
 define service {
 	use			mysql-service-localhost,mysql-check_threadcache-hitrate
@@ -77,8 +77,8 @@ define service {
 	use			mysql-service-localhost,mysql-check_bufferpool-hitrate
 	#service_description	MySQL innodb-bufferpool-hitrate
 
-	#_MYSQLWARNING		99:  ; Default Threshold
-	#_MYSQLCRITICAL		95:  ; Default threshold
+	#_MYSQLWARNING		90:  ; Default 99:
+	#_MYSQLCRITICAL		80:  ; Default 95:
 }
 define service {
 	use			mysql-service-localhost,mysql-check_bufferpool-wait-free
@@ -121,8 +121,8 @@ define service {
 	use			mysql-service-localhost,mysql-check_index-usage
 	#service_description	MySQL index-usage
 
-	#_MYSQLWARNING		90:  ; Default Threshold
-	#_MYSQLCRITICAL		80:  ; Default threshold
+	#_MYSQLWARNING		20:  ; Default 90:
+	#_MYSQLCRITICAL		10:  ; Default 80:
 }
 define service {
 	use			mysql-service-localhost,mysql-check_tmp-disk-tables
