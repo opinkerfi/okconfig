@@ -48,14 +48,18 @@ define service {
 	#__CRITICAL		86400
 }
 
+
 define service {
-        use                    linux-check_crond
+        use                    linux-check_proc
 	host_name		HOSTNAME
-
-
+        __NAME                  crond
+        __WARNING               1:
+        __CRITICAL              :10
         service_description     Process crond
-        #check_command           check_nrpe!check_procs -a 1: 0:10 crond
+        #register                0
 }
+
+
 
 
 define service {
