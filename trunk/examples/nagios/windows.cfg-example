@@ -76,12 +76,14 @@ define service {
 define service {
         use                     windows-systeminfo
         host_name               HOSTNAME
+	register		0
 }
 
 # Gets a list of network interfaces for this server
 define service {
         use                     windows-show_net
         host_name               HOSTNAME
+	register		0
 }
 
 
@@ -89,5 +91,6 @@ define service {
 define service {
         use                     windows-show_disks
         host_name               HOSTNAME
+	register		0
 }
 
