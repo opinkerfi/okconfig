@@ -65,22 +65,22 @@ define service {
 
 # Checks all interfaces of a Cisco ASA box
 define service {
-        use                     cisco-ok-asa.ok.is,cisco-check_all_interfaces
-        host_name               ok-asa.ok.is
+        use                     cisco-HOSTNAME,cisco-check_all_interfaces
+        host_name               HOSTNAME
         }
 
 
 # Checks for the current patchlevel of a cisco ASA
 define service {
-        use                     cisco-ok-asa.ok.is,cisco-check_asa_patchlevel
-        host_name               ok-asa.ok.is
+        use                     cisco-HOSTNAME,cisco-check_asa_patchlevel
+        host_name               HOSTNAME
         }
 
 
 # Monitors the number of current VPN Sessions of a Cisco ASA
 define service {
-        use                     cisco-ok-asa.ok.is,cisco-check_vpn_sessions
-        host_name               ok-asa.ok.is
+        use                     cisco-HOSTNAME,cisco-check_vpn_sessions
+        host_name               HOSTNAME
 	#__WARNING		:10 		; Default :10
 	#__CRITICAL		:20 		; Default :20
 	#_SNMP_COMMUNITY	public 		; Default public

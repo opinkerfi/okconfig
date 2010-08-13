@@ -1,5 +1,26 @@
 
 
+# These do not relate directly to Exchange
+# They are more of generic mail checks
+
+
+define service {
+	use		mail-check_bl
+	host_name	HOSTNAME
+}
+define service {
+	use		mail-check_imap
+	host_name	HOSTNAME
+}
+
+define service {
+	use		mail-check_smtp
+	host_name	HOSTNAME
+}
+
+
+
+
 define service {
 	use		exchange-pending-routing
 	host_name	HOSTNAME
@@ -10,14 +31,6 @@ define service {
 
 define service {
 	use		exchange-remote-queue-length	
-	host_name	HOSTNAME
-}
-define service {
-	use		mail-check_bl
-	host_name	HOSTNAME
-}
-define service {
-	use		mail-check_imap
 	host_name	HOSTNAME
 }
 define service {
@@ -34,6 +47,7 @@ define service {
 define service {
 	use		exchange-check_services
 	host_name	HOSTNAME
+	register	0
 
 	#__EXCHANGE_SKIP_SERVICES	exclude=MSExchangeImap4
 }
@@ -232,4 +246,258 @@ define service{
 	service_description	Microsoft Exchange Unique OWA Users
         check_command    exc-msg-unique-usr
 } 
+
+
+
+#
+# Service Checks - Based on Exchange 2010
+#
+
+define service {
+        use                    windows-check_service
+	host_name		HOSTNAME
+        action_url
+
+        __SERVICE               msftesql-Exchange
+        service_description     Microsoft Search Exchange
+}
+
+define service {
+        use                    windows-check_service
+	host_name		HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeTransportLogSearch
+        service_description     Microsoft Exchange Transport Log Search
+}
+
+define service {
+        use                    windows-check_service
+	host_name		HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeADTopology
+        service_description     Microsoft Exchange Active Directory Topology
+}
+
+define service {
+        use                    windows-check_service
+	host_name		HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeIS
+        service_description     Microsoft Exchange Information Store
+}
+
+define service {
+        use                    windows-check_service
+	host_name		HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeMailboxAssistants
+        service_description     Microsoft Exchange Mailbox Assistants
+}
+
+define service {
+        use                    windows-check_service
+	host_name		HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeMailSubmission
+        service_description     Microsoft Exchange Mail Submission
+
+}
+
+define service {
+        use                    windows-check_service
+	host_name		HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeRepl
+        service_description     Microsoft Exchange Replication
+}
+
+define service {
+        use                    windows-check_service
+	host_name		HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeRPC
+        service_description     Microsoft Exchange RPC Client Access
+}
+
+define service {
+        use                    windows-check_service
+	host_name		HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeSA
+        service_description     Microsoft Exchange System Attendant
+}
+
+define service {
+        use                    windows-check_service
+	host_name		HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeSearch
+        service_description     Microsoft Exchange Search Indexer
+
+}
+
+define service {
+        use                    windows-check_service
+	host_name		HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeServiceHost
+        service_description     Microsoft Exchange Service Host
+
+}
+define service {
+        use                    windows-check_service
+        host_name               HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeThrottling
+        service_description      Microsoft Exchange Throttling
+
+}
+
+
+
+# These services were found on a exchange frontend server
+
+
+
+
+
+
+
+
+define service {
+        use                    windows-check_service
+        host_name               HOSTNAME
+        action_url
+
+        __SERVICE              MSExchangeAB 
+        service_description      Microsoft Exchange Address Book
+
+
+}
+define service {
+        use                    windows-check_service
+        host_name               HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeAntispamUpdate
+        service_description      Microsoft Exchange Anti-spam Update
+
+}
+define service {
+        use                    windows-check_service
+        host_name               HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeFBA
+        service_description      Microsoft Exchange Forms-Based Authentication service
+
+}
+define service {
+        use                    windows-check_service
+        host_name               HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeFDS
+        service_description      Microsoft Exchange File Distribution
+
+
+}
+
+
+
+
+define service {
+        use                    windows-check_service
+        host_name               HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeImap4
+        service_description      Microsoft Exchange IMAP4
+
+
+}
+define service {
+        use                    windows-check_service
+        host_name               HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeMailboxReplication
+        service_description      Microsoft Exchange Mailbox Replication
+
+}
+define service {
+        use                    windows-check_service
+        host_name               HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangePop3
+        service_description      Microsoft Exchange POP3
+
+
+}
+define service {
+        use                    windows-check_service
+        host_name               HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeProtectedServiceHost
+        service_description      Microsoft Exchange Protected Service Host
+
+
+}
+define service {
+        use                    windows-check_service
+        host_name               HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeTransport
+        service_description      Microsoft Exchange Transport
+
+
+}
+define service {
+        use                    windows-check_service
+        host_name               HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeUM
+        service_description      Microsoft Exchange Unified Messaging
+
+
+}
+define service {
+        use                    windows-check_service
+        host_name               HOSTNAME
+        action_url
+
+        __SERVICE               MSSpeechService
+        service_description      Microsoft Exchange Speech Engine Service
+
+
+}
+
+
+
+
+define service {
+        use                    windows-check_service
+        host_name               HOSTNAME
+        action_url
+
+        __SERVICE              MSExchangeEdgeSync
+        service_description    Microsoft Exchange EdgeSync  
+
+}
+
 
