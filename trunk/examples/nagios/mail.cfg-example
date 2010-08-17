@@ -1,0 +1,14 @@
+
+
+
+
+define service {
+        use             mail-check_bl
+        host_name       HOSTNAME
+}
+define service {
+        use             mail-check_smtp
+        host_name       HOSTNAME
+}
+
+
