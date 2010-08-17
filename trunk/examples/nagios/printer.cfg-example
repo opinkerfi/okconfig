@@ -1,0 +1,24 @@
+
+
+define service {
+	use			hp-check_printer
+	host_name		HOSTNAME
+	contact_groups		+GROUP-admins
+
+	#__SNMP_COMMUNITY	public
+	#service_description	Printer Health
+	#check_command		check_hpjd!-C $_SERVICE_SNMP_COMMUNITY$
+}
+
+
+define service {
+        use                             hp-check_snmp
+        host_name                       HOSTNAME
+	contact_groups		+GROUP-admins
+
+        #__SNMP_COMMUNITY               public
+        #service_description             SNMP Connectivity
+        #check_command                   check_snmp_connectivity!$_SERVICESNMP_COMMUNITY$
+
+}
+
