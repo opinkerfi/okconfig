@@ -4,6 +4,7 @@
 define service {
 	use			hp-check_snmp_connectivity
 	host_name		HOSTNAME
+	contact_groups		+GROUP-admins
 	#service_description	SNMP Connectivity
 
 	#_SNMP_COMMUNITY		public
@@ -13,6 +14,7 @@ define service {
 define service {
 	use			hp-check_hpasm
 	host_name		HOSTNAME
+	contact_groups		+GROUP-admins
 	#service_description	Hardware Status
 
 	#_SNMP_COMMUNITY		public

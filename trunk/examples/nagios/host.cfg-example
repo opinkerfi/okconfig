@@ -8,8 +8,8 @@ define host {
 	host_name	HOSTNAME
 	address		IPADDR
 
-        contact_groups  +office-admins,office-prod-admins
-        hostgroups      +office-prod-servers,office-servers
+        contact_groups  +GROUP-admins,GROUP-prod-admins
+        hostgroups      +GROUP-prod-servers,GROUP-servers
 };
 
 
@@ -18,6 +18,7 @@ define service{
         host_name                       HOSTNAME
         service_description             Ping
         check_command                   check_ping!100.0,20%!500.0,60%
+	contact_groups			+GROUP-admins,GROUP-prod-admins
 }
 
 

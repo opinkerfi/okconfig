@@ -3,6 +3,7 @@
 define service {
 	use			dataprotector-backups
 	host_name		HOSTNAME
+	contact_groups		+GROUP-admins
         
 	#service_description     Dataprotector Backup Stats
         #check_command           check_nrpe!check_dp_backups
@@ -16,6 +17,7 @@ define service {
 define service {
 	use			dataprotector-idb_backup
 	host_name		HOSTNAME
+	contact_groups		+GROUP-admins
 	
 	#service_description	Dataprotector IDB Backup
 	#check_command		check_nrpe!check_dp_idb
@@ -28,6 +30,7 @@ define service {
 define service {
 	use			dataprotector-pool
 	host_name		HOSTNAME
+	contact_groups		+GROUP-admins
         
 	#service_description     Dataprotector Mediapools
         #check_command           check_nrpe!check_dp_pool
@@ -38,6 +41,7 @@ define service {
 define service {
 	use			dataprotector-mountrequest
 	host_name		HOSTNAME
+	contact_groups		+GROUP-admins
         
 	#service_description     Dataprotector Mount Requests
         #check_command           check_nrpe!check_dp_mountrequest
@@ -50,6 +54,7 @@ define service {
 define service {
 	use			dataprotector-tablespace
 	host_name		HOSTNAME
+	contact_groups		+GROUP-admins
         
 	#service_description     Dataprotector Tablespaces
         #check_command           check_nrpe!check_dp_tablespace
