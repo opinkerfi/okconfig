@@ -6,12 +6,14 @@ define service {
 	use			brocade-check_snmp_connectivity
 	host_name		HOSTNAME
 	#_SNMP_COMMUNITY	public
+	contact_groups		+GROUP-admins
 }
 # Check Hardware Health on Brocade SAN Switches
 define service {
 	use			check-generic-brocade-prod-health
 	host_name		HOSTNAME
 	#__SNMP_COMMUNITY	public
+	contact_groups		+GROUP-admins
 }
 
 
@@ -22,5 +24,6 @@ define service {
 
         #service_description     Interface Status
         #_SNMP_COMMUNITY         public
+	contact_groups		+GROUP-admins
 }
 

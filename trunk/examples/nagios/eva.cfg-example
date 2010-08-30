@@ -1,0 +1,13 @@
+
+define service {
+	use			eva-check_eva
+	host_name		HOSTNAME
+	contact_groups          +GROUP-admins
+
+	# Some defaults
+	#service_description	EVA Hardware Status
+        #__USERNAME              eva-nagios
+        #__PASSWORD              Manudagur.eftirlit
+        #__EXTRAOPTIONS
+}
+
