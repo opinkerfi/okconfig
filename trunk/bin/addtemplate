@@ -38,6 +38,10 @@ do
 	template=$2
 	shift 2;
     ;;
+    --group)
+	group=$2
+	shift 2;
+    ;;
     --help)
 	print_help;
 	exit 0;
@@ -63,9 +67,21 @@ if [ -z "$FORCE" ]; then
         fi
 fi
 
+if [ -z "$group" ]; then
+        CURRDIR=`basename $PWD`
+        if [ "$CURRDIR" == "prod" ]; then
+                group=$(basename `dirname $PWD`)
+        elif [ "$CURRDIR" == "dev" ]; then
+                group=$(basename `dirname $PWD`)
+        else
+                echo "--group was not specified"
+                exit 1
+        fi
+fi
 
 
-cat $TEMPLATE | sed "s/IPADDR/$ipaddress/g" | sed "s/HOSTNAME/$hostname/g" > $DESTINATION
+
+cat $TEMPLATE | sed "s/IPADDR/$ipaddress/g" | sed "s/HOSTNAME/$hostname/g" | sed "s/GROUP/$group/g" > $DESTINATION
 echo "Template $template successfully added to $DESTINATION"
 grep TODO $TEMPLATE
 
