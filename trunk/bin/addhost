@@ -1,8 +1,15 @@
 #!/bin/sh
 
+# Changelog:
+# Version 1.1 Added --parent option
+# 
 
+VERSION=1.1
 TEMPLATE=/etc/nagios/examples/nagios/host.cfg-example
 DEST_DIRECTORY=`pwd`
+
+# Default parent:
+parent="default-host"
 
 print_help() {
       echo "nagmin version $VERSION"
@@ -43,6 +50,10 @@ do
     ;;
     --group)
 	group=$2
+	shift 2;
+    ;;
+    --parent)
+	parent=$2
 	shift 2;
     ;;
     --help)
@@ -91,7 +102,7 @@ fi
 
 
 
-cat $TEMPLATE | sed "s/IPADDR/$ipaddress/g" | sed "s/HOSTNAME/$hostname/g" | sed "s/GROUP/$group/g" > $DESTINATION
+cat $TEMPLATE | sed "s/IPADDR/$ipaddress/g" | sed "s/HOSTNAME/$hostname/g" | sed "s/GROUP/$group/g" | sed "s/PARENTHOST/$parent/g" > $DESTINATION
 echo "Host $hostname ($ipaddress) successfully saved as $DESTINATION"
 
 for template in $templates;  do
