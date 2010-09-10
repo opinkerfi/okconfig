@@ -1,0 +1,31 @@
+
+
+# Generic SNMP Connectivity check
+define service {
+	use			hp-check_snmp_connectivity
+	host_name		HOSTNAME
+	contact_groups		+GROUP-admins
+	#service_description	SNMP Connectivity
+
+	#_SNMP_COMMUNITY		public
+}
+
+# HP Hardware check via SNMP
+define service {
+	use			hp-check_hpasm
+	host_name		HOSTNAME
+	contact_groups		+GROUP-admins
+	#service_description	Hardware Status
+
+	#_SNMP_COMMUNITY		public
+}
+
+# Check Hardware Raid via hpacucli
+define service {
+	use			hp-check_hpacucli
+	host_name		HOSTNAME
+	contact_groups		+GROUP-admins
+	#service_description	Hardware Status
+
+	#_SNMP_COMMUNITY		public
+}
