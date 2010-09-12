@@ -100,11 +100,25 @@ if [ -z "$FORCE" ]; then
 	fi
 fi
 
-
-
+# Lets try to auto-detect the platform by the use of templates:
+for template in $templates ; do
+	case $template
+	in
+	windows)
+		parent=windows-server
+		echo "Parent = windows"
+	;;
+	linux)
+		parent=linux-server
+	;;
+	ciscoswitch)
+		parent=generic-switch
+	;;
+	esac
+done
 cat $TEMPLATE | sed "s/IPADDR/$ipaddress/g" | sed "s/HOSTNAME/$hostname/g" | sed "s/GROUP/$group/g" | sed "s/PARENTHOST/$parent/g" > $DESTINATION
 echo "Host $hostname ($ipaddress) successfully saved as $DESTINATION"
 
 for template in $templates;  do
-	addtemplate --host $hostname --template $template $FORCE
+	addtemplate --host $hostname --template $template $FORCE --group $group
 done
