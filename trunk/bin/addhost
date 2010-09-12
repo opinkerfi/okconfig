@@ -13,7 +13,7 @@ parent="default-host"
 
 print_help() {
       echo "nagmin version $VERSION"
-      echo "Usage: $0 --host <host> [--ip IPADDRESS] [--templates LIST] [--force]"
+      echo "Usage: $0 --host <host> [--ip IPADDRESS] [--templates LIST] [--parent <parent>] [--force]"
       echo ""
       echo "Example: Add a new windows host"
       echo "# newhost --host myhostname --templates windows,mssql"
