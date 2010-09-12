@@ -6,6 +6,7 @@
 define service {
 	use			windows-check_disks
 	host_name		HOSTNAME
+	contact_groups		+GROUP-admins
 
 	#service_description	Disk Usage
 	#__EXTRAOPTS		-f /C:10:5
