@@ -6,7 +6,7 @@ define service {
 	name			check-mssql-HOSTNAME	; Unique name for the service	
 	host_name		HOSTNAME	; This is the host that will run the check
         #_MSSQL_PORT             1433		; This is the Port the SQL Server is listening on
-        #_MSSQL_USERNAME         nagios		; The user that connects to SQL Server
+        #_MSSQL_USERNAME         nagios_user	; The user that connects to SQL Server
         #_MSSQL_PASSWORD         eftirl11t	; The password used to connect to sql server
 	register		0
 }
@@ -109,6 +109,7 @@ define service {
         #_MSSQL_WARNING          30
         #_MSSQL_CRITICAL         50
         #register                0
+	#check_command		check_mssql!--name "^(?\!(tempdb$$)|(master$$)|(DB3$$))" --regexp
 }
 
 define service {
@@ -238,7 +239,7 @@ define service {
 
 # Custom SQL Statements
 define service {
-        use                     check-mssql-herkules.lt.is,check-mssql-sql
+        use                     check-mssql-HOSTNAME,check-mssql-sql
         #_MSSQL_WARNING          500000000
         #_MSSQL_CRITICAL         700000000
         _MSSQL_NAME2            Custom SQL Statement
