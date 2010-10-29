@@ -1,0 +1,15 @@
+#!/bin/sh
+
+
+echo "Starting install of $1" | tee /var/log/install_nsclient.log
+winexe  -U DOMAIN/Administrator%PASSWORD //$1 "cmd /c \\\\nagios\nsclient\install.bat"
+RESULT=$?
+
+if [ $RESULT -gt 0 ]; then
+	echo install of $1 failed | tee /var/log/install_nsclient.log
+	exit $RESULT
+fi
+
+echo "Starting install of $1 sucessful" | tee /var/log/install_nsclient.log
+exit 0
+
