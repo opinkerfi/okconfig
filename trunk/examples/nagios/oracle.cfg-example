@@ -1,0 +1,290 @@
+# TODO: Remember to set username,password and tnsname
+
+define service {
+	name			oracle-HOSTNAME
+	__USERNAME		nagios
+	__PASSWORD		nagios_password
+	__TNSNAME		ORA11 ; this must exist in /etc/tnsnames.ora
+	register		0
+}
+
+
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-tnsping
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+
+
+
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-connected-users
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-sga-data-buffer-hit-ratio
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-sga-library-cache-hit-ratio
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-sga-dictionary-cache-hit-ratio
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-sga-latches-hit-ratio
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-sga-shared-pool-reloads
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-sga-shared-pool-free
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-pga-in-memory-sort-ratio
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-invalid-objects
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-tablespace-fragmentation
+	contact_groups		+GROUP-admins
+	register		0
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-stale-statistics
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-tablespace-usage
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-tablespace-free
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-tablespace-io-balance
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-tablespace-remaining-time
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-tablespace-can-allocate-next
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-flash-recovery-area-usage
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+	register		0
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-flash-recovery-area-free
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+	register		0
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-datafile-io-traffic
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-soft-parse-ratio
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-switch-interval
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-retry-ratio
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-redo-io-traffic
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-roll-header-contention
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-roll-block-contention
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-roll-hit-ratio
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-roll-extends
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-roll-wraps
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-seg-top10-physical-reads
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-seg-top10-buffer-busy-waits
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-seg-top10-row-lock-waits
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-event-waits
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-event-waiting
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-enqueue-contention
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-enqueue-waiting
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-latch-contention
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-latch-waiting
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
+define service {
+	host_name		HOSTNAME
+	use			oracle-HOSTNAME,oracle-sysstat
+	contact_groups		+GROUP-admins
+	#__WARNING		
+	#__CRITICAL		
+}
