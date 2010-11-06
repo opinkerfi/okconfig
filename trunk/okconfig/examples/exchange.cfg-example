@@ -1,0 +1,503 @@
+
+
+# These do not relate directly to Exchange
+# They are more of generic mail checks
+
+
+define service {
+	use		mail-check_bl
+	host_name	HOSTNAME
+}
+define service {
+	use		mail-check_imap
+	host_name	HOSTNAME
+}
+
+define service {
+	use		mail-check_smtp
+	host_name	HOSTNAME
+}
+
+
+
+
+define service {
+	use		exchange-pending-routing
+	host_name	HOSTNAME
+}
+
+
+
+
+define service {
+	use		exchange-remote-queue-length	
+	host_name	HOSTNAME
+}
+define service {
+	use		exchange-check_owa
+	host_name	HOSTNAME
+}
+define service {
+	use		exchange-check_owa_https
+	host_name	HOSTNAME
+}
+# exchange-check_services
+# __EXCHANGE_SKIP_SERVICES = Use this if any specific exchange services
+# are not supposed to be running.
+define service {
+	use		exchange-check_services
+	host_name	HOSTNAME
+	register	0
+
+	#__EXCHANGE_SKIP_SERVICES	exclude=MSExchangeImap4
+}
+
+
+
+# Following is mostly for statistics and such
+define service{
+	use		exchange-mem-max
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange Maximum Memory
+        check_command 	exc-mem-max
+}
+define service{
+	use		exchange-mem-cur
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange Current Memory
+        check_command 	exc-mem-cur
+}
+define service{
+	use		exchange-mem-all
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange Memory Allocated
+        check_command 	exc-mem-all
+}
+define service{
+	use		exchange-mem-cur-all
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange Memory Current Allocated
+        check_command 	exc-mem-cur-all
+}
+define service{
+	use		exchange-msg-sent
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange Messages Sent
+        check_command    exc-msg-sent
+}
+define service{
+	use		exchange-msg-delivered
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange Messages Delivered
+        check_command    exc-msg-deliv
+}
+define service{
+	use		exchange-msg-sub
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange Messages Submitted
+        check_command    exc-msg-sub
+}
+define service{
+	use		exchange-msg-rsc-tot
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange Messages Received Total
+        check_command    exc-msg-rsc-tot
+}
+define service{
+	use		exchange-service
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange Messages Sent Total
+        check_command    exc-msg-sent-tot
+}
+define service{
+	use		exchange-service
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange Messages Submitted Total
+        check_command    exc-msg-sub-tot
+}
+define service{
+	use		exchange-service
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange Bytes Sent Total  
+        check_command    exc-byte-sent-tot
+}
+define service{
+	use		exchange-service
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange Bytes Received Total
+        check_command    exc-byte-recv-tot
+}
+define service{
+	use		exchange-service
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange Content Filter Agent Messages with SCL0
+        check_command    exc-scl0
+}
+define service{
+	use		exchange-service
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange Content Filter Agent Messages with SCL1       
+        check_command    exc-scl1
+}
+define service{
+	use		exchange-service
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange Content Filter Agent Messages with SCL2
+        check_command    exc-scl2
+}
+define service{
+	use		exchange-service
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange Content Filter Agent Messages with SCL3
+        check_command    exc-scl3
+}
+define service{
+	use		exchange-service
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange Content Filter Agent Messages with SCL4
+        check_command    exc-scl4
+}
+define service{
+	use		exchange-service
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange Content Filter Agent Messages with SCL5
+        check_command    exc-scl5
+}
+
+define service{
+	use		exchange-service
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange Content Filter Agent Messages with SCL6
+        check_command    exc-scl6
+}
+define service{
+	use		exchange-service
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange Content Filter Agent Messages with SCL7
+        check_command    exc-scl7
+}
+define service{
+	use		exchange-service
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange Content Filter Agent Messages with SCL8
+        check_command    exc-scl8
+}
+
+define service{
+	use		exchange-service
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange Content Filter Agent Messages with SCL9
+        check_command    exc-scl8
+}
+
+
+define service{
+	use		exchange-service
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange Messages Scanned
+        check_command    exc-msg-scan
+}
+define service{
+	use		exchange-service
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange Messages Bypassed
+        check_command    exc-msg-bypass
+}
+define service{
+	use		exchange-service
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange Messages Deleted
+        check_command    exc-msg-del
+}
+define service{
+	use		exchange-service
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange Messages Rejected
+        check_command    exc-msg-rej
+}
+define service{
+	use		exchange-service
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange Messages Quarantined
+        check_command    exc-msg-quar
+}
+define service{
+	use		exchange-service
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange Messages Unknown
+        check_command    exc-msg-unkn
+}
+define service{
+	use		exchange-service
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange User Count
+        check_command    exc-msg-user
+}
+define service{
+	use		exchange-service
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange Active Users
+        check_command    exc-msg-active-user
+}
+
+define service{
+	use		exchange-service
+	host_name	HOSTNAME
+	service_description	Microsoft Exchange Unique OWA Users
+        check_command    exc-msg-unique-usr
+} 
+
+
+
+#
+# Service Checks - Based on Exchange 2010
+#
+
+define service {
+        use                    windows-check_service
+	host_name		HOSTNAME
+        action_url
+
+        __SERVICE               msftesql-Exchange
+        service_description     Microsoft Search Exchange
+}
+
+define service {
+        use                    windows-check_service
+	host_name		HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeTransportLogSearch
+        service_description     Microsoft Exchange Transport Log Search
+}
+
+define service {
+        use                    windows-check_service
+	host_name		HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeADTopology
+        service_description     Microsoft Exchange Active Directory Topology
+}
+
+define service {
+        use                    windows-check_service
+	host_name		HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeIS
+        service_description     Microsoft Exchange Information Store
+}
+
+define service {
+        use                    windows-check_service
+	host_name		HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeMailboxAssistants
+        service_description     Microsoft Exchange Mailbox Assistants
+}
+
+define service {
+        use                    windows-check_service
+	host_name		HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeMailSubmission
+        service_description     Microsoft Exchange Mail Submission
+
+}
+
+define service {
+        use                    windows-check_service
+	host_name		HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeRepl
+        service_description     Microsoft Exchange Replication
+}
+
+define service {
+        use                    windows-check_service
+	host_name		HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeRPC
+        service_description     Microsoft Exchange RPC Client Access
+}
+
+define service {
+        use                    windows-check_service
+	host_name		HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeSA
+        service_description     Microsoft Exchange System Attendant
+}
+
+define service {
+        use                    windows-check_service
+	host_name		HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeSearch
+        service_description     Microsoft Exchange Search Indexer
+
+}
+
+define service {
+        use                    windows-check_service
+	host_name		HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeServiceHost
+        service_description     Microsoft Exchange Service Host
+
+}
+define service {
+        use                    windows-check_service
+        host_name               HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeThrottling
+        service_description      Microsoft Exchange Throttling
+
+}
+
+
+
+# These services were found on a exchange frontend server
+
+
+
+
+
+
+
+
+define service {
+        use                    windows-check_service
+        host_name               HOSTNAME
+        action_url
+
+        __SERVICE              MSExchangeAB 
+        service_description      Microsoft Exchange Address Book
+
+
+}
+define service {
+        use                    windows-check_service
+        host_name               HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeAntispamUpdate
+        service_description      Microsoft Exchange Anti-spam Update
+
+}
+define service {
+        use                    windows-check_service
+        host_name               HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeFBA
+        service_description      Microsoft Exchange Forms-Based Authentication service
+
+}
+define service {
+        use                    windows-check_service
+        host_name               HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeFDS
+        service_description      Microsoft Exchange File Distribution
+
+
+}
+
+
+
+
+define service {
+        use                    windows-check_service
+        host_name               HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeImap4
+        service_description      Microsoft Exchange IMAP4
+
+
+}
+define service {
+        use                    windows-check_service
+        host_name               HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeMailboxReplication
+        service_description      Microsoft Exchange Mailbox Replication
+
+}
+define service {
+        use                    windows-check_service
+        host_name               HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangePop3
+        service_description      Microsoft Exchange POP3
+
+
+}
+define service {
+        use                    windows-check_service
+        host_name               HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeProtectedServiceHost
+        service_description      Microsoft Exchange Protected Service Host
+
+
+}
+define service {
+        use                    windows-check_service
+        host_name               HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeTransport
+        service_description      Microsoft Exchange Transport
+
+
+}
+define service {
+        use                    windows-check_service
+        host_name               HOSTNAME
+        action_url
+
+        __SERVICE               MSExchangeUM
+        service_description      Microsoft Exchange Unified Messaging
+
+
+}
+define service {
+        use                    windows-check_service
+        host_name               HOSTNAME
+        action_url
+
+        __SERVICE               MSSpeechService
+        service_description      Microsoft Exchange Speech Engine Service
+
+
+}
+
+
+
+
+define service {
+        use                    windows-check_service
+        host_name               HOSTNAME
+        action_url
+
+        __SERVICE              MSExchangeEdgeSync
+        service_description    Microsoft Exchange EdgeSync  
+
+}
+
+

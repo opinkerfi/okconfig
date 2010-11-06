@@ -1,0 +1,250 @@
+
+# TODO: Remember to change MSSQL username/password whith access to the SQL Server
+
+define service {
+	use			check-mssql-template
+	name			check-mssql-HOSTNAME	; Unique name for the service	
+	host_name		HOSTNAME	; This is the host that will run the check
+        #_MSSQL_PORT             1433		; This is the Port the SQL Server is listening on
+        #_MSSQL_USERNAME         nagios_user	; The user that connects to SQL Server
+        #_MSSQL_PASSWORD         eftirl11t	; The password used to connect to sql server
+	register		0
+}
+	
+
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-connect
+	#host_name		HOSTNAME
+        #service_description     mssql Connect Time
+	#_MSSQL_MODE		connection-time
+	#_MSSQL_WARNING		5
+	#_MSSQL_CRITICAL		10
+        #_MSSQL_HOSTNAME         default-mssql-hostname
+        #_MSSQL_PORT             1433
+        #_MSSQL_USERNAME         nagios
+        #_MSSQL_PASSWORD         eftirl11t
+}
+
+
+
+
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-transactions
+	#host_name		HOSTNAME
+        #service_description     mssql transactions
+        #_MSSQL_MODE             transactions
+        #_MSSQL_WARNING          10000
+        #_MSSQL_CRITICAL         50000
+        #_MSSQL_HOSTNAME         default-mssql-hostname
+        #_MSSQL_PORT             1433
+        #_MSSQL_USERNAME         nagios
+        #_MSSQL_PASSWORD         eftirl11t
+}
+
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-buffer-hit-ratio
+	#host_name		HOSTNAME
+        #service_description     mssql buffer-hit-ratio
+        #_MSSQL_MODE             mem-pool-data-buffer-hit-ratio
+        #_MSSQL_WARNING          90:
+        #_MSSQL_CRITICAL         80:
+        #_MSSQL_HOSTNAME         default-mssql-hostname
+        #_MSSQL_PORT             1433
+        #_MSSQL_USERNAME         nagios
+        #_MSSQL_PASSWORD         eftirl11t
+}
+
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-users
+	#host_name		HOSTNAME
+        #service_description     mssql connected-users
+        #_MSSQL_MODE             connected-users
+        #_MSSQL_WARNING          100
+        #_MSSQL_CRITICAL         500
+        #_MSSQL_HOSTNAME         default-mssql-hostname
+        #_MSSQL_PORT             1433
+        #_MSSQL_USERNAME         nagios
+        #_MSSQL_PASSWORD         eftirl11t
+}
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-deadlocks
+	#host_name		HOSTNAME
+        #service_description     mssql deadlocks
+        #_MSSQL_MODE             locks-deadlocks
+        #_MSSQL_WARNING          1
+        #_MSSQL_CRITICAL         5
+        #_MSSQL_HOSTNAME         default-mssql-hostname
+        #_MSSQL_PORT             1433
+        #_MSSQL_USERNAME         nagios
+        #_MSSQL_PASSWORD         eftirl11t
+}
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-cpu-busy
+	#host_name		HOSTNAME
+        #service_description     mssql cpu
+        #_MSSQL_MODE             cpu-busy
+        #_MSSQL_WARNING          80
+        #_MSSQL_CRITICAL         90
+        #_MSSQL_HOSTNAME         default-mssql-hostname
+        #_MSSQL_PORT             1433
+        #_MSSQL_USERNAME         nagios
+        #_MSSQL_PASSWORD         eftirl11t
+}
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-io-busy
+	#host_name		HOSTNAME
+        #service_description     mssql io
+        #_MSSQL_MODE             io-busy
+        #_MSSQL_WARNING          80
+        #_MSSQL_CRITICAL         90
+        #_MSSQL_HOSTNAME         default-mssql-hostname
+        #_MSSQL_PORT             1433
+        #_MSSQL_USERNAME         nagios
+        #_MSSQL_PASSWORD         eftirl11t
+}
+
+define service {
+        use                   check-mssql-HOSTNAME,check-mssql-backup-age
+        #_MSSQL_MODE             backup-age
+        #_MSSQL_WARNING          30
+        #_MSSQL_CRITICAL         50
+        #register                0
+	#check_command		check_mssql!--name "^(?\!(tempdb$$)|(master$$)|(DB3$$))" --regexp
+}
+
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-backup-age
+        #host_name              HOSTNAME
+        #service_description     mssql backup-age
+        #_MSSQL_MODE             backup-age
+        #_MSSQL_WARNING          30
+        #_MSSQL_CRITICAL         100
+        #_MSSQL_HOSTNAME         default-mssql-hostname
+        #_MSSQL_PORT             1433
+        #_MSSQL_USERNAME         nagios
+        #_MSSQL_PASSWORD         eftirl11t
+}
+
+
+
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-full-scans
+        #service_description     MSSQL Table Scans
+        #_MSSQL_MODE             full-scans
+        #_MSSQL_WARNING          100
+        #_MSSQL_CRITICAL         500
+        host_name		HOSTNAME
+}
+
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-batch-requests
+        service_description     MSSQL Batch Requests
+        #_MSSQL_MODE             batch-requests
+        #_MSSQL_WARNING          100
+        #_MSSQL_CRITICAL         200
+        host_name		HOSTNAME
+}
+
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-latches-waits
+        service_description     MSSQL Unfulfilled Latch-Requests
+        #_MSSQL_MODE             latches-waits
+        #_MSSQL_WARNING          10
+        #_MSSQL_CRITICAL         50
+        host_name		HOSTNAME
+}
+
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-latches-wait-time
+        service_description     MSSQL Latch Request wait time
+        #_MSSQL_MODE             latches-wait-time
+        #_MSSQL_WARNING          1
+        #_MSSQL_CRITICAL         5
+        host_name		HOSTNAME
+}
+
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-locks-waits
+        service_description     MSSQL Unfulfilled Lock-Requests
+        #_MSSQL_MODE             locks-waits
+        #_MSSQL_WARNING          100
+        #_MSSQL_CRITICAL         500
+        host_name		HOSTNAME
+}
+
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-locks-timeouts
+        service_description     MSSQL Timed Out Lock-Requests
+        #_MSSQL_MODE             locks-timeouts
+        #_MSSQL_WARNING          1
+        #_MSSQL_CRITICAL         5
+        host_name		HOSTNAME
+}
+
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-sql-recompilations
+        service_description     MSSQL Re-Compilations
+        #_MSSQL_MODE             sql-recompilations
+        #_MSSQL_WARNING          100
+        #_MSSQL_CRITICAL         500
+        host_name		HOSTNAME
+}
+
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-sql-initcompilations
+        service_description     MSSQL Intial Compilations
+        #_MSSQL_MODE             sql-initcompilations
+        #_MSSQL_WARNING          100
+        #_MSSQL_CRITICAL         200
+        host_name		HOSTNAME
+}
+
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-lazy-writes
+        service_description     MSSQL Lazy Writes
+        #_MSSQL_MODE             lazy-writes
+        #_MSSQL_WARNING          20
+        #_MSSQL_CRITICAL         40
+        host_name		HOSTNAME
+}
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-page-life-expectancy
+        service_description     MSSQL Page Life Expectancy
+        #_MSSQL_MODE             page-life-expectancy
+        #_MSSQL_WARNING          300:
+        #_MSSQL_CRITICAL         180:
+        host_name		HOSTNAME
+}
+
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-checkpoint-pages
+        service_description     MSSQL Flushed Dirty Pages/sec
+        #_MSSQL_MODE             checkpoint-pages
+        #_MSSQL_WARNING          100
+        #_MSSQL_CRITICAL         500
+        host_name		HOSTNAME
+}
+
+define service {
+        use                    check-mssql-HOSTNAME,check-mssql-database-free
+        service_description     MSSQL Database Free space
+        #_MSSQL_MODE             database-free
+        #_MSSQL_WARNING          5%
+        #_MSSQL_CRITICAL         2%
+        host_name		HOSTNAME
+}
+
+
+
+
+# Custom SQL Statements
+define service {
+        use                     check-mssql-HOSTNAME,check-mssql-sql
+        #_MSSQL_WARNING          500000000
+        #_MSSQL_CRITICAL         700000000
+        _MSSQL_NAME2            Custom SQL Statement
+        check_command           check_mssql!"--name=select * from dual"!--name2=$_SERVICEMSSQL_NAME2$
+        service_description     Size CII
+	register 0
+}
+

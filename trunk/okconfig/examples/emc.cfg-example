@@ -1,0 +1,46 @@
+define host {
+	use 		generic-emc-array
+
+	host_name	HOSTNAME
+	address		IPADDRESS
+	#parents		core-hri-vel-1
+}
+
+define service {
+	use generic-networks-ping
+
+	host_name	HOSTNAME
+}
+
+define service {
+	use		check-emc-disk
+	host_name	HOSTNAME
+}
+
+define service {
+        use             check-emc-sp-a
+        host_name       HOSTNAME
+}
+
+define service {
+        use             check-emc-sp-b
+        host_name       HOSTNAME
+}
+
+
+define service {
+        use             check-emc-portstate-a
+        host_name       HOSTNAME
+}
+
+define service {
+        use             check-emc-portstate-b
+        host_name       HOSTNAME
+}
+
+define service {
+        use             check-emc-cache
+        host_name       HOSTNAME
+}
+
+

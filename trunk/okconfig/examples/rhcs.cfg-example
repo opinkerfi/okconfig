@@ -1,0 +1,52 @@
+
+# Check the status of Redhat Cluster (clustat)
+define service {
+	use		rhcs-check_rhcs
+	host_name	HOSTNAME
+}
+
+# Check if qdiskd is up and running
+define service {
+        use                    linux-check_proc
+        host_name               HOSTNAME
+        __NAME                  qdiskd
+        __WARNING               1
+        __CRITICAL              1
+        check_command           check_nrpe!check_procs -a $_SERVICE_WARNING$ $_SERVICE_CRITICAL$ $_SERVICE_NAME$
+        service_description     RHCS qdiskd
+        check_interval          1
+}
+
+# Check if clvmd is up and running
+define service {
+        use                    linux-check_proc
+        host_name               HOSTNAME
+        __NAME                 clvmd 
+        __WARNING               1
+        __CRITICAL              1
+        check_command           check_nrpe!check_procs -a $_SERVICE_WARNING$ $_SERVICE_CRITICAL$ $_SERVICE_NAME$
+        service_description     RHCS clvmd
+        check_interval          1
+}
+# Check if  is up and running
+define service {
+        use                    linux-check_proc
+        host_name               HOSTNAME
+        __NAME                 clurgmgrd 
+        __WARNING               1:
+        __CRITICAL              1:5
+        check_command           check_nrpe!check_procs -a $_SERVICE_WARNING$ $_SERVICE_CRITICAL$ $_SERVICE_NAME$
+        service_description     RHCS clurgmgrd
+        check_interval          1
+}
+
+# Custom check for services
+
+
+define service {
+	use			rhcs-check_rhcs_service
+	host_name		HOSTNAME
+	__RHCS_SERVICE		podcast.ruv.is
+	service_description	RHCS Service podcast.ruv.is
+	register		0
+}

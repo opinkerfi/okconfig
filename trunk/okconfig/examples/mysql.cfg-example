@@ -1,0 +1,202 @@
+
+# TODO: Remember to set username/password for mysql
+
+define service {
+	host_name		HOSTNAME
+	name			mysql-service-HOSTNAME
+	use			mysql-service
+	register		0
+	#_MYSQLHOSTNAME		HOSTNAME
+	#_MYSQLUSERNAME		nagios
+	#_MYSQLPASSWORD		nagiospassword
+	#_MYSQLMODE		connection-time
+	#_MYSQLWARNING		0
+	#_MYSQLCRITICAL		0
+
+}
+
+
+define service {
+	use			mysql-service-HOSTNAME,mysql-check_connection-time
+	#service_description	MySQL Connection Time
+
+	#_MYSQLWARNING		1  ; Default Threshold
+	#_MYSQLCRITICAL		5  ; Default threshold
+}
+
+
+define service {
+	use			mysql-service-HOSTNAME,mysql-check_querycache-hitrate
+	#service_description	MySQL Query Cache
+
+	#_MYSQLWARNING		90:  ; Default Threshold
+	#_MYSQLCRITICAL		80:  ; Default threshold
+}
+define service {
+	use			mysql-service-HOSTNAME,mysql-check_threads-connected
+	#service_description	MySQL Client Connection Threads
+
+	#_MYSQLWARNING		10  ; Default Threshold
+	#_MYSQLCRITICAL		20  ; Default threshold
+}
+define service {
+	use			mysql-service-HOSTNAME,mysql-check_threadcache-hitrate
+	#service_description	MySQL threadcache-hitrate
+
+	#_MYSQLWARNING		90: ; Default Threshold
+	#_MYSQLCRITICAL		80:  ; Default threshold
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+define service {
+	use			mysql-service-HOSTNAME,mysql-check_qcache-lowmem-prunes
+	#service_description	MySQL qcache-lowmem-prunes
+
+	#_MYSQLWARNING		1:  ; Default Threshold
+	#_MYSQLCRITICAL		10  ; Default threshold
+}
+define service {
+	use			mysql-service-HOSTNAME,mysql-check_keycache-hitrate
+	#service_description	MySQL myisam-keycache-hitrate
+
+	#_MYSQLWARNING		99:  ; Default Threshold
+	#_MYSQLCRITICAL		95:  ; Default threshold
+}
+define service {
+	use			mysql-service-HOSTNAME,mysql-check_bufferpool-hitrate
+	#service_description	MySQL innodb-bufferpool-hitrate
+
+	#_MYSQLWARNING		99:  ; Default Threshold
+	#_MYSQLCRITICAL		95:  ; Default threshold
+}
+define service {
+	use			mysql-service-HOSTNAME,mysql-check_bufferpool-wait-free
+	#service_description	MySQL innodb-bufferpool-wait-free
+
+	#_MYSQLWARNING		1  ; Default Threshold
+	#_MYSQLCRITICAL		10  ; Default threshold
+}
+define service {
+	use			mysql-service-HOSTNAME,mysql-check_log-waits
+	#service_description	MySQL innodb-log-waits
+
+	#_MYSQLWARNING		1  ; Default Threshold
+	#_MYSQLCRITICAL		10  ; Default threshold
+}
+
+
+
+
+
+
+
+
+
+define service {
+	use			mysql-service-HOSTNAME,mysql-check_tablecache-hitrate
+	#service_description	MySQL tablecache-hitrate
+
+	#_MYSQLWARNING		99:  ; Default Threshold
+	#_MYSQLCRITICAL		95:  ; Default threshold
+}
+define service {
+	use			mysql-service-HOSTNAME,mysql-check_table-lock-contention
+	#service_description	MySQL table-lock-contention
+
+	#_MYSQLWARNING		1  ; Default Threshold
+	#_MYSQLCRITICAL		2  ; Default threshold
+}
+define service {
+	use			mysql-service-HOSTNAME,mysql-check_index-usage
+	#service_description	MySQL index-usage
+
+	#_MYSQLWARNING		90:  ; Default Threshold
+	#_MYSQLCRITICAL		80:  ; Default threshold
+}
+define service {
+	use			mysql-service-HOSTNAME,mysql-check_tmp-disk-tables
+	#service_description	MySQL tmp-disk-tables
+
+	#_MYSQLWARNING		25  ; Default Threshold
+	#_MYSQLCRITICAL		50  ; Default threshold
+}
+define service {
+	use			mysql-service-HOSTNAME,mysql-check_slow-queries
+	#service_description	MySQL slow-queries
+
+	#_MYSQLWARNING		0.1  ; Default Threshold
+	#_MYSQLCRITICAL		1  ; Default threshold
+}
+define service {
+	use			mysql-service-HOSTNAME,mysql-check_long-running-procs
+	#service_description	MySQL long-running-procs
+
+	#_MYSQLWARNING		10  ; Default Threshold
+	#_MYSQLCRITICAL		20  ; Default threshold
+}
+
+
+
+# Run a custom query, should return a numerical value
+define service {
+	use			mysql-service-HOSTNAME,mysql-check_sql
+	#service_description	MySQL sql
+
+	#_MYSQLWARNING		0  ; Default Threshold
+	#_MYSQLCRITICAL		1  ; Default threshold
+	#_MYSQLARGUMENTS	--name select%20111%20from%20dual
+	register		0
+}
+
+
+
+
+
+
+
+
+
+
+
+
+# Slave replication stuffs
+
+define service {
+        use                     mysql-service-HOSTNAME,mysql-check_slave-lag
+        #service_description    MySQL slave-lag
+
+        #_MYSQLWARNING          5  ; Default Threshold
+        #_MYSQLCRITICAL         10  ; Default threshold
+        register                0
+
+}
+define service {
+        use                    mysql-service-HOSTNAME,mysql-check_slave-io-running
+        #service_description     MySQL slave-io-running
+
+        #_MYSQLWARNING          5  ; Default Threshold
+        #_MYSQLCRITICAL         10  ; Default threshold
+        register                0
+
+}
+define service {
+        use                    mysql-service-HOSTNAME,mysql-check_slave-sql-running
+        #service_description     MySQL slave-sql-running
+
+        #_MYSQLWARNING          5  ; Default Threshold
+        #_MYSQLCRITICAL         10  ; Default threshold
+        register                0
+
+}
+
