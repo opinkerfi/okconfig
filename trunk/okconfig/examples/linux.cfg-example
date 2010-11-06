@@ -40,7 +40,7 @@ define service {
 }
 
 define service {
-        use                   HOSTNAME, linux-check_time
+        use                   HOSTNAME,linux-check_time
 	host_name		HOSTNAME
 
 
