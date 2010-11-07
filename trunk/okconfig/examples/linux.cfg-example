@@ -4,7 +4,7 @@
 # __EXTRAOPTS = Optional Extra arguments to pass into disks
 define service {
 	use			HOSTNAME,linux-check_disks
-	host_name		HOSTNAME
+	#host_name		HOSTNAME
 
 	#service_description	Disk Usage
 	#__EXTRAOPTS		-f /var:10:5,/boot:0:0
@@ -13,7 +13,7 @@ define service {
 
 define service {
 	use			HOSTNAME,linux-check_load
-	host_name		HOSTNAME
+	#host_name		HOSTNAME
 
 	#service_description	Load
 	#__WARNING		15,15,15
@@ -23,7 +23,7 @@ define service {
 
 define service {
 	use			HOSTNAME,linux-check_uptime
-	host_name		HOSTNAME
+	#host_name		HOSTNAME
 
 
 	#service_description	Uptime
@@ -33,7 +33,7 @@ define service {
 
 define service {
 	use			HOSTNAME,linux-check_procs
-	host_name		HOSTNAME
+	#host_name		HOSTNAME
 
 	#service_description	Running Processes
 	#check_command		check_nrpe!check_procs
@@ -41,7 +41,7 @@ define service {
 
 define service {
         use                   HOSTNAME,linux-check_time
-	host_name		HOSTNAME
+	#host_name		HOSTNAME
 
 
         #service_description	Time
@@ -52,7 +52,7 @@ define service {
 
 define service {
         use                    HOSTNAME,linux-check_proc
-	host_name		HOSTNAME
+	#host_name		HOSTNAME
         __NAME                  crond
         __WARNING               1:
         __CRITICAL              :10

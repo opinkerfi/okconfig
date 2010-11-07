@@ -1,11 +1,11 @@
 define hostgroup {
-	name		GROUP
-	alias		ALIAS
+	hostgroup_name		GROUP
+	alias			ALIAS
 }
 
 define servicegroup {
-	name		GROUP
-	alias		ALIAS
+	servicegroup_name	GROUP
+	alias			ALIAS
 }
 
 define contactgroup {
@@ -14,3 +14,12 @@ define contactgroup {
 	contactgroup_members	admins
 }
 
+
+
+# Use this service for example if you want to set check_interval for a whole hostgroup
+define service {
+	name			GROUP-service
+	register		0
+	#check_interval		5
+	#retry_interval		2
+}

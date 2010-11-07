@@ -4,9 +4,9 @@
 # __EXTRAOPTS = Use this to set thresholds for specific disks
 # Example: __EXTRAOPTS -f /C:10:5,/F:0:0
 define service {
-	use			windows-check_disks
-	host_name		HOSTNAME
-	contact_groups		+GROUP-admins
+	use			HOSTNAME,windows-check_disks
+	#host_name		HOSTNAME
+	#contact_groups		+GROUP-admins
 
 	#service_description	Disk Usage
 	#__EXTRAOPTS		-f /C:10:5
@@ -16,9 +16,9 @@ define service {
 # default windows_check_cpu
 # Warns if cpu usage exceeds certain threshold
 define service {
-	use			windows-check_cpu
-	host_name		HOSTNAME
-	contact_groups		+GROUP-admins
+	use			HOSTNAME,windows-check_cpu
+	#host_name		HOSTNAME
+	#contact_groups		+GROUP-admins
 
 	#service_description	CPU Utilization
 	#__WARNING		90
@@ -31,9 +31,9 @@ define service {
 # Warns if device has recently been rebooted
 # __WARNING = warning threshold (default = 1h)
 define service {
-	use			windows-check_uptime
-	host_name		HOSTNAME
-	contact_groups		+GROUP-admins
+	use			HOSTNAME,windows-check_uptime
+	#host_name		HOSTNAME
+	#contact_groups		+GROUP-admins
 
 	#service_description	Uptime
 	#__WARNING		1h
@@ -44,9 +44,9 @@ define service {
 # __EXTRAOPTS = Extra argumends to send to CheckServiceState
 # Example __EXTRAOPTS exclude=SysmonLog
 define service {
-	use			windows-check_services
-	host_name		HOSTNAME
-	contact_groups		+GROUP-admins
+	use			HOSTNAME,windows-check_services
+	#host_name		HOSTNAME
+	#contact_groups		+GROUP-admins
 
 	#service_description	Running Services
 	#__EXTRAOPTS		exclude=OpenSSHd exclude=TBS
@@ -55,9 +55,9 @@ define service {
 # windows-check_time
 # Warns if clock is incorrectly set on a windows host
 define service {
-        use                     windows-check_time
-        host_name               HOSTNAME
-	contact_groups		+GROUP-admins
+        use                     HOSTNAME,windows-check_time
+        #host_name               HOSTNAME
+	#contact_groups		+GROUP-admins
 
         #service_description    Time
 	#__WARNING		3600
@@ -67,9 +67,9 @@ define service {
 # windows-check_mem
 # Checks windows memory usage
 define service {
-        use                     windows-check_mem
-        host_name               HOSTNAME
-	contact_groups		+GROUP-admins
+        use                     HOSTNAME,windows-check_mem
+        #host_name               HOSTNAME
+	#contact_groups		+GROUP-admins
 
         #service_description    Time
         #__WARNING              80 	; warn if memory reaches 80%
@@ -80,26 +80,26 @@ define service {
 
 # System Information
 define service {
-        use                     windows-systeminfo
-        host_name               HOSTNAME
-	contact_groups		+GROUP-admins
+        use                     HOSTNAME,windows-systeminfo
+        #host_name               HOSTNAME
+	#contact_groups		+GROUP-admins
 	register		0
 }
 
 # Gets a list of network interfaces for this server
 define service {
-        use                     windows-show_net
-        host_name               HOSTNAME
-	contact_groups		+GROUP-admins
+        use                     HOSTNAME,windows-show_net
+        #host_name               HOSTNAME
+	#contact_groups		+GROUP-admins
 	register		0
 }
 
 
 # Gets a list of logical disks with disk IO
 define service {
-        use                     windows-show_disks
-        host_name               HOSTNAME
-	contact_groups		+GROUP-admins
+        use                     HOSTNAME,windows-show_disks
+        #host_name               HOSTNAME
+	#contact_groups		+GROUP-admins
 	register		0
 }
 

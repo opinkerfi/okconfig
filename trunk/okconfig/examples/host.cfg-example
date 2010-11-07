@@ -13,12 +13,22 @@ define host {
 };
 
 
+
+
+# This is a template service for HOSTNAME
+# Services that belong to this host should use this as a template
 define service {
 	name				HOSTNAME
+	use				GROUP-service
+	host_name			HOSTNAME
 	contact_groups			+GROUP
 	service_groups			+GROUP
 }
 
+
+
+# We are still using Ping as a service in addition to check-host-alive, all hosts
+# deserve a ping
 define service{
         use                             HOSTNAME,generic-service
         host_name                       HOSTNAME

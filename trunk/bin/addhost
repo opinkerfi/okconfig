@@ -5,11 +5,12 @@
 # 
 
 VERSION=1.1
-TEMPLATE=/etc/nagios/examples/nagios/host.cfg-example
-DEST_DIRECTORY=`pwd`
+TEMPLATE=/etc/nagios/okconfig/examples/host.cfg-example
+DEST_DIRECTORY=/etc/nagios/okconfig/hosts
 
 # Default parent:
 parent="default-host"
+group="default"
 
 print_help() {
       echo "nagmin version $VERSION"
@@ -78,17 +79,11 @@ if [ -z "$ipaddress" ]; then
 
 fi
 
-
-if [ -z "$group" ]; then
-	CURRDIR=`basename $PWD`
-	if [ "$CURRDIR" == "prod" ]; then
-		group=$(basename `dirname $PWD`)
-	elif [ "$CURRDIR" == "dev" ]; then
-		group=$(basename `dirname $PWD`)
-	else
-		echo "--group was not specified"
-		exit 1
-	fi
+DEST_DIRECTORY=$DEST_DIRECTORY/$group
+test -d "$DEST_DIRECTORY" || mkdir -p "$DEST_DIRECTORY"
+if [ $? -gt 0 ]; then
+	echo "ERROR: Could not create directory $DEST_DIRECTORY"
+	exit 1
 fi
 
 DESTINATION="$DEST_DIRECTORY/$hostname-host.cfg"
@@ -117,8 +112,18 @@ for template in $templates ; do
 	esac
 done
 cat $TEMPLATE | sed "s/IPADDR/$ipaddress/g" | sed "s/HOSTNAME/$hostname/g" | sed "s/GROUP/$group/g" | sed "s/PARENTHOST/$parent/g" > $DESTINATION
+RESULT=$?
+
+if [ $RESULT -gt 0 ]; then
+	echo "Error writing to $DESTINATION"
+	exit 1
+fi
 echo "Host $hostname ($ipaddress) successfully saved as $DESTINATION"
 
 for template in $templates;  do
 	addtemplate --host $hostname --template $template $FORCE --group $group
+	if [ $? -gt 0 ]; then
+		echo Error adding template $template
+		exit 1
+	fi
 done

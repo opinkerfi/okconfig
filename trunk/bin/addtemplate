@@ -1,8 +1,8 @@
 #!/bin/sh
 
 
-TEMPLATE_DIR=/etc/nagios/examples/nagios/
-DEST_DIRECTORY=`pwd`
+TEMPLATE_DIR=/etc/nagios/okconfig/examples
+DEST_DIRECTORY=/etc/nagios/okconfig/hosts
 
 print_help() {
       echo "addtemplate version $VERSION"
@@ -53,6 +53,23 @@ do
   esac
 done
 
+
+if [ -z $template ] ; then
+	print_help
+	exit 1
+fi
+
+
+
+FILENAME=`findhost $hostname`
+if [ $? -gt 0 ]; then
+	echo "Host $hostname not found"
+	exit 1
+fi
+
+
+DEST_DIRECTORY=`dirname $FILENAME`
+
 DESTINATION="$DEST_DIRECTORY/$hostname-$template.cfg"
 TEMPLATE=$TEMPLATE_DIR/$template.cfg-example
 if [ ! -f "$TEMPLATE" ]; then
@@ -74,16 +91,20 @@ if [ -z "$group" ]; then
         elif [ "$CURRDIR" == "dev" ]; then
                 group=$(basename `dirname $PWD`)
         else
-                echo "--group was not specified"
-                exit 1
+                group="default"
         fi
 fi
 
 
 
 cat $TEMPLATE | sed "s/IPADDR/$ipaddress/g" | sed "s/HOSTNAME/$hostname/g" | sed "s/GROUP/$group/g" > $DESTINATION
+if [ $? -gt 0 ]; then
+	echo "Error writing to $DESTINATION"
+	exit 1
+fi
 echo "Template $template successfully added to $DESTINATION"
 grep TODO $TEMPLATE
+exit 0
 
 #echo "* hostname = $hostname"
 #echo "* ipaddress = $ipaddress"
