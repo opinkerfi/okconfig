@@ -1,0 +1,54 @@
+
+
+define host {
+	use		default-host
+
+
+
+	host_name	sma-bak
+	address		0.0.0.0
+
+        contact_groups  +eva
+        hostgroups      +eva
+};
+
+
+define service {
+	use				eva-passive,eva-check_systems
+	host_name			sma-bak
+	contact_groups			+eva
+}
+
+
+define service {
+        use                             eva-passive,eva-check_diskgroups
+        host_name                       sma-bak
+        contact_groups                  +eva
+
+}
+
+define service {
+        use                             eva-passive,eva-check_disks
+        host_name                       sma-bak
+        contact_groups                  +eva
+	register			0
+
+}
+
+
+define service {
+        use                             eva-passive,eva-check_controllers
+        host_name                       sma-bak
+        contact_groups                  +eva
+
+}
+
+
+
+define service {
+        use                             eva-passive,eva-check_diskshelves
+        host_name                       sma-bak
+        contact_groups                  +eva
+
+}
+

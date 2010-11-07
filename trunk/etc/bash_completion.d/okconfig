@@ -1,0 +1,64 @@
+_addhost() 
+{
+    local cur prev opts
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    #opts="--host --help --group --templates"
+    case "${COMP_WORDS[0]}" in
+	addhost)
+    		opts="--host --help --group --templates --ip --parent --force"
+		;;
+	addtemplate)
+    		opts="--host --help --group --template --force "
+		;;
+	addgroup)
+		opts="--group --help --alias --force"
+		;;
+	findhost)
+		opts=$(grep host_name /var/log/nagios/objects.cache | awk '{ print $2 }' | sort | uniq)
+		;;
+	vimcfg)
+		cfgfiles=$(find -L /etc/nagios -iname \*cfg -exec basename {} \; | sort | uniq)
+		okconfig=$(cd /etc/nagios/okconfig/templates ; find * -iname \*cfg )
+		opts="$cfgfiles $okconfig"
+		;;
+	*)
+		opts="${COMP_WORDS[0]}"
+		;;
+    esac
+
+    case "${prev}" in
+	--templates)
+		local templates=$(cd /etc/nagios/okconfig/examples; /bin/ls *.cfg-example|sed 's/.cfg-example//')
+		completion=$templates
+   	;;
+	--template)
+		local templates=$(cd /etc/nagios/okconfig/examples; /bin/ls *.cfg-example|sed 's/.cfg-example//')
+		completion=$templates
+   	;;
+	--group)
+                local groups=$(grep hostgroup_name /var/log/nagios/objects.cache | awk '{ print $2 }' | sort | uniq)
+		completion=$groups
+   	;;
+        --host)
+                local hosts=$(grep host_name /var/log/nagios/objects.cache | awk '{ print $2 }' | sort | uniq)
+		completion=$hosts
+        ;;
+   	*)
+	completion=$opts
+   	;;
+   esac
+	echo ${COMP_WORDS[1]} >> /tmp/compl
+   
+   COMPREPLY=($(compgen -W "${completion}" -- ${cur}))  
+   return 0
+}
+
+
+
+complete -F _addhost addhost
+complete -F _addhost addtemplate
+complete -F _addhost addgroup
+complete -F _addhost findhost
+complete -F _addhost vimcfg

@@ -1,0 +1,26 @@
+#!/bin/sh
+#
+# Finds the filename which defines a specific Nagios host
+#
+#
+
+if [ -z $1 ]; then
+	echo "Usage: $0 <HOSTNAME>"
+	exit 1
+fi
+
+DIRECTORIES=`grep ^cfg_dir /etc/nagios/nagios.cfg  | sed 's/cfg_dir=//'`
+DIRECTORIES=`echo $DIRECTORIES | sed 's/ /\/ /g'`
+
+OUTPUT=`find $DIRECTORIES/ -iname $1-host.cfg | head -n 1`
+
+
+echo "$OUTPUT" | grep -q /etc/nagios 
+
+if [ $? -gt 0 ]; then
+	echo host $1 not found
+	exit 1
+fi
+
+echo $OUTPUT
+exit 0

@@ -1,0 +1,46 @@
+
+
+define service {
+	use				eva-passive,eva-check_systems
+	host_name			aissans1
+	contact_groups			+eva
+	service_description		HP EVA Systems MYEVA
+}
+
+
+define service {
+        use                             eva-passive,eva-check_diskgroups
+        host_name                       aissans1
+        contact_groups                  +eva
+	service_description		HP EVA Diskgroups MYEVA
+	
+
+}
+
+define service {
+        use                             eva-passive,eva-check_disks
+        host_name                       aissans1
+        contact_groups                  +eva
+	service_description		HP EVA Disks MYEVA
+
+}
+
+
+define service {
+        use                             eva-passive,eva-check_controllers
+        host_name                       aissans1
+        contact_groups                  +eva
+	service_description		HP EVA Controllers MYEVA
+
+}
+
+
+
+define service {
+        use                             eva-passive,eva-check_diskshelves
+        host_name                       aissans1
+        contact_groups                  +eva
+	service_description		HP EVA Diskshelves MYEVA
+
+}
+

@@ -1,0 +1,76 @@
+#!/bin/sh
+
+# Changelog:
+# Version 1.1 Added --parent option
+# 
+
+VERSION=1.1
+TEMPLATE=/etc/nagios/okconfig/examples/group.cfg-example
+DEST_DIRECTORY=/etc/nagios/okconfig/hosts
+DEFAULT_MEMBERGROUPS=admins
+
+print_help() {
+      echo "addgroup version $VERSION"
+      echo "Usage: $0 <--group GROUPNAME> [--alias <alias>]"
+      echo ""
+      echo "Example: Add a mailserver group"
+      echo "# addgroup --group mailservers --alias \"My Mailservers\""
+}
+
+if [ $# -eq 0 ]; then
+     print_help ;
+     exit 1
+fi
+
+
+# Parse arguments
+while [ $# -gt 0 ]
+do
+  case $1
+  in
+    --force)
+	FORCE="--force"
+	shift 1
+    ;;
+    --alias)
+	alias=$2
+	shift 2;
+    ;;
+    --group)
+	group=$2
+	shift 2;
+    ;;
+    --help)
+	print_help;
+	exit 0;
+    ;;
+    *)
+	print_help;
+	exit 1;
+    ;;
+  esac
+done
+
+if [ -z "$group" ]; then
+	echo "Error: --group was not specified"
+	exit 1
+fi
+
+# If alias not specified, it gets the same name as group
+if [ -z "$alias" ]; then
+	alias=$group
+fi
+
+#DEST_DIRECTORY=$DEST_DIRECTORY/$group
+#mkdir -p $DEST_DIRECTORY
+DESTINATION="$DEST_DIRECTORY/$group.cfg"
+
+if [ -z "$FORCE" ]; then
+	if [ -f $DESTINATION ]; then
+		echo "ERROR: File $DESTINATION already exists. Use --force to overwrite"
+		exit 1
+	fi
+fi
+
+cat $TEMPLATE | sed "s/ALIAS/$alias/g" | sed "s/GROUP/$group/g" > $DESTINATION
+echo "Group $group successfully created at $DESTINATION"
