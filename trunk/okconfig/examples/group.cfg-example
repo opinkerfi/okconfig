@@ -18,7 +18,7 @@ define contactgroup {
 
 # Use this service for example if you want to set check_interval for a whole hostgroup
 define service {
-	name			GROUP-service
+	name			GROUP-default_service
 	register		0
 	#check_interval		5
 	#retry_interval		2

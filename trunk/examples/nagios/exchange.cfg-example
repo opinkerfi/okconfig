@@ -259,7 +259,7 @@ define service {
         action_url
 
         __SERVICE               msftesql-Exchange
-        service_description     Microsoft Search Exchange
+        service_description     Service Search Exchange
 }
 
 define service {
@@ -268,7 +268,7 @@ define service {
         action_url
 
         __SERVICE               MSExchangeTransportLogSearch
-        service_description     Microsoft Exchange Transport Log Search
+        service_description     Service Transport Log Search
 }
 
 define service {
@@ -277,7 +277,7 @@ define service {
         action_url
 
         __SERVICE               MSExchangeADTopology
-        service_description     Microsoft Exchange Active Directory Topology
+        service_description     Service Active Directory Topology
 }
 
 define service {
@@ -286,7 +286,7 @@ define service {
         action_url
 
         __SERVICE               MSExchangeIS
-        service_description     Microsoft Exchange Information Store
+        service_description     Service Information Store
 }
 
 define service {
@@ -295,7 +295,7 @@ define service {
         action_url
 
         __SERVICE               MSExchangeMailboxAssistants
-        service_description     Microsoft Exchange Mailbox Assistants
+        service_description     Service Mailbox Assistants
 }
 
 define service {
@@ -304,7 +304,7 @@ define service {
         action_url
 
         __SERVICE               MSExchangeMailSubmission
-        service_description     Microsoft Exchange Mail Submission
+        service_description     Service Mail Submission
 
 }
 
@@ -314,7 +314,7 @@ define service {
         action_url
 
         __SERVICE               MSExchangeRepl
-        service_description     Microsoft Exchange Replication
+        service_description     Service Replication
 }
 
 define service {
@@ -323,7 +323,7 @@ define service {
         action_url
 
         __SERVICE               MSExchangeRPC
-        service_description     Microsoft Exchange RPC Client Access
+        service_description     Service  RPC Client Access
 }
 
 define service {
@@ -332,7 +332,7 @@ define service {
         action_url
 
         __SERVICE               MSExchangeSA
-        service_description     Microsoft Exchange System Attendant
+        service_description     Service System Attendant
 }
 
 define service {
@@ -341,7 +341,7 @@ define service {
         action_url
 
         __SERVICE               MSExchangeSearch
-        service_description     Microsoft Exchange Search Indexer
+        service_description     Service Search Indexer
 
 }
 
@@ -351,7 +351,7 @@ define service {
         action_url
 
         __SERVICE               MSExchangeServiceHost
-        service_description     Microsoft Exchange Service Host
+        service_description     Service Service Host
 
 }
 define service {
@@ -360,7 +360,7 @@ define service {
         action_url
 
         __SERVICE               MSExchangeThrottling
-        service_description      Microsoft Exchange Throttling
+        service_description      Service Throttling
 
 }
 
@@ -381,7 +381,7 @@ define service {
         action_url
 
         __SERVICE              MSExchangeAB 
-        service_description      Microsoft Exchange Address Book
+        service_description      Service Address Book
 
 
 }
@@ -391,7 +391,7 @@ define service {
         action_url
 
         __SERVICE               MSExchangeAntispamUpdate
-        service_description      Microsoft Exchange Anti-spam Update
+        service_description      Service Anti-spam Update
 
 }
 define service {
@@ -400,7 +400,7 @@ define service {
         action_url
 
         __SERVICE               MSExchangeFBA
-        service_description      Microsoft Exchange Forms-Based Authentication service
+        service_description      Service Forms-Based Authentication service
 
 }
 define service {
@@ -409,7 +409,7 @@ define service {
         action_url
 
         __SERVICE               MSExchangeFDS
-        service_description      Microsoft Exchange File Distribution
+        service_description      Service File Distribution
 
 
 }
@@ -423,7 +423,7 @@ define service {
         action_url
 
         __SERVICE               MSExchangeImap4
-        service_description      Microsoft Exchange IMAP4
+        service_description      Service IMAP4
 
 
 }
@@ -433,7 +433,7 @@ define service {
         action_url
 
         __SERVICE               MSExchangeMailboxReplication
-        service_description      Microsoft Exchange Mailbox Replication
+        service_description      Service Mailbox Replication
 
 }
 define service {
@@ -442,7 +442,7 @@ define service {
         action_url
 
         __SERVICE               MSExchangePop3
-        service_description      Microsoft Exchange POP3
+        service_description      Service POP3
 
 
 }
@@ -452,7 +452,7 @@ define service {
         action_url
 
         __SERVICE               MSExchangeProtectedServiceHost
-        service_description      Microsoft Exchange Protected Service Host
+        service_description      Service Protected Service Host
 
 
 }
@@ -462,7 +462,7 @@ define service {
         action_url
 
         __SERVICE               MSExchangeTransport
-        service_description      Microsoft Exchange Transport
+        service_description      Service Transport
 
 
 }
@@ -472,7 +472,7 @@ define service {
         action_url
 
         __SERVICE               MSExchangeUM
-        service_description      Microsoft Exchange Unified Messaging
+        service_description      Service Unified Messaging
 
 
 }
@@ -482,7 +482,7 @@ define service {
         action_url
 
         __SERVICE               MSSpeechService
-        service_description      Microsoft Exchange Speech Engine Service
+        service_description      Service Speech Engine Service
 
 
 }
@@ -496,7 +496,7 @@ define service {
         action_url
 
         __SERVICE              MSExchangeEdgeSync
-        service_description    Microsoft Exchange EdgeSync  
+        service_description    Service EdgeSync  
 
 }
 

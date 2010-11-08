@@ -19,7 +19,7 @@ define host {
 # Services that belong to this host should use this as a template
 define service {
 	name				HOSTNAME
-	use				GROUP-service
+	use				GROUP-default_service
 	host_name			HOSTNAME
 	contact_groups			+GROUP
 	service_groups			+GROUP
