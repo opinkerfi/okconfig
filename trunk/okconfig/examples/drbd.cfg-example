@@ -1,0 +1,8 @@
+define service {
+	use			generic-service
+	host_name		HOSTNAME
+
+	contact_groups		+GROUP	
+	service_description	DRBD Status
+	check_command		check_nrpe!check_drbd
+}
