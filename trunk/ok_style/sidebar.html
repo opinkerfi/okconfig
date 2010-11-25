@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>Web Interface Monitoring - Theme design by Eduardo L. Arana</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<meta http-equiv="Content-Language" content="en" />
+	<meta name="robots" content="noindex, nofollow" />
+	<meta name="author" content="Eduardo L. Arana - info@arananet.net"/>
+	<link rel="stylesheet" type="text/css" href="stylesheets/interface/common.css" media="screen, projection" />
+	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
+	<script type="text/javascript" src="js/mootools.js"></script>
+	<script type="text/javascript" src="js/search.js"></script>
+</head>
+<body>
+	<div id="navigation">
+		<div id="search_box">
+			<form action="/nagios/cgi-bin/status.cgi" method="get" target="main">
+				<input id="search" name="host" type="text" />
+				<input type="hidden" name="navbarsearch" value="1" />
+				<input src="images/icons/search.png" width="20" height="20" alt="OK" title="Search" id="search_submit" type="image" />
+			</form>
+		</div>
+	</div>
+</body>
+</html>

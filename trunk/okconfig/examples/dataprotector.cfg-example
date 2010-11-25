@@ -1,9 +1,8 @@
 # Dataprotector backup Stats
 # Provides Useful Statics of todays backups
 define service {
-	use			dataprotector-backups
+	use			HOSTNAME,dataprotector-backups
 	host_name		HOSTNAME
-	contact_groups		+GROUP-admins
         
 	#service_description     Dataprotector Backup Stats
         #check_command           check_nrpe!check_dp_backups
@@ -15,9 +14,8 @@ define service {
 # Dataprotector Internal Database Backup
 # Warns if Internal Database backup is more than two days old
 define service {
-	use			dataprotector-idb_backup
+	use			HOSTNAME,dataprotector-idb_backup
 	host_name		HOSTNAME
-	contact_groups		+GROUP-admins
 	
 	#service_description	Dataprotector IDB Backup
 	#check_command		check_nrpe!check_dp_idb
@@ -28,9 +26,8 @@ define service {
 # Dataprotector Mediapools
 # Warns if Mediapools are Free Media are getting low
 define service {
-	use			dataprotector-pool
+	use			HOSTNAME,dataprotector-pool
 	host_name		HOSTNAME
-	contact_groups		+GROUP-admins
         
 	#service_description     Dataprotector Mediapools
         #check_command           check_nrpe!check_dp_pool
@@ -39,9 +36,8 @@ define service {
 # Dataprotector Mount Requests
 # Warns if there are active mountrequests
 define service {
-	use			dataprotector-mountrequest
+	use			HOSTNAME,dataprotector-mountrequest
 	host_name		HOSTNAME
-	contact_groups		+GROUP-admins
         
 	#service_description     Dataprotector Mount Requests
         #check_command           check_nrpe!check_dp_mountrequest
@@ -52,9 +48,8 @@ define service {
 # Dataprotector Tablespaces
 # Warns if any tablespaces are full
 define service {
-	use			dataprotector-tablespace
+	use			HOSTNAME,dataprotector-tablespace
 	host_name		HOSTNAME
-	contact_groups		+GROUP-admins
         
 	#service_description     Dataprotector Tablespaces
         #check_command           check_nrpe!check_dp_tablespace

@@ -23,6 +23,7 @@ if [ $# -eq 0 ]; then
 fi
 
 
+test -d $DEST_DIRECTORY || mkdir -p $DEST_DIRECTORY
 # Parse arguments
 while [ $# -gt 0 ]
 do
@@ -66,10 +67,20 @@ fi
 DESTINATION="$DEST_DIRECTORY/$group.cfg"
 
 if [ -z "$FORCE" ]; then
+	# Abort if destination file already exists
 	if [ -f $DESTINATION ]; then
 		echo "ERROR: File $DESTINATION already exists. Use --force to overwrite"
 		exit 1
 	fi
+	# Abort if group already exists in Nagios
+	for i in service_group contact_group contactgroup host_group ; do
+		grep $i /var/log/nagios/objects.cache | awk '{ print $2 }' | grep -q -w $group
+		RESULT=$?
+		if [ $RESULT -eq 0 ]; then
+			echo "ERROR: $i $group already exists in nagios configuration. Use --force to write config anyway"
+			exit 1
+		fi
+	done
 fi
 
 cat $TEMPLATE | sed "s/ALIAS/$alias/g" | sed "s/GROUP/$group/g" > $DESTINATION

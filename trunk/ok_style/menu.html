@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>Web Interface Monitoring - Theme design by Eduardo L. Arana</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<meta http-equiv="Content-Language" content="en" />
+	<meta name="robots" content="noindex, nofollow" />
+	<meta name="author" content="Eduardo L. Arana - info@arananet.net"/>
+	<link rel="stylesheet" type="text/css" href="stylesheets/interface/menu.css" media="screen, projection" />
+	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
+	<script type="text/javascript" src="js/mootools.js"></script>
+	<script type="text/javascript" src="js/menu.js"></script>
+</head>
+<body>
+	<div id="menu">
+		<h2>Monitoring</h2>
+		<ul>
+			<li class="menuli_style1"><img src="images/icons/tactical.png" width="20" height="20" style="margin-top:-10px" align="absmiddle"><a href="/nagios/cgi-bin/tac.cgi" target="main">Tactical Overview</a></li>
+			<li class="menuli_style2"><img src="images/icons/host.png" width="20" height="20" style="margin-top:-10px" align="absmiddle"><a href="/nagios/cgi-bin/status.cgi?hostgroup=all&amp;style=hostdetail" target="main">Host Detail</a></li>
+			<li class="menuli_style1"><img src="images/icons/servicesgroup.png" width="20" height="20" style="margin-top:-10px" align="absmiddle"><a href="/nagios/cgi-bin/status.cgi?host=all" target="main">Service Detail</a></li>
+			<li class="menuli_style2"><img src="images/icons/hostgroup.png" width="20" height="20" style="margin-top:-10px" align="absmiddle"><a href="/nagios/cgi-bin/status.cgi?hostgroup=all&amp;style=overview" target="main">Hostgroup Overview</a></li>
+			<li class="menuli_style1"><img src="images/icons/servicesgroupdet.png" width="20" height="20" style="margin-top:-10px" align="absmiddle"><a href="/nagios/cgi-bin/status.cgi?servicegroup=all&amp;style=overview" target="main">Servicegroup Overview</a></li>
+			<li class="menuli_style2"><img src="images/icons/statusmap.png" width="20" height="20" style="margin-top:-10px" align="absmiddle"><a href="/nagios/cgi-bin/statusmap.cgi?host=all" target="main">Status Map</a></li>
+			<li class="menuli_style1"><img src="images/icons/status3d.png" width="20" height="20" style="margin-top:-10px" align="absmiddle"><a href="/nagios/cgi-bin/statuswrl.cgi?host=all" target="main">3-D Status Map</a></li>
+			<li class="menuli_style2"><img src="images/icons/servicesgrouperror.png" width="20" height="20" style="margin-top:-10px" align="absmiddle"><a href="/nagios/cgi-bin/status.cgi?host=all&amp;servicestatustypes=28" target="main">Service Problems</a></li>
+			<li class="menuli_style1"><img src="images/icons/hostproblem.png" width="20" height="20" style="margin-top:-10px" align="absmiddle"><a href="/nagios/cgi-bin/status.cgi?hostgroup=all&amp;style=hostdetail&amp;hoststatustypes=12" target="main">Host Problems</a></li>
+			<li class="menuli_style2"><img src="images/icons/network.png" width="20" height="20" style="margin-top:-10px" align="absmiddle"><a href="/nagios/cgi-bin/outages.cgi" target="main">Network Outages</a></li>
+			<li class="menuli_style1"><img src="images/icons/comments.png" width="20" height="20" style="margin-top:-10px" align="absmiddle"><a href="/nagios/cgi-bin/extinfo.cgi?type=3" target="main">Comments</a></li>
+			<li class="menuli_style2"><img src="images/icons/downtime.png" width="20" height="20" style="margin-top:-10px" align="absmiddle"><a href="/nagios/cgi-bin/extinfo.cgi?type=6" target="main">Downtime</a></li>
+			<li class="menuli_style1"><img src="images/icons/process.png" width="20" height="20" style="margin-top:-10px" align="absmiddle"><a href="/nagios/cgi-bin/extinfo.cgi?type=0" target="main">Process Info</a></li>
+			<li class="menuli_style2"><img src="images/icons/perfo.png" width="20" height="20" style="margin-top:-10px" align="absmiddle"><a href="/nagios/cgi-bin/extinfo.cgi?type=4" target="main">Performance Info</a></li>
+			<li class="menuli_style1"><img src="images/icons/cal.png" width="20" height="20" style="margin-top:-10px" align="absmiddle"><a href="/nagios/cgi-bin/extinfo.cgi?type=7" target="main">Scheduling Queue</a></li>
+		</ul>
+		<h2>Reporting</h2>
+		<ul>
+			<li class="menuli_style1"><img src="images/icons/threads.png" width="20" height="20" style="margin-top:-10px" align="absmiddle"><a href="/nagios/cgi-bin/trends.cgi" target="main">Trends</a></li>
+			<li class="menuli_style2"><img src="images/icons/avai.png" width="20" height="20" style="margin-top:-10px" align="absmiddle"><a href="/nagios/cgi-bin/avail.cgi" target="main">Availability</a></li>
+			<li class="menuli_style1"><img src="images/icons/histogram.png" width="20" height="20" style="margin-top:-10px" align="absmiddle"><a href="/nagios/cgi-bin/histogram.cgi" target="main">Alert Histogram</a></li>
+			<li class="menuli_style2"><img src="images/icons/alerthis.png" width="20" height="20" style="margin-top:-10px" align="absmiddle"><a href="/nagios/cgi-bin/history.cgi?host=all" target="main">Alert History</a></li>
+			<li class="menuli_style1"><img src="images/icons/sum.png" width="20" height="20" style="margin-top:-10px" align="absmiddle"><a href="/nagios/cgi-bin/summary.cgi" target="main">Alert Summary</a></li>
+			<li class="menuli_style2"><img src="images/icons/notifications.png" width="20" height="20" style="margin-top:-10px" align="absmiddle"><a href="/nagios/cgi-bin/notifications.cgi?contact=all" target="main">Notifications</a></li>
+			<li class="menuli_style1"><img src="images/icons/report.png" width="20" height="20" style="margin-top:-10px" align="absmiddle"><a href="/nagios/cgi-bin/showlog.cgi" target="main">Event Log</a></li>
+		</ul>
+		<h2>Configuration</h2>
+		<ul>
+			<li class="menuli_style1"><img src="images/icons/config.png" width="20" height="20" style="margin-top:-10px" align="absmiddle"><a href="/nagios/cgi-bin/config.cgi" target="main">View Config</a></li>
+		</ul>
+	</div>
+</body>
+</html>
