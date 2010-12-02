@@ -88,3 +88,28 @@ define service {
 	host_name		HOSTNAME
 	#service_description	Security Updates
 }
+
+
+
+
+# These are not enabled by default
+
+define service {
+	use			HOSTNAME,linux-check_selinux
+	host_name		HOSTNAME
+	
+	register		0
+	#__STATUS		Enforcing
+	#service_description	SELinux Status
+}
+
+
+define service {
+	use			HOSTNAME,linux-check_bond
+	host_name		HOSTNAME
+	
+	register		0
+	#__INTERFACE		bond0
+	#service_description	Ethernet Bond bond0
+}
+
