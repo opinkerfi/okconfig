@@ -7,7 +7,7 @@ define service {
 
 # Check if qdiskd is up and running
 define service {
-        use                    linux-check_proc
+        use                    HOSTNAME,linux-check_proc
         host_name               HOSTNAME
         __NAME                  qdiskd
         __WARNING               1
@@ -19,7 +19,7 @@ define service {
 
 # Check if clvmd is up and running
 define service {
-        use                    linux-check_proc
+        use                    HOSTNAME,linux-check_proc
         host_name               HOSTNAME
         __NAME                 clvmd 
         __WARNING               1
@@ -30,7 +30,7 @@ define service {
 }
 # Check if  is up and running
 define service {
-        use                    linux-check_proc
+        use                    HOSTNAME,linux-check_proc
         host_name               HOSTNAME
         __NAME                 clurgmgrd 
         __WARNING               1:
@@ -44,9 +44,37 @@ define service {
 
 
 define service {
-	use			rhcs-check_rhcs_service
+	use			HOSTNAME,rhcs-check_rhcs_service
 	host_name		HOSTNAME
 	__RHCS_SERVICE		podcast.ruv.is
 	service_description	RHCS Service podcast.ruv.is
 	register		0
 }
+
+
+
+
+
+define service {
+        use                     HOSTNAME,rhcs-check_cman_group
+        host_name               HOSTNAME
+        service_description     RHCS cman group default
+        __GROUP                 default
+        __LEVEL                 0
+}
+
+
+
+define service {
+        use                     HOSTNAME,rhcs-check_cman_group
+        host_name               HOSTNAME
+        service_description     RHCS cman group rgmanager
+        __GROUP                 rgmanager
+        __LEVEL                 1
+}
+
+define service {
+        use                     HOSTNAME,rhcs-check_fencing
+        host_name               HOSTNAME
+}
+

@@ -113,3 +113,12 @@ define service {
 	#service_description	Ethernet Bond bond0
 }
 
+
+define service {
+	use			HOSTNAME,linux-check_multipath
+	host_name		HOSTNAME
+	
+	register		0
+	#__NUMBER_OF_PATHS	4
+	#service_description	Multipath
+}
