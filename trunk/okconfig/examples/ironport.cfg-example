@@ -1,0 +1,136 @@
+define service {
+	name			ironport-HOSTNAME
+	use			HOSTNAME
+	
+	# This user and password should be able to log in to
+	# https://HOSTNAME/xml/status
+	__USERNAME		nagios_user
+	__PASSWORD		nagios_password
+	
+	# Hardware Status Check use SNMP rather than https access
+	__SNMP_USERNAME		v3get
+	__SNMP_PASSWORD		default_password
+}
+
+
+define service {
+	use			ironport-HOSTNAME,ironport-check_status
+	#service_description	IronPort Status
+	#__MODE			status
+        #__WARNING               5
+        #__CRITICAL              10
+
+}
+
+define service {
+        use                    ironport-HOSTNAME,ironport-check_cpu
+        #service_description     IronPort CPU
+        #__MODE                 cpu
+	#__WARNING		50
+	#__CRITICAL		90
+}
+
+
+
+
+define service {
+        use                    ironport-HOSTNAME,ironport-check_ram
+        #service_description     IronPort Memory
+        #__MODE                  ram
+        #__WARNING               80
+        #__CRITICAL              90
+}
+
+
+
+define service {
+        use                    ironport-HOSTNAME,ironport-check_msgxhour
+        #service_description     IronPort Messages per Hour
+        #__MODE                  msgxhour
+        #__WARNING               70000
+        #__CRITICAL              100000
+        #register                0
+}
+
+define service {
+        use                    ironport-HOSTNAME,ironport-check_conn_in
+        service_description     IronPort Connections Incoming
+        #__MODE                  conn_in
+        #__WARNING               70000
+        #__CRITICAL              100000
+        register                0
+}
+
+define service {
+        use                    ironport-HOSTNAME,ironport-check_conn_out
+        #service_description     IronPort Connections Outgoing
+        #__MODE                  conn_out
+        #__WARNING               70000
+        #__CRITICAL              100000
+        #register                0
+}
+
+
+define service {
+        use                    ironport-HOSTNAME,ironport-check_queue
+        #service_description     IronPort Queue
+        #__MODE                  queue
+        #__WARNING               70000
+        #__CRITICAL              100000
+        #register                0
+}
+
+define service {
+        use                    ironport-HOSTNAME,ironport-check_workqueue
+        #service_description     IronPort Work Queue
+        #__MODE                  workqueue
+        #__WARNING               70000
+        #__CRITICAL              100000
+        #register                0
+}
+
+define service {
+        use                    ironport-HOSTNAME,ironport-check_msgs_in_quarantine
+        #service_description     IronPort Quarantine
+        #__MODE                  msgs_in_quarantine
+        #__WARNING               70000
+        #__CRITICAL              100000
+        #register                0
+}
+
+
+define service {
+        use                    ironport-HOSTNAME,ironport-check_disk_util
+        #service_description     IronPort Disk Utilization
+        #__MODE                  disk_util
+        #__WARNING               90
+        #__CRITICAL              95
+        #register                0
+}
+
+
+define service {
+        use                    ironport-HOSTNAME,ironport-check_queuedisk_usage
+        #service_description     IronPort Queuedisk Usage
+        #__MODE                  queuedisk_usage
+        #__WARNING               90
+        #__CRITICAL              95
+        #register                0
+}
+
+
+define service {
+        use                    ironport-HOSTNAME,ironport-check_resourceconservation
+        #service_description     IronPort Resource Conservation
+        #__MODE                  resourceconservation
+        #__WARNING               1
+        #__CRITICAL              2
+        #register                0
+}
+
+
+
+define service {
+	use			ironport-HOSTNAME,ironport-check_env
+	#service_description	IronPort Hardware Status
+}
