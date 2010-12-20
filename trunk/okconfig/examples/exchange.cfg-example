@@ -55,135 +55,135 @@ define service {
 
 
 # Following is mostly for statistics and such
-define service{
+define service {
 	use		exchange-mem-max
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Maximum Memory
         check_command 	exc-mem-max
 }
-define service{
+define service {
 	use		exchange-mem-cur
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Current Memory
         check_command 	exc-mem-cur
 }
-define service{
+define service {
 	use		exchange-mem-all
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Memory Allocated
         check_command 	exc-mem-all
 }
-define service{
+define service {
 	use		exchange-mem-cur-all
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Memory Current Allocated
         check_command 	exc-mem-cur-all
 }
-define service{
+define service {
 	use		exchange-msg-sent
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Messages Sent
         check_command    exc-msg-sent
 }
-define service{
+define service {
 	use		exchange-msg-delivered
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Messages Delivered
         check_command    exc-msg-deliv
 }
-define service{
+define service {
 	use		exchange-msg-sub
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Messages Submitted
         check_command    exc-msg-sub
 }
-define service{
+define service {
 	use		exchange-msg-rsc-tot
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Messages Received Total
         check_command    exc-msg-rsc-tot
 }
-define service{
+define service {
 	use		exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Messages Sent Total
         check_command    exc-msg-sent-tot
 }
-define service{
+define service {
 	use		exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Messages Submitted Total
         check_command    exc-msg-sub-tot
 }
-define service{
+define service {
 	use		exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Bytes Sent Total  
         check_command    exc-byte-sent-tot
 }
-define service{
+define service {
 	use		exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Bytes Received Total
         check_command    exc-byte-recv-tot
 }
-define service{
+define service {
 	use		exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL0
         check_command    exc-scl0
 }
-define service{
+define service {
 	use		exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL1       
         check_command    exc-scl1
 }
-define service{
+define service {
 	use		exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL2
         check_command    exc-scl2
 }
-define service{
+define service {
 	use		exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL3
         check_command    exc-scl3
 }
-define service{
+define service {
 	use		exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL4
         check_command    exc-scl4
 }
-define service{
+define service {
 	use		exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL5
         check_command    exc-scl5
 }
 
-define service{
+define service {
 	use		exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL6
         check_command    exc-scl6
 }
-define service{
+define service {
 	use		exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL7
         check_command    exc-scl7
 }
-define service{
+define service {
 	use		exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL8
         check_command    exc-scl8
 }
 
-define service{
+define service {
 	use		exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL9
@@ -191,56 +191,56 @@ define service{
 }
 
 
-define service{
+define service {
 	use		exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Messages Scanned
         check_command    exc-msg-scan
 }
-define service{
+define service {
 	use		exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Messages Bypassed
         check_command    exc-msg-bypass
 }
-define service{
+define service {
 	use		exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Messages Deleted
         check_command    exc-msg-del
 }
-define service{
+define service {
 	use		exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Messages Rejected
         check_command    exc-msg-rej
 }
-define service{
+define service {
 	use		exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Messages Quarantined
         check_command    exc-msg-quar
 }
-define service{
+define service {
 	use		exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Messages Unknown
         check_command    exc-msg-unkn
 }
-define service{
+define service {
 	use		exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange User Count
         check_command    exc-msg-user
 }
-define service{
+define service {
 	use		exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Active Users
         check_command    exc-msg-active-user
 }
 
-define service{
+define service {
 	use		exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Unique OWA Users

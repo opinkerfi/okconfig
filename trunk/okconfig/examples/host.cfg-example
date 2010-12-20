@@ -29,7 +29,7 @@ define service {
 
 # We are still using Ping as a service in addition to check-host-alive, all hosts
 # deserve a ping
-define service{
+define service {
         use                             HOSTNAME,generic-service
         host_name                       HOSTNAME
         service_description             Ping
