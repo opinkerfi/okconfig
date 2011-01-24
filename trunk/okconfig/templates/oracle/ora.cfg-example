@@ -1,0 +1,9 @@
+define service {
+	use			oracle-service
+	name			oracle-NAME
+	service_description	NAME
+	__MODE			NAME
+	__WARNING		
+	__CRITICAL		
+	__EXTRAOPTIONS		
+}
