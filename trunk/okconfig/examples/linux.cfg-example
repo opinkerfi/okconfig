@@ -82,11 +82,18 @@ define service {
         #service_description     Swap Usage
 }
 
+define service {
+	use			HOSTNAME,linux-check_cpu
+	host_name		HOSTNAME
+	#service_description	Uptime
+}
+
 
 define service {
 	use			HOSTNAME,linux-check_updates
 	host_name		HOSTNAME
 	#service_description	Security Updates
+	register		0
 }
 
 

@@ -2,7 +2,7 @@
 # TODO: Remember to change MSSQL username/password whith access to the SQL Server
 
 define service {
-	use			check-mssql-template
+	use			HOSTNAME,check-mssql-template
 	name			check-mssql-HOSTNAME	; Unique name for the service	
 	host_name		HOSTNAME	; This is the host that will run the check
         #_MSSQL_PORT             1433		; This is the Port the SQL Server is listening on
@@ -112,20 +112,6 @@ define service {
 	#check_command		check_mssql!--name "^(?\!(tempdb$$)|(master$$)|(DB3$$))" --regexp
 }
 
-define service {
-        use                    check-mssql-HOSTNAME,check-mssql-backup-age
-        #host_name              HOSTNAME
-        #service_description     mssql backup-age
-        #_MSSQL_MODE             backup-age
-        #_MSSQL_WARNING          30
-        #_MSSQL_CRITICAL         100
-        #_MSSQL_HOSTNAME         default-mssql-hostname
-        #_MSSQL_PORT             1433
-        #_MSSQL_USERNAME         nagios
-        #_MSSQL_PASSWORD         eftirl11t
-}
-
-
 
 define service {
         use                    check-mssql-HOSTNAME,check-mssql-full-scans
@@ -232,6 +218,7 @@ define service {
         #_MSSQL_WARNING          5%
         #_MSSQL_CRITICAL         2%
         host_name		HOSTNAME
+	register		0
 }
 
 
