@@ -1,8 +1,13 @@
 #!/bin/sh
 
+DOMAIN="DOMAIN"
+DOMAIN_USER="Administrator"
+DOMAIN_PASSWORD="PASSWORD"
+BATCHFILE='\\nagios\nsclient\install.bat'
+
 
 echo "Starting install of $1" | tee /var/log/install_nsclient.log
-winexe  -U DOMAIN/Administrator%PASSWORD //$1 "cmd /c \\\\nagios\nsclient\install.bat"
+winexe  -U DOMAIN/$DOMAIN_USER%$DOMAIN_PASSWORD //$1 "cmd /c $BATCHFILE"
 RESULT=$?
 
 if [ $RESULT -gt 0 ]; then
