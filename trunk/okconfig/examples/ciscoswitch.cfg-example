@@ -6,7 +6,6 @@ define service {
 	#host_name		_HOSTNAME_
 	
 	#_SNMP_COMMUNITY	public
-	#check_command		check_snmp_connectivity
 	register		0
 }
 
@@ -19,7 +18,6 @@ define service {
 	#_WARNING		30,30,30
 	#_CRITICAL		80,80,80
 	_CISCO_TYPE		cisco
-        register                1
 }
 
 
@@ -30,7 +28,6 @@ define service {
         #check_command           check_cisco_mem
 	#_WARNING		90%
 	#_CRITICAL		98%
-	register		1
 }
 
 define service {
@@ -38,7 +35,6 @@ define service {
         host_name               HOSTNAME
 
         #check_command           check_cisco_env
-        register                1
 }
 
 
