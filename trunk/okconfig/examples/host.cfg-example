@@ -23,6 +23,7 @@ define service {
 	host_name			HOSTNAME
 	contact_groups			+GROUP
 	service_groups			+GROUP
+	register			0
 }
 
 
