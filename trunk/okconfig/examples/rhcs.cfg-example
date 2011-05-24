@@ -59,7 +59,7 @@ define service {
         use                     HOSTNAME,rhcs-check_cman_group
         host_name               HOSTNAME
         service_description     RHCS cman group default
-        __GROUP                 default
+        __NAME                 default
         __LEVEL                 0
 }
 
@@ -69,9 +69,19 @@ define service {
         use                     HOSTNAME,rhcs-check_cman_group
         host_name               HOSTNAME
         service_description     RHCS cman group rgmanager
-        __GROUP                 rgmanager
+        __NAME                 rgmanager
         __LEVEL                 1
 }
+
+define service {
+        use                     HOSTNAME,rhcs-check_cman_group
+        host_name               HOSTNAME
+        service_description     RHCS cman group clvmd
+        __NAME                 clvmd
+        __LEVEL                 1
+	register		0
+}
+
 
 define service {
         use                     HOSTNAME,rhcs-check_fencing
