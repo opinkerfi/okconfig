@@ -72,7 +72,7 @@ done
 if [ -z "$ipaddress" ]; then
 	TMP=`host $hostname | grep "has address"`
 	if [ $? -gt 0 ]; then
-		echo "could not locate ip address for host $hostname. Try using --ip paramater"
+		echo "Error: could not locate ip address for host $hostname. Try using --ip paramater" >&2
 		exit 1
 	fi
 	ipaddress=`echo $TMP | awk '{ print $4 }'`
@@ -82,7 +82,7 @@ fi
 DEST_DIRECTORY=$DEST_DIRECTORY/$group
 test -d "$DEST_DIRECTORY" || mkdir -p "$DEST_DIRECTORY"
 if [ $? -gt 0 ]; then
-	echo "ERROR: Could not create directory $DEST_DIRECTORY"
+	echo "ERROR: Could not create directory $DEST_DIRECTORY" >&2
 	exit 1
 fi
 
@@ -90,7 +90,7 @@ DESTINATION="$DEST_DIRECTORY/$hostname-host.cfg"
 
 if [ -z "$FORCE" ]; then
 	if [ -f $DESTINATION ]; then
-		echo "ERROR: File $DESTINATION already exists. Use --force to overwrite"
+		echo "ERROR: File $DESTINATION already exists. Use --force to overwrite" >&2
 		exit 1
 	fi
 fi

@@ -63,7 +63,7 @@ fi
 
 FILENAME=`findhost $hostname`
 if [ $? -gt 0 ]; then
-	echo "Host $hostname not found"
+	echo "Host $hostname not found" >&2
 	exit 1
 fi
 
@@ -73,13 +73,13 @@ DEST_DIRECTORY=`dirname $FILENAME`
 DESTINATION="$DEST_DIRECTORY/$hostname-$template.cfg"
 TEMPLATE=$TEMPLATE_DIR/$template.cfg-example
 if [ ! -f "$TEMPLATE" ]; then
-	echo "ERROR: No such file or directory: $TEMPLATE"
+	echo "ERROR: No such file or directory: $TEMPLATE" >&2
 	exit 1
 fi
 
 if [ -z "$FORCE" ]; then
         if [ -f $DESTINATION ]; then
-                echo "ERROR: File $DESTINATION already exists. Use --force to overwrite"
+                echo "ERROR: File $DESTINATION already exists. Use --force to overwrite" >&2
                 exit 1
         fi
 fi
@@ -99,7 +99,7 @@ fi
 
 cat $TEMPLATE | sed "s/IPADDR/$ipaddress/g" | sed "s/HOSTNAME/$hostname/g" | sed "s/GROUP/$group/g" > $DESTINATION
 if [ $? -gt 0 ]; then
-	echo "Error writing to $DESTINATION"
+	echo "Error writing to $DESTINATION" >&2
 	exit 1
 fi
 echo "Template $template successfully added to $DESTINATION"
