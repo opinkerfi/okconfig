@@ -1,0 +1,77 @@
+
+
+define service {
+	use			HOSTNAME,ibm-bladecenter_bladehealth
+	#service_description	Bladecenter Bladehealth
+	#__MODE			bladehealth
+	#check_command		ibm-check_bladecenter
+	#__SNMP_COMMUNITY	public
+	#__SNMP_VERSION		1
+}
+	
+define service {
+	use			HOSTNAME,ibm-bladecenter_powermodules
+	
+	#__SNMP_COMMUNITY	public
+	#__SNMP_VERSION		1
+	#service_description	Bladecenter Powermodules
+	#__MODE			powermodules
+	#check_command		ibm-check_bladecenter
+}
+
+define service {
+	use			HOSTNAME,ibm-bladecenter_system-health
+	#service_description	Bladecenter System Health
+	#__MODE			system-health
+	#check_command		ibm-check_bladecenter
+	#__SNMP_COMMUNITY	public
+	#__SNMP_VERSION		1
+}
+
+
+	
+define service {
+	use			HOSTNAME,ibm-bladecenter_temperature
+	#service_description	Bladecenter Temperature
+	#__MODE			temperature
+	#check_command		ibm-check_bladecenter
+	#__SNMP_COMMUNITY	public
+	#__SNMP_VERSION		1
+}
+
+
+	
+define service {
+	use			HOSTNAME,ibm-bladecenter_chassis-status
+	#service_description	Bladecenter Chassis Status
+	#__MODE			chassis-status
+	#check_command		ibm-check_bladecenter
+	#__SNMP_COMMUNITY	public
+	#__SNMP_VERSION		1
+}
+
+
+define service {
+	use			HOSTNAME,ibm-bladecenter_blowers
+	#service_description	Bladecenter Blowers
+	#__MODE			blowers
+	#check_command		ibm-check_bladecenter
+	#__SNMP_COMMUNITY	public
+	#__SNMP_VERSION		1
+}
+
+
+define service {
+	use			HOSTNAME,ibm-bladecenter_switchmodules
+	#service_description	Bladecenter Switchmodules
+	#__MODE			switchmodules
+	#check_command		ibm-check_bladecenter
+	#__SNMP_COMMUNITY	public
+	#__SNMP_VERSION		1
+}
+
+define service {
+	use			HOSTNAME,ibm-check_snmp_connectivity
+	_SNMP_COMMUNITY 	public
+	__SNMP_VERSION 		1
+}
