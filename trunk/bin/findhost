@@ -15,7 +15,7 @@ DIRECTORIES=`echo $DIRECTORIES | sed 's/ /\/ /g'`
 OUTPUT=`find $DIRECTORIES/ -iname $1-host.cfg | head -n 1`
 
 
-echo "$OUTPUT" | grep -q /etc/nagios 
+echo "$OUTPUT" | grep -q $1
 
 if [ $? -gt 0 ]; then
 	echo host $1 not found
