@@ -50,6 +50,10 @@ test "x$RPM_BUILD_ROOT" != "x" && rm -rf $RPM_BUILD_ROOT
 %{__python} setup.py install --prefix=/usr --root=$RPM_BUILD_ROOT
 #mkdir -p $RPM_BUILD_ROOT/usr/share/pynag
 install -m 755 -d usr/share/okconfig $RPM_BUILD_ROOT/%{_datadir}/%{name}
+mkdir -p $RPM_BUILD_ROOT/etc/bash_completion.d/
+install -m 755 etc/okconfig.conf $RPM_BUILD_ROOT/%{_sysconfdir}/
+install -m 755 etc/bash_completion.d/* $RPM_BUILD_ROOT/%{_sysconfdir}/bash_completion.d/
+install -m 755 etc/profile.d/* $RPM_BUILD_ROOT/%{_sysconfdir}/bash_completion.d/
 #install -m 755  usr/share/okconfig/* $RPM_BUILD_ROOT/%{_datadir}/%{name}
 cp -rf usr/share/okconfig $RPM_BUILD_ROOT/%{_datadir}/%{name}
 
@@ -68,7 +72,7 @@ rm -fr $RPM_BUILD_ROOT
 #%{_mandir}/man1/pynag-add_host_to_group.1.gz
 #%{_mandir}/man1/pynag-safe_restart.1.gz
 %{_datadir}/%{name}
-
+%{_sysconfdir}
 
 %changelog
 * Fri Jul 22 2011 Tomas Edwardsson <palli@opensource.is> - 1.0-1

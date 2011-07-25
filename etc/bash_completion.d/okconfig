@@ -6,6 +6,9 @@ _addhost()
     prev="${COMP_WORDS[COMP_CWORD-1]}"
     #opts="--host --help --group --templates"
     case "${COMP_WORDS[0]}" in
+	okconfig)
+		opts="--host --help --group --templates --ip --parent --force --addhost --addgroup --addtemplate --alias"
+		;;
 	addhost)
     		opts="--host --help --group --templates --ip --parent --force"
 		;;
