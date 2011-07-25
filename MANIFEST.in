@@ -1,0 +1,8 @@
+recursive-include etc *
+recursive-include usr *
+include AUTHORS
+include LICENSE
+include README
+include CHANGES
+include okconfig.spec
+include usr/share/okconfig/testfile

@@ -1,9 +1,0 @@
-define service {
-	use			windows-check_services
-	#name			windows-check_services
-
-	#check_command		check_nrpe!CheckServiceState -a CheckAll exclude=SysmonLog
-	#service_description	services
-	host_name		HOSTNAME
-}
-
