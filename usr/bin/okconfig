@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2010, Pall Sigurdsson <palli@opensource.is>
+# Copyright 2011, Pall Sigurdsson <palli@opensource.is>
 #
 # This script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -99,7 +99,7 @@ try:
 		for k,v in result.items():
 			if v is True: v = "success"
 			else: v = "fail"
-			print "* %-60s...%s" % (k,v)
+			print "* %-70s...%s" % (k,v)
 	elif opts.mode == 'upgrade':
 		import okconfig.migration_tool
 		result = okconfig.migration_tool.upgrade_okconfig()

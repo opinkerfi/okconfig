@@ -22,7 +22,7 @@ templates to current hosts
 Example Usage:
 
 import okconfig
-okconfig.cfg_file="/etc/nagios/nagios.cfg"
+okconfig.nagios_config="/etc/nagios/nagios.cfg"
 okconfig.addhost("myhost.example.com", group_name="databases", templates=["linux","mysql"]) 
 """
 
@@ -36,10 +36,12 @@ __email__ = "palli@opensource.is"
 __status__ = "Development"
 
 
-cfg_file="/etc/nagios/nagios.cfg"
-template_directory="/etc/nagios/okconfig/templates"
-examples_directory="/etc/nagios/okconfig/examples"
-destination_directory="/etc/nagios/okconfig/hosts"
+
+import config
+nagios_config = config.nagios_config
+template_directory =config.template_directory
+examples_directory= config.examples_directory
+destination_directory = config.destination_directory
 import socket
 
 from sys import exit
@@ -88,15 +90,15 @@ def verify():
 	Returns dict of {'check_name':Boolean}
 	
 	Check if:
-	1) cfg_file exists
+	1) nagios_config exists
 	2) template_directory exists
 	3) destination_directory exists (and is writable)
 	"""
 	results = {}
 	
-	# 1) cfg_file exists
-	check = "Main configuration file %s is readable" % (cfg_file)
-	results[check] = os.access(cfg_file, os.R_OK)
+	# 1) nagios_config exists
+	check = "Main configuration file %s is readable" % (nagios_config)
+	results[check] = os.access(nagios_config, os.R_OK)
 
 	# 2) template_directory exists
 	check = "template_directory %s exists" % (template_directory)
