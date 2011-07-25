@@ -16,8 +16,10 @@ def get_filelist(path):
 	while len(directories_to_check) > 0:
 		current_directory = directories_to_check.pop(0)
 		for i in os.listdir(current_directory):
-			if os.path.isfile(i): files.append(i)
-			elif os.path.isdir(i): directories_to_check.append(i)
+			relative_path = current_directory + "/" + i
+			if os.path.isfile(relative_path): files.append(relative_path)
+			elif os.path.isdir(relative_path): directories_to_check.append(relative_path)
+			else: print "what am i?", i
 	return files
 
 if __name__ == "__main__":
@@ -30,6 +32,7 @@ if __name__ == "__main__":
 	rotpath		= "/etc/logrotate.d"
 	datarootdir	= "/usr/share/%s" % NAME
 	template_files = get_filelist('usr/share/okconfig')
+	data_files = map(lambda x: ("/" + os.path.dirname(x),[x]), template_files)
 	setup(
 		name='%s' % NAME,
 		version = VERSION,
@@ -45,6 +48,5 @@ if __name__ == "__main__":
 		packages = [
 			'okconfig',
 		],
-      	data_files = [(datarootdir, template_files ),
-		],
+      	data_files = data_files,
 	)
