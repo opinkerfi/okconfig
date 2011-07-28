@@ -1,16 +1,16 @@
 define service {
-	use			HOSTNAME,check_reverse_lookup
+	use			HOSTNAME,okc-check_reverse_lookup
 }
 define service {
-	use			HOSTNAME,check_forward_lookup
-}
-
-define service {
-	use			HOSTNAME,check_nrpe_connectivity
+	use			HOSTNAME,okc-check_forward_lookup
 }
 
 define service {
-	use			HOSTNAME,check_ports
+	use			HOSTNAME,okc-check_nrpe_connectivity
+}
+
+define service {
+	use			HOSTNAME,okc-check_ports
 }
 
 

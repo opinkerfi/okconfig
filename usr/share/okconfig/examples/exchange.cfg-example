@@ -5,24 +5,16 @@
 
 
 define service {
-	use		mail-check_bl
+	use		HOSTNAME,okc-mail-check_bl
 	host_name	HOSTNAME
 }
 define service {
-	use		mail-check_imap
+	use		HOSTNAME,okc-mail-check_imap
 	host_name	HOSTNAME
 }
 
 define service {
-	use		mail-check_smtp
-	host_name	HOSTNAME
-}
-
-
-
-
-define service {
-	use		exchange-pending-routing
+	use		HOSTNAME,okc-mail-check_smtp
 	host_name	HOSTNAME
 }
 
@@ -30,22 +22,30 @@ define service {
 
 
 define service {
-	use		exchange-remote-queue-length	
+	use		HOSTNAME,okc-exchange-pending-routing
+	host_name	HOSTNAME
+}
+
+
+
+
+define service {
+	use		HOSTNAME,okc-exchange-remote-queue-length	
 	host_name	HOSTNAME
 }
 define service {
-	use		exchange-check_owa
+	use		HOSTNAME,okc-exchange-check_owa
 	host_name	HOSTNAME
 }
 define service {
-	use		exchange-check_owa_https
+	use		HOSTNAME,okc-exchange-check_owa_https
 	host_name	HOSTNAME
 }
 # exchange-check_services
 # __EXCHANGE_SKIP_SERVICES = Use this if any specific exchange services
 # are not supposed to be running.
 define service {
-	use		exchange-check_services
+	use		HOSTNAME,okc-exchange-check_services
 	host_name	HOSTNAME
 	register	0
 
@@ -56,135 +56,135 @@ define service {
 
 # Following is mostly for statistics and such
 define service {
-	use		exchange-mem-max
+	use		HOSTNAME,okc-exchange-mem-max
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Maximum Memory
         check_command 	exc-mem-max
 }
 define service {
-	use		exchange-mem-cur
+	use		HOSTNAME,okc-exchange-mem-cur
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Current Memory
         check_command 	exc-mem-cur
 }
 define service {
-	use		exchange-mem-all
+	use		HOSTNAME,okc-exchange-mem-all
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Memory Allocated
         check_command 	exc-mem-all
 }
 define service {
-	use		exchange-mem-cur-all
+	use		HOSTNAME,okc-exchange-mem-cur-all
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Memory Current Allocated
         check_command 	exc-mem-cur-all
 }
 define service {
-	use		exchange-msg-sent
+	use		HOSTNAME,okc-exchange-msg-sent
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Messages Sent
         check_command    exc-msg-sent
 }
 define service {
-	use		exchange-msg-delivered
+	use		HOSTNAME,okc-exchange-msg-delivered
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Messages Delivered
         check_command    exc-msg-deliv
 }
 define service {
-	use		exchange-msg-sub
+	use		HOSTNAME,okc-exchange-msg-sub
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Messages Submitted
         check_command    exc-msg-sub
 }
 define service {
-	use		exchange-msg-rsc-tot
+	use		HOSTNAME,okc-exchange-msg-rsc-tot
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Messages Received Total
         check_command    exc-msg-rsc-tot
 }
 define service {
-	use		exchange-service
+	use		HOSTNAME,okc-exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Messages Sent Total
         check_command    exc-msg-sent-tot
 }
 define service {
-	use		exchange-service
+	use		HOSTNAME,okc-exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Messages Submitted Total
         check_command    exc-msg-sub-tot
 }
 define service {
-	use		exchange-service
+	use		HOSTNAME,okc-exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Bytes Sent Total  
         check_command    exc-byte-sent-tot
 }
 define service {
-	use		exchange-service
+	use		HOSTNAME,okc-exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Bytes Received Total
         check_command    exc-byte-recv-tot
 }
 define service {
-	use		exchange-service
+	use		HOSTNAME,okc-exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL0
         check_command    exc-scl0
 }
 define service {
-	use		exchange-service
+	use		HOSTNAME,okc-exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL1       
         check_command    exc-scl1
 }
 define service {
-	use		exchange-service
+	use		HOSTNAME,okc-exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL2
         check_command    exc-scl2
 }
 define service {
-	use		exchange-service
+	use		HOSTNAME,okc-exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL3
         check_command    exc-scl3
 }
 define service {
-	use		exchange-service
+	use		HOSTNAME,okc-exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL4
         check_command    exc-scl4
 }
 define service {
-	use		exchange-service
+	use		HOSTNAME,okc-exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL5
         check_command    exc-scl5
 }
 
 define service {
-	use		exchange-service
+	use		HOSTNAME,okc-exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL6
         check_command    exc-scl6
 }
 define service {
-	use		exchange-service
+	use		HOSTNAME,okc-exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL7
         check_command    exc-scl7
 }
 define service {
-	use		exchange-service
+	use		HOSTNAME,okc-exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL8
         check_command    exc-scl8
 }
 
 define service {
-	use		exchange-service
+	use		HOSTNAME,okc-exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL9
         check_command    exc-scl8
@@ -192,56 +192,56 @@ define service {
 
 
 define service {
-	use		exchange-service
+	use		HOSTNAME,okc-exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Messages Scanned
         check_command    exc-msg-scan
 }
 define service {
-	use		exchange-service
+	use		HOSTNAME,okc-exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Messages Bypassed
         check_command    exc-msg-bypass
 }
 define service {
-	use		exchange-service
+	use		HOSTNAME,okc-exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Messages Deleted
         check_command    exc-msg-del
 }
 define service {
-	use		exchange-service
+	use		HOSTNAME,okc-exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Messages Rejected
         check_command    exc-msg-rej
 }
 define service {
-	use		exchange-service
+	use		HOSTNAME,okc-exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Messages Quarantined
         check_command    exc-msg-quar
 }
 define service {
-	use		exchange-service
+	use		HOSTNAME,okc-exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Messages Unknown
         check_command    exc-msg-unkn
 }
 define service {
-	use		exchange-service
+	use		HOSTNAME,okc-exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange User Count
         check_command    exc-msg-user
 }
 define service {
-	use		exchange-service
+	use		HOSTNAME,okc-exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Active Users
         check_command    exc-msg-active-user
 }
 
 define service {
-	use		exchange-service
+	use		HOSTNAME,okc-exchange-service
 	host_name	HOSTNAME
 	service_description	Microsoft Exchange Unique OWA Users
         check_command    exc-msg-unique-usr
@@ -254,7 +254,7 @@ define service {
 #
 
 define service {
-        use                    windows-check_service
+        use                    HOSTNAME,okc-windows-check_service
 	host_name		HOSTNAME
         action_url
 
@@ -263,7 +263,7 @@ define service {
 }
 
 define service {
-        use                    windows-check_service
+        use                    HOSTNAME,okc-windows-check_service
 	host_name		HOSTNAME
         action_url
 
@@ -272,7 +272,7 @@ define service {
 }
 
 define service {
-        use                    windows-check_service
+        use                    HOSTNAME,okc-windows-check_service
 	host_name		HOSTNAME
         action_url
 
@@ -281,7 +281,7 @@ define service {
 }
 
 define service {
-        use                    windows-check_service
+        use                    HOSTNAME,okc-windows-check_service
 	host_name		HOSTNAME
         action_url
 
@@ -290,7 +290,7 @@ define service {
 }
 
 define service {
-        use                    windows-check_service
+        use                    HOSTNAME,okc-windows-check_service
 	host_name		HOSTNAME
         action_url
 
@@ -299,7 +299,7 @@ define service {
 }
 
 define service {
-        use                    windows-check_service
+        use                    HOSTNAME,okc-windows-check_service
 	host_name		HOSTNAME
         action_url
 
@@ -309,7 +309,7 @@ define service {
 }
 
 define service {
-        use                    windows-check_service
+        use                    HOSTNAME,okc-windows-check_service
 	host_name		HOSTNAME
         action_url
 
@@ -318,7 +318,7 @@ define service {
 }
 
 define service {
-        use                    windows-check_service
+        use                    HOSTNAME,okc-windows-check_service
 	host_name		HOSTNAME
         action_url
 
@@ -327,7 +327,7 @@ define service {
 }
 
 define service {
-        use                    windows-check_service
+        use                    HOSTNAME,okc-windows-check_service
 	host_name		HOSTNAME
         action_url
 
@@ -336,7 +336,7 @@ define service {
 }
 
 define service {
-        use                    windows-check_service
+        use                    HOSTNAME,okc-windows-check_service
 	host_name		HOSTNAME
         action_url
 
@@ -346,7 +346,7 @@ define service {
 }
 
 define service {
-        use                    windows-check_service
+        use                    HOSTNAME,okc-windows-check_service
 	host_name		HOSTNAME
         action_url
 
@@ -355,7 +355,7 @@ define service {
 
 }
 define service {
-        use                    windows-check_service
+        use                    HOSTNAME,okc-windows-check_service
         host_name               HOSTNAME
         action_url
 
@@ -376,7 +376,7 @@ define service {
 
 
 define service {
-        use                    windows-check_service
+        use                    HOSTNAME,okc-windows-check_service
         host_name               HOSTNAME
         action_url
 
@@ -386,7 +386,7 @@ define service {
 
 }
 define service {
-        use                    windows-check_service
+        use                    HOSTNAME,okc-windows-check_service
         host_name               HOSTNAME
         action_url
 
@@ -395,7 +395,7 @@ define service {
 
 }
 define service {
-        use                    windows-check_service
+        use                    HOSTNAME,okc-windows-check_service
         host_name               HOSTNAME
         action_url
 
@@ -404,7 +404,7 @@ define service {
 
 }
 define service {
-        use                    windows-check_service
+        use                    HOSTNAME,okc-windows-check_service
         host_name               HOSTNAME
         action_url
 
@@ -418,7 +418,7 @@ define service {
 
 
 define service {
-        use                    windows-check_service
+        use                    HOSTNAME,okc-windows-check_service
         host_name               HOSTNAME
         action_url
 
@@ -428,7 +428,7 @@ define service {
 
 }
 define service {
-        use                    windows-check_service
+        use                    HOSTNAME,okc-windows-check_service
         host_name               HOSTNAME
         action_url
 
@@ -437,7 +437,7 @@ define service {
 
 }
 define service {
-        use                    windows-check_service
+        use                    HOSTNAME,okc-windows-check_service
         host_name               HOSTNAME
         action_url
 
@@ -447,7 +447,7 @@ define service {
 
 }
 define service {
-        use                    windows-check_service
+        use                    HOSTNAME,okc-windows-check_service
         host_name               HOSTNAME
         action_url
 
@@ -457,7 +457,7 @@ define service {
 
 }
 define service {
-        use                    windows-check_service
+        use                    HOSTNAME,okc-windows-check_service
         host_name               HOSTNAME
         action_url
 
@@ -467,7 +467,7 @@ define service {
 
 }
 define service {
-        use                    windows-check_service
+        use                    HOSTNAME,okc-windows-check_service
         host_name               HOSTNAME
         action_url
 
@@ -477,7 +477,7 @@ define service {
 
 }
 define service {
-        use                    windows-check_service
+        use                    HOSTNAME,okc-windows-check_service
         host_name               HOSTNAME
         action_url
 
@@ -491,7 +491,7 @@ define service {
 
 
 define service {
-        use                    windows-check_service
+        use                    HOSTNAME,okc-windows-check_service
         host_name               HOSTNAME
         action_url
 

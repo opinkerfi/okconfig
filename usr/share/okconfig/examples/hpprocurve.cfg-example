@@ -2,7 +2,7 @@
 
 # Generic SNMP Connectivity check
 define service {
-	use			procurve-check_snmp_connectivity
+	use			HOSTNAME,okc-procurve-check_snmp_connectivity
 	host_name		HOSTNAME
 	#service_description	SNMP Connectivity
 

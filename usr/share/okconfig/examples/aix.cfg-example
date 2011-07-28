@@ -3,9 +3,8 @@
 # check disk usage on aix host
 # __EXTRAOPTS = Optional Extra arguments to pass into disks
 define service {
-	use			aix-check_disks
+	use			HOSTNAME,okc-aix-check_disks
 	host_name		HOSTNAME
-	contact_groups		+GROUP-admins
 
 	#service_description	Disk Usage
 	#__EXTRAOPTS		-f /var:10:5,/boot:0:0
@@ -13,9 +12,8 @@ define service {
 
 
 define service {
-	use			aix-check_load
+	use			HOSTNAME,okc-aix-check_load
 	host_name		HOSTNAME
-	contact_groups		+GROUP-admins
 
 	#service_description	Load
 	#__WARNING		15,15,15
@@ -24,9 +22,8 @@ define service {
 
 
 define service {
-	use			aix-check_uptime
+	use			HOSTNAME,okc-aix-check_uptime
 	host_name		HOSTNAME
-	contact_groups		+GROUP-admins
 
 
 	#service_description	Uptime
@@ -35,18 +32,16 @@ define service {
 
 
 define service {
-	use			aix-check_procs
+	use			HOSTNAME,okc-aix-check_procs
 	host_name		HOSTNAME
-	contact_groups		+GROUP-admins
 
 	#service_description	Running Processes
 	#check_command		check_nrpe!check_procs
 }
 
 define service {
-        use                    aix-check_time
+        use                    HOSTNAME,okc-aix-check_time
 	host_name		HOSTNAME
-	contact_groups		+GROUP-admins
 
 
         #service_description	Time
@@ -56,9 +51,8 @@ define service {
 
 
 define service {
-        use                    aix-check_proc
+        use                    HOSTNAME,okc-aix-check_proc
 	host_name		HOSTNAME
-	contact_groups		+GROUP-admins
         __NAME                  crond
         __WARNING               1:
         __CRITICAL              :10
@@ -70,9 +64,8 @@ define service {
 
 
 define service {
-        use                    aix-check_ssh
+        use                    HOSTNAME,okc-aix-check_ssh
 	host_name		HOSTNAME
-	contact_groups		+GROUP-admins
 
 
         #service_description     SSH Connectivity
@@ -81,9 +74,8 @@ define service {
 
 
 define service {
-        use                    aix-check_swap
+        use                    HOSTNAME,okc-aix-check_swap
         host_name               HOSTNAME
-	contact_groups		+GROUP-admins
 
 	#__WARNING		50   ; Default 50%
 	#__CRITICAL		20   ; Default 20%

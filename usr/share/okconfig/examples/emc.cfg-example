@@ -1,5 +1,5 @@
 define host {
-	use 		generic-emc-array
+	use 		okc-generic-emc-array
 
 	host_name	HOSTNAME
 	address		IPADDRESS
@@ -13,33 +13,33 @@ define service {
 }
 
 define service {
-	use		check-emc-disk
+	use		okc-check-emc-disk
 	host_name	HOSTNAME
 }
 
 define service {
-        use             check-emc-sp-a
+        use             okc-check-emc-sp-a
         host_name       HOSTNAME
 }
 
 define service {
-        use             check-emc-sp-b
+        use             okc-check-emc-sp-b
         host_name       HOSTNAME
 }
 
 
 define service {
-        use             check-emc-portstate-a
+        use             okc-check-emc-portstate-a
         host_name       HOSTNAME
 }
 
 define service {
-        use             check-emc-portstate-b
+        use             okc-check-emc-portstate-b
         host_name       HOSTNAME
 }
 
 define service {
-        use             check-emc-cache
+        use             okc-check-emc-cache
         host_name       HOSTNAME
 }
 

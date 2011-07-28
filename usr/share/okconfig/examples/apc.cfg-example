@@ -1,6 +1,6 @@
 
 define service {
-	use				apc-check_health
+	use				HOSTNAME,okc-apc-check_health
 	host_name			HOSTNAME
 
 	#__SNMP_COMMUNITY		public
@@ -10,7 +10,7 @@ define service {
 
 
 define service {
-	use				apc-check_snmp
+	use				HOSTNAME,okc-apc-check_snmp
 	host_name			HOSTNAME
 
 	#__SNMP_COMMUNITY		public

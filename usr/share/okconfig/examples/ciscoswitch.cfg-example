@@ -11,7 +11,7 @@ define service {
 
 
 define service {
-	use			cisco-HOSTNAME,cisco-check_cpu
+	use			cisco-HOSTNAME,okc-cisco-check_cpu
 	host_name		HOSTNAME
 
         #check_command           check_cisco_cpu
@@ -22,7 +22,7 @@ define service {
 
 
 define service {
-        use			cisco-HOSTNAME,cisco-check_mem
+        use			cisco-HOSTNAME,okc-cisco-check_mem
         host_name               HOSTNAME
 
         #check_command           check_cisco_mem
@@ -31,7 +31,7 @@ define service {
 }
 
 define service {
-        use                     cisco-HOSTNAME,cisco-check_env
+        use                     cisco-HOSTNAME,okc-cisco-check_env
         host_name               HOSTNAME
 
         #check_command           check_cisco_env
@@ -39,7 +39,7 @@ define service {
 
 
 define service {
-	use			cisco-HOSTNAME,cisco-check_int
+	use			cisco-HOSTNAME,okc-cisco-check_int
         host_name               HOSTNAME
         #check_command          check_cisco_int
 

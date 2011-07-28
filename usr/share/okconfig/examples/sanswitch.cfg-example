@@ -1,7 +1,7 @@
 # TODO: Remember to change default SNMP community of public!
 
 define host {
-	use 		generic-distribution-switch
+	use 		HOSTNAME,okc-generic-distribution-switch
 
 	host_name	HOSTNAME
 	address		IPADDRESS

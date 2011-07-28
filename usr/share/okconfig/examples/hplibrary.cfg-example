@@ -5,7 +5,7 @@
 
 define service {
 	name				hplibrary-HOSTNAME
-	use				hplibrary-service
+	use				HOSTNAME,okc-hplibrary-service
 	host_name			HOSTNAME
 	register			0
 
@@ -17,7 +17,7 @@ define service {
 # Returns OK if host responds to SNMP and gives model and serial number as informational value
 #
 define service {
-	use				hplibrary-HOSTNAME,hplibrary-check-name
+	use				hplibrary-HOSTNAME,okc-hplibrary-check-name
 }
 
 
@@ -25,6 +25,6 @@ define service {
 # Returns the internal Health status of the library via SNMP. 
 # 3=OK, 4=warning, 5=critical
 define service {
-	use				hplibrary-HOSTNAME,hplibrary-check-health
+	use				hplibrary-HOSTNAME,okc-hplibrary-check-health
 }
 

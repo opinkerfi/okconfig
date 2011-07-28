@@ -1,7 +1,7 @@
 
 
 define service {
-	use			HOSTNAME,ibm-bladecenter_bladehealth
+	use			HOSTNAME,okc-ibm-bladecenter_bladehealth
 	#service_description	Bladecenter Bladehealth
 	#__MODE			bladehealth
 	#check_command		ibm-check_bladecenter
@@ -10,7 +10,7 @@ define service {
 }
 	
 define service {
-	use			HOSTNAME,ibm-bladecenter_powermodules
+	use			HOSTNAME,okc-ibm-bladecenter_powermodules
 	
 	#__SNMP_COMMUNITY	public
 	#__SNMP_VERSION		1
@@ -20,7 +20,7 @@ define service {
 }
 
 define service {
-	use			HOSTNAME,ibm-bladecenter_system-health
+	use			HOSTNAME,okc-ibm-bladecenter_system-health
 	#service_description	Bladecenter System Health
 	#__MODE			system-health
 	#check_command		ibm-check_bladecenter
@@ -31,7 +31,7 @@ define service {
 
 	
 define service {
-	use			HOSTNAME,ibm-bladecenter_temperature
+	use			HOSTNAME,okc-ibm-bladecenter_temperature
 	#service_description	Bladecenter Temperature
 	#__MODE			temperature
 	#check_command		ibm-check_bladecenter
@@ -42,7 +42,7 @@ define service {
 
 	
 define service {
-	use			HOSTNAME,ibm-bladecenter_chassis-status
+	use			HOSTNAME,okc-ibm-bladecenter_chassis-status
 	#service_description	Bladecenter Chassis Status
 	#__MODE			chassis-status
 	#check_command		ibm-check_bladecenter
@@ -52,7 +52,7 @@ define service {
 
 
 define service {
-	use			HOSTNAME,ibm-bladecenter_blowers
+	use			HOSTNAME,okc-ibm-bladecenter_blowers
 	#service_description	Bladecenter Blowers
 	#__MODE			blowers
 	#check_command		ibm-check_bladecenter
@@ -62,7 +62,7 @@ define service {
 
 
 define service {
-	use			HOSTNAME,ibm-bladecenter_switchmodules
+	use			HOSTNAME,okc-ibm-bladecenter_switchmodules
 	#service_description	Bladecenter Switchmodules
 	#__MODE			switchmodules
 	#check_command		ibm-check_bladecenter
@@ -71,7 +71,7 @@ define service {
 }
 
 define service {
-	use			HOSTNAME,ibm-check_snmp_connectivity
+	use			HOSTNAME,okc-ibm-check_snmp_connectivity
 	_SNMP_COMMUNITY 	public
 	__SNMP_VERSION 		1
 }

@@ -3,7 +3,7 @@
 # check disk usage on linux host
 # __EXTRAOPTS = Optional Extra arguments to pass into disks
 define service {
-	use			HOSTNAME,linux-check_disks
+	use			HOSTNAME,okc-linux-check_disks
 	#host_name		HOSTNAME
 
 	#service_description	Disk Usage
@@ -12,7 +12,7 @@ define service {
 
 
 define service {
-	use			HOSTNAME,linux-check_load
+	use			HOSTNAME,okc-linux-check_load
 	#host_name		HOSTNAME
 
 	#service_description	Load
@@ -22,7 +22,7 @@ define service {
 
 
 define service {
-	use			HOSTNAME,linux-check_uptime
+	use			HOSTNAME,okc-linux-check_uptime
 	#host_name		HOSTNAME
 
 
@@ -32,7 +32,7 @@ define service {
 
 
 define service {
-	use			HOSTNAME,linux-check_procs
+	use			HOSTNAME,okc-linux-check_procs
 	#host_name		HOSTNAME
 
 	#service_description	Running Processes
@@ -40,7 +40,7 @@ define service {
 }
 
 define service {
-        use                   HOSTNAME,linux-check_time
+        use                   HOSTNAME,okc-linux-check_time
 	#host_name		HOSTNAME
 
 
@@ -51,7 +51,7 @@ define service {
 
 
 define service {
-        use                    HOSTNAME,linux-check_proc
+        use                    HOSTNAME,okc-linux-check_proc
 	#host_name		HOSTNAME
         __NAME                  crond
         __WARNING               1:
@@ -64,7 +64,7 @@ define service {
 
 
 define service {
-        use                    HOSTNAME,linux-check_ssh
+        use                    HOSTNAME,okc-linux-check_ssh
 	host_name		HOSTNAME
 
 
@@ -74,7 +74,7 @@ define service {
 
 
 define service {
-        use                    HOSTNAME,linux-check_swap
+        use                    HOSTNAME,okc-linux-check_swap
         host_name               HOSTNAME
 
 	#__WARNING		50   ; Default 50%
@@ -83,14 +83,14 @@ define service {
 }
 
 define service {
-	use			HOSTNAME,linux-check_cpu
+	use			HOSTNAME,okc-linux-check_cpu
 	host_name		HOSTNAME
 	#service_description	Uptime
 }
 
 
 define service {
-	use			HOSTNAME,linux-check_updates
+	use			HOSTNAME,okc-linux-check_updates
 	host_name		HOSTNAME
 	#service_description	Security Updates
 	register		0
@@ -102,7 +102,7 @@ define service {
 # These are not enabled by default
 
 define service {
-	use			HOSTNAME,linux-check_selinux
+	use			HOSTNAME,okc-linux-check_selinux
 	host_name		HOSTNAME
 	
 	register		0
@@ -112,7 +112,7 @@ define service {
 
 
 define service {
-	use			HOSTNAME,linux-check_bond
+	use			HOSTNAME,okc-linux-check_bond
 	host_name		HOSTNAME
 	
 	register		0
@@ -122,7 +122,7 @@ define service {
 
 
 define service {
-	use			HOSTNAME,linux-check_multipath
+	use			HOSTNAME,okc-linux-check_multipath
 	host_name		HOSTNAME
 	
 	register		0

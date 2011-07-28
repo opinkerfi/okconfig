@@ -1,9 +1,7 @@
 
 
 define service {
-	use			hp-check_printer
-	host_name		HOSTNAME
-	contact_groups		+GROUP-admins
+	use			HOSTNAME,okc-hp-check_printer
 
 	#__SNMP_COMMUNITY	public
 	#service_description	Printer Health
@@ -12,9 +10,7 @@ define service {
 
 
 define service {
-        use                             hp-check_snmp
-        host_name                       HOSTNAME
-	contact_groups		+GROUP-admins
+        use                             HOSTNAME,okc-hp-check_snmp
 
         #__SNMP_COMMUNITY               public
         #service_description             SNMP Connectivity

@@ -3,9 +3,7 @@
 
 
 define service {
-	use				eva-check_systems
-	host_name			HOSTNAME
-	contact_groups			+GROUP-admins
+	use				HOSTNAME,okc-eva-check_systems
 
 	__USERNAME			eva-nagios	
 	__PASSWORD			Manudagur.eftirlit
@@ -13,18 +11,14 @@ define service {
 
 
 define service {
-        use                             eva-check_diskgroups
-        host_name                       HOSTNAME
-        contact_groups                  +GROUP-admins
+        use                             HOSTNAME,okc-eva-check_diskgroups
 
         __USERNAME                      eva-nagios
         __PASSWORD                      Manudagur.eftirlit
 }
 
 define service {
-        use                             eva-check_disks
-        host_name                       HOSTNAME
-        contact_groups                  +GROUP-admins
+        use                             HOSTNAME,okc-eva-check_disks
 
         __USERNAME                      eva-nagios
         __PASSWORD                      Manudagur.eftirlit
@@ -32,7 +26,7 @@ define service {
 
 
 define service {
-        use                             eva-check_controllers
+        use                             HOSTNAME,okc-eva-check_controllers
         host_name                       HOSTNAME
         contact_groups                  +GROUP-admins
 
@@ -43,7 +37,7 @@ define service {
 
 
 define service {
-        use                             eva-check_diskshelves
+        use                             HOSTNAME,okc-eva-check_diskshelves
         host_name                       HOSTNAME
         contact_groups                  +GROUP-admins
 

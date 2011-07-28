@@ -9,25 +9,25 @@ define service {
 }
 
 define service {
-	use		vmware-HOSTNAME,vmware-check_cpu
+	use		vmware-HOSTNAME,okc-vmware-check_cpu
 	host_name	HOSTNAME
 }
 
 define service {
-        use             vmware-HOSTNAME,vmware-check_gueststatus
+        use             vmware-HOSTNAME,okc-vmware-check_gueststatus
         host_name       HOSTNAME
 }
 define service {
-        use             vmware-HOSTNAME,vmware-check_memory
+        use             vmware-HOSTNAME,okc-vmware-check_memory
         host_name       HOSTNAME
 }
 define service {
-        use             vmware-HOSTNAME,vmware-check_netio
+        use             vmware-HOSTNAME,okc-vmware-check_netio
         host_name       HOSTNAME
 	register	0
 }
 define service {
-        use             vmware-HOSTNAME,vmware-check_vmkernel
+        use             vmware-HOSTNAME,okc-vmware-check_vmkernel
         host_name       HOSTNAME
 }
 
