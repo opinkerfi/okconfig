@@ -55,7 +55,7 @@ install -m 755 etc/okconfig.conf $RPM_BUILD_ROOT/%{_sysconfdir}/
 install -m 755 etc/bash_completion.d/* $RPM_BUILD_ROOT/%{_sysconfdir}/bash_completion.d/
 install -m 755 etc/profile.d/* $RPM_BUILD_ROOT/%{_sysconfdir}/bash_completion.d/
 #install -m 755  usr/share/okconfig/* $RPM_BUILD_ROOT/%{_datadir}/%{name}
-cp -rf usr/share/okconfig $RPM_BUILD_ROOT/%{_datadir}/%{name}
+#cp -rf usr/share/okconfig $RPM_BUILD_ROOT/%{_datadir}/%{name}
 
 %clean
 rm -fr $RPM_BUILD_ROOT
