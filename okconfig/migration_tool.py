@@ -60,7 +60,6 @@ def upgrade_to_version_1_1():
     for service in my_services:
         if service.name in all_hosts and not service['service_description']:
             service['register'] = 0
-            service['service_description'] = "Default Service for %s" % service.name
             print "Default service for %s updated" % service.name
             service.save()
     print "ok"
