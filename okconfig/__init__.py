@@ -50,6 +50,7 @@ from sys import path
 from pynag import Model
 from os import getenv,putenv,environ
 
+import glob
 import os
 import subprocess
 import helper_functions
@@ -162,7 +163,10 @@ def addhost(host_name, address=None, group_name=None, templates=[], use=None, fo
 	arguments['GROUP'] = group_name
 	arguments['IPADDR'] = address
 	arguments['HOSTNAME'] = host_name
-	destination_file = "%s/%s/%s-host.cfg" % (destination_directory, group_name, host_name)
+	destination_dir = "%s/hosts/%s/" % (destination_directory, group_name)
+	destination_file = "%s/%s-host.cfg" % (destination_dir, host_name)
+	if not os.path.exists(destination_dir):
+		os.makedirs(destination_dir)
 	if not force:
 		if os.path.isfile(destination_file):
 			raise OKConfigError("Destination file '%s' already exists." % (destination_file))
@@ -229,17 +233,17 @@ def addgroup(group_name, alias=None, force=False):
 	 True if operation was successful
 	""" 
 	if alias == None: alias=group_name
-	newfile = "%s/%s.cfg" % (destination_directory, group_name)
-	
+	destination_dir = "%s/groups" % (destination_directory)
+	destination_file = "%s/%s.cfg" % (destination_directory, group_name)	
 	if not force:
 		'Do some sanity checking'
-		if os.path.exists(newfile):
-			raise OKConfigError("Destination file '%s' already exists" % newfile)
+		if os.path.exists(destination_file):
+			raise OKConfigError("Destination file '%s' already exists" % destination_file)
 		groups = helper_functions.group_exists(group_name)
 		if groups != False:
 			raise OKConfigError("We already have groups with name = %s" % (group_name))
 	
-	return _apply_template(template_name="group",destination_file=newfile, GROUP=group_name, ALIAS=alias)
+	return _apply_template(template_name="group",destination_file=destination_file, GROUP=group_name, ALIAS=alias)
 
 def findhost(host_name):
 	"""Returns the filename which defines a specied host. Returns None on failure.
@@ -271,34 +275,6 @@ def get_templates():
 			template_friendly_name = ''
 			result[template_name] = {'parents':template_parents, 'name':template_friendly_name}
 	return result
-	dummy_templates = {
-		'windows': {
-            'parents': [],
-			'name': 'Microsoft Windows',
-		},
-		'linux': {
-            'parents': [],
-            'name': 'Linux'
-		},
-        'dnsregistration': {
-            'parents': ['linux', 'windows'],
-            'name': 'DNS Registration'
-        },
-        'mssql': {
-            'parents': ['windows'],
-            'name': 'Microsoft SQL Server',
-        },
-        'exchange': {
-            'parents': ['windows'],
-            'name': 'Microsoft Exchange Server',
-        },
-        'ssh': {
-            'parents': ['linux'],
-            'name': 'Secure Shell Service'
-        }
-	}
-	return dummy_templates
-
 
 def get_hosts():
 	""" Returns a list of available hosts """
@@ -310,21 +286,17 @@ def get_hosts():
 	return result
 
 def get_groups():
-	""" Returns a list of okconfig compatible groups """
+	""" Returns a list of available groups """
 	result = []
-	Model.Servicegroup.objects.reload_cache()
-	servicegroups = Model.Servicegroup.objects.all
-	for s in servicegroups:
-		name = s.get_shortname()
-		if name == None: continue
-		try:
-			Model.Contactgroup.objects.reload_cache()
-			Model.Hostgroup.objects.reload_cache()
-			Model.Contactgroup.objects.get_by_shortname(name)
-			Model.Hostgroup.objects.get_by_shortname(name)
-			result.append( name )
-		except ValueError:
-			continue
+	group_directory = "%s/groups" % (destination_directory)
+	if not os.path.isdir(group_directory):
+		raise OKConfigError("groups directory does not exist: %s" % group_directory)
+	filelist = os.listdir(group_directory)
+	for file in filelist:
+		if os.path.isfile(group_directory + "/" + file) and file.endswith('.cfg'):
+			name = file[:-4]
+			result.append(name)
+	result.sort()
 	return result
 		
 def install_nsclient(remote_host, username, password):
@@ -421,5 +393,5 @@ class OKConfigError(Exception):
 #all_templates = get_templates()
 if __name__ == '__main__':
 	'This leaves room for some unit testing while being run from the command line'
-	print addhost('mbl.is', address=None, group_name=None, templates=['windows'], use=None, force=True)
+	print get_groups()
 

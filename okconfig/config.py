@@ -26,7 +26,7 @@ config_file             = "/etc/okconfig.conf"
 nagios_config           = "/etc/nagios/nagios.cfg"
 template_directory      = "/etc/nagios/okconfig/templates"
 examples_directory      = "/etc/nagios/okconfig/examples"
-destination_directory   = "/etc/nagios/okconfig/hosts"
+destination_directory   = "/etc/nagios/okconfig/"
 
 try:
     if os.path.isfile(config_file):
