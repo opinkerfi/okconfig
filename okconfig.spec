@@ -6,7 +6,7 @@
 Summary: Python Nagios Template management and config powertools
 Name: okconfig
 Version: 1.0
-Release: 3%{?dist}
+Release: 4%{?dist}
 Source0: http://opensource.is/files/%{name}-%{version}.tar.gz
 License: GPLv2
 Group: System Environment/Libraries
@@ -51,9 +51,10 @@ test "x$RPM_BUILD_ROOT" != "x" && rm -rf $RPM_BUILD_ROOT
 #mkdir -p $RPM_BUILD_ROOT/usr/share/pynag
 install -m 755 -d usr/share/okconfig $RPM_BUILD_ROOT/%{_datadir}/%{name}
 mkdir -p $RPM_BUILD_ROOT/etc/bash_completion.d/
+mkdir -p $RPM_BUILD_ROOT/etc/profile.d/
 install -m 755 etc/okconfig.conf $RPM_BUILD_ROOT/%{_sysconfdir}/
 install -m 755 etc/bash_completion.d/* $RPM_BUILD_ROOT/%{_sysconfdir}/bash_completion.d/
-install -m 755 etc/profile.d/* $RPM_BUILD_ROOT/%{_sysconfdir}/bash_completion.d/
+install -m 755 etc/profile.d/* $RPM_BUILD_ROOT/%{_sysconfdir}/profile.d/
 #install -m 755  usr/share/okconfig/* $RPM_BUILD_ROOT/%{_datadir}/%{name}
 #cp -rf usr/share/okconfig $RPM_BUILD_ROOT/%{_datadir}/%{name}
 
