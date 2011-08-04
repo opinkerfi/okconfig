@@ -234,7 +234,7 @@ def addgroup(group_name, alias=None, force=False):
 	""" 
 	if alias == None: alias=group_name
 	destination_dir = "%s/groups" % (destination_directory)
-	destination_file = "%s/%s.cfg" % (destination_directory, group_name)	
+	destination_file = "%s/%s.cfg" % (destination_dir, group_name)	
 	if not force:
 		'Do some sanity checking'
 		if os.path.exists(destination_file):

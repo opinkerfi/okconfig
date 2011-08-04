@@ -79,8 +79,9 @@ if opts.mode is None:
 # Here we have some action
 try:
 	if opts.mode == "addhost":
-		if not opts.host: parser.error("--host is required")	
-		f = okconfig.addhost(host_name=opts.host,address=opts.address,group_name=opts.group,use=opts.use,force=opts.force)
+		if not opts.host: parser.error("--host is required")
+		templates=opts.template.split(',')
+		f = okconfig.addhost(host_name=opts.host,address=opts.address,group_name=opts.group,use=opts.use,force=opts.force,templates=templates)
 		for i in f: print "Saved", i
 	elif opts.mode == "addgroup":
 		if not opts.group: parser.error("--group is required")
