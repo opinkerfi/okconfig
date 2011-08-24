@@ -76,5 +76,5 @@ rm -fr $RPM_BUILD_ROOT
 %{_sysconfdir}
 
 %changelog
-* Fri Jul 22 2011 Pall Sigurdsson <palli@opensource.is> - 1.0-1
+* Fri Jul 22 2011 Tomas Edwardsson <palli@opensource.is> - 1.0-1
 - Initial RPM Creation, based heavily on the func spec file
