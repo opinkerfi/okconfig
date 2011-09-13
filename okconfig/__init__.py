@@ -374,6 +374,9 @@ def _apply_template(template_name,destination_file, **kwargs):
     '''
 	sourcefile = "%s/%s.cfg-example" % (examples_directory,template_name)
 	
+	# Clean // from destination file
+	destination_file = destination_file.replace('//','/')
+	
 	if not os.path.isfile(sourcefile):
 		raise OKConfigError('Template %s cannot be found' % (template_name))
 
