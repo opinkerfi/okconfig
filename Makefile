@@ -5,7 +5,7 @@ NEWRELEASE	= $(shell echo $$(($(RELEASE) + 1)))
 PYTHON		= /usr/bin/python
 
 TOPDIR = $(shell pwd)
-DIRS	= build  etc okconfig usr
+DIRS	= build docs etc okconfig usr
 PYDIRS	= okconfig bin
 EXAMPLEDIR = 
 MANPAGES = okconfig
