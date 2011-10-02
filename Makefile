@@ -8,7 +8,7 @@ TOPDIR = $(shell pwd)
 DIRS	= build  etc okconfig usr
 PYDIRS	= okconfig bin
 EXAMPLEDIR = 
-MANPAGES = 
+MANPAGES = okconfig
 
 all: rpms
 
