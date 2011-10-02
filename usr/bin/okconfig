@@ -80,7 +80,10 @@ if opts.mode is None:
 try:
 	if opts.mode == "addhost":
 		if not opts.host: parser.error("--host is required")
-		templates=opts.template.split(',')
+		try:
+			templates = opts.template.split(',')
+		except:
+			templates = ()
 		f = okconfig.addhost(host_name=opts.host,address=opts.address,group_name=opts.group,use=opts.use,force=opts.force,templates=templates)
 		for i in f: print "Saved", i
 	elif opts.mode == "addgroup":
