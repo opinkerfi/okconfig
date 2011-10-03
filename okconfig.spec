@@ -6,7 +6,7 @@
 Summary: Python Nagios Template management and configuration power tools
 Name: okconfig
 Version: 1.0
-Release: 6%{?dist}
+Release: 7%{?dist}
 Source0: http://opensource.is/files/%{name}-%{version}.tar.gz
 License: GPLv2
 Group: System Environment/Libraries
@@ -26,6 +26,9 @@ BuildRequires: python-setuptools
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Url: http://opensource.is/trac
 BuildArch: noarch 
+Requires: nagios nagios-plugins-nrpe 
+Requires: nagios-okplugin-apc nagios-okplugin-brocade nagios-okplugin-mailblacklist nagios-okplugin-mssql
+Requires: nagios-okplugin-check_disks nagios-okplugin-check_time nagios-plugins-fping
 
 %description
 A robust template mechanism for Nagios configuration files. Providing
@@ -71,7 +74,7 @@ rm -fr $RPM_BUILD_ROOT
 
 
 %changelog
-* Sun Oct  1 2011 Tomas Edwardsson <tommi@opensource.is> - 1.0-6
+* Sun Oct  1 2011 Tomas Edwardsson <tommi@opensource.is> - 1.0-7
 - Fixes to packaging and missing specifications
 
 * Fri Jul 22 2011 Pall Sigurdsson <palli@opensource.is> - 1.0-1
