@@ -1,5 +1,5 @@
 VERSION		= 1.0
-RELEASE		= 8
+RELEASE		= 9
 DATE		= $(shell date)
 NEWRELEASE	= $(shell echo $$(($(RELEASE) + 1)))
 PYTHON		= /usr/bin/python
