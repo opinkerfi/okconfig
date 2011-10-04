@@ -27,7 +27,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Url: http://opensource.is/trac
 BuildArch: noarch 
 Requires: pynag
-Requires: nagios nagios-plugins-nrpe  nagios-plugins-ping
+Requires: nagios nagios-plugins-nrpe  nagios-plugins-ping nagios-plugins-ssh
 Requires: nagios-okplugin-apc nagios-okplugin-brocade nagios-okplugin-mailblacklist nagios-okplugin-mssql
 Requires: nagios-okplugin-check_disks nagios-okplugin-check_time nagios-plugins-fping
 
