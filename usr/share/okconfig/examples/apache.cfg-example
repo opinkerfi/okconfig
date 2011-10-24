@@ -1,0 +1,16 @@
+define service {
+	use		HOSTNAME,apache-check_status
+}
+
+
+define service {
+        use                    HOSTNAME,okc-linux-check_proc
+        #host_name              HOSTNAME
+        __NAME                  httpd
+        __WARNING               1:
+        __CRITICAL              :50
+        service_description     Process httpd
+        #register                0
+}
+
+
