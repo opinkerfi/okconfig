@@ -7,6 +7,12 @@ define service {
 
 
 define service {
+	#service_description	Nagios Ghost Services
+	use			HOSTNAME,okc-nagios-check_ghostservices
+}
+
+
+define service {
          __NAME                         nagios
          use                            HOSTNAME,okc-linux-check_proc
          host_name                      HOSTNAME
