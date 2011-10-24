@@ -1,0 +1,23 @@
+
+
+define service {
+        #service_description     Nagios Configuration
+        use                    HOSTNAME,okc-nagios-check_configuration
+}
+
+
+define service {
+         __NAME                         nagios
+         use                            HOSTNAME,okc-linux-check_proc
+         host_name                      HOSTNAME
+         service_description            Process nagios
+}
+
+
+define service {
+         __NAME                         npcd
+         use                            HOSTNAME,okc-linux-check_proc
+         host_name                      HOSTNAME
+         service_description            Process npcd
+}
+
