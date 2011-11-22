@@ -53,10 +53,10 @@ define service {
 define service {
         use                    HOSTNAME,okc-aix-check_proc
 	host_name		HOSTNAME
-        __NAME                  crond
+        __NAME                  cron
         __WARNING               1:
         __CRITICAL              :10
-        service_description     Process crond
+        service_description     Process cron
         #register                0
 }
 
