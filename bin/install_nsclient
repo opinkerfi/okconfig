@@ -1,20 +1,27 @@
 #!/bin/sh
 
-DOMAIN="DOMAIN"
-DOMAIN_USER="Administrator"
-DOMAIN_PASSWORD="PASSWORD"
-BATCHFILE='\\nagios\nsclient\install.bat'
+DOMAIN="ADDOMAIN"
+DOMAIN_USER="administrator"
+DOMAIN_PASSWORD="not needed"
+BATCHFILE='\\nagiosserver\nagios\install.bat'
+TMPFILE=`mktemp`
+LOGFILE=/var/log/install_nsclient.log
 
 
-echo "Starting install of $1" | tee /var/log/install_nsclient.log
-winexe  -U DOMAIN/$DOMAIN_USER%$DOMAIN_PASSWORD //$1 "cmd /c $BATCHFILE"
-RESULT=$?
+read -s -p "Password for $DOMAIN/$DOMAIN_USER: " DOMAIN_PASSWORD
+echo
 
-if [ $RESULT -gt 0 ]; then
-	echo install of $1 failed | tee /var/log/install_nsclient.log
-	exit $RESULT
-fi
-
-echo "Starting install of $1 sucessful" | tee /var/log/install_nsclient.log
+for i in $@ ; do
+	echo -n "Starting install of $i ... " | tee $LOGFILE
+	winexe  -U $DOMAIN/$DOMAIN_USER%"$DOMAIN_PASSWORD" //$i "cmd /c $BATCHFILE" > $TMPFILE
+	RESULT=$?
+	
+	if [ $RESULT -gt 0 ]; then
+		echo install of $i failed | tee $LOGFILE
+		cat $TMPFILE | tee $LOGFILE
+	else
+		echo "Install of $i sucessful" | tee $LOGFILE
+	fi
+done
 exit 0
 
