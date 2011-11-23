@@ -1,4 +1,5 @@
 recursive-include etc *
+recursive-include docs *
 recursive-include usr *
 include AUTHORS
 include LICENSE

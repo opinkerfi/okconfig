@@ -2,3 +2,9 @@
 *.swp
 .project
 .pydevproject
+docs/*.1.gz
+MANIFEST
+build
+dist
+etc/version
+rpm-build

@@ -1,4 +1,3 @@
-#!/usr/bin/python
 #
 # Copyright 2011, Pall Sigurdsson <palli@opensource.is>
 #

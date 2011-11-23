@@ -1,14 +1,14 @@
 VERSION		= 1.0
-RELEASE		= 4
+RELEASE		= 9
 DATE		= $(shell date)
 NEWRELEASE	= $(shell echo $$(($(RELEASE) + 1)))
 PYTHON		= /usr/bin/python
 
 TOPDIR = $(shell pwd)
-DIRS	= build  etc okconfig usr
+DIRS	= build docs etc okconfig usr
 PYDIRS	= okconfig bin
 EXAMPLEDIR = 
-MANPAGES = 
+MANPAGES = okconfig
 
 all: rpms
 
