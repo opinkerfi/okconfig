@@ -7,7 +7,7 @@ _addhost()
     #opts="--host --help --group --templates"
     case "${COMP_WORDS[0]}" in
 	okconfig)
-		opts="--host --help --group --templates --ip --parent --force --addhost --addgroup --addtemplate --alias"
+		opts="--host --help --group --templates --address --parent --force --addhost --addgroup --addtemplate --alias"
 		;;
 	addhost)
     		opts="--host --help --group --templates --ip --parent --force"
@@ -33,11 +33,11 @@ _addhost()
 
     case "${prev}" in
 	--templates)
-		local templates=$(cd /etc/nagios/okconfig/examples; /bin/ls *.cfg-example|sed 's/.cfg-example//')
+		local templates=$(cd /usr/share/okconfig/examples; /bin/ls *.cfg-example|sed 's/.cfg-example//')
 		completion=$templates
    	;;
 	--template)
-		local templates=$(cd /etc/nagios/okconfig/examples; /bin/ls *.cfg-example|sed 's/.cfg-example//')
+		local templates=$(cd /usr/share/okconfig/examples; /bin/ls *.cfg-example|sed 's/.cfg-example//')
 		completion=$templates
    	;;
 	--group)
@@ -64,3 +64,4 @@ complete -F _addhost addtemplate
 complete -F _addhost addgroup
 complete -F _addhost findhost
 complete -F _addhost vimcfg
+complete -F _addhost okconfig
