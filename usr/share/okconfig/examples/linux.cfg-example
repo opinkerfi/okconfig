@@ -36,7 +36,9 @@ define service {
 	#host_name		HOSTNAME
 
 	#service_description	Running Processes
-	#check_command		check_nrpe!check_procs
+	#__WARNING		250
+	#__CRITICAL		400
+	#check_command		check_nrpe!check_total_procs!$_SERVICE_WARNING$!$_SERVICE_CRITICAL$
 }
 
 define service {
