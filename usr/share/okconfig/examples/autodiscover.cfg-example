@@ -13,5 +13,18 @@ define service {
 	use			HOSTNAME,okc-check_ports
 }
 
+define service {
+	use			HOSTNAME,generic-service
+	service_description	Nagios Configuration
+	check_command		execute!$USER1$/check_nagios_needs_reload
+}
 
 
+#### The following are used with an SMS modem only ###
+define service {
+	use			HOSTNAME,generic-service
+	service_description	SMS Manual test
+	max_check_attempts	1
+	is_volatile		1
+	flap_detection_enabled	0
+}
