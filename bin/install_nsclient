@@ -1,27 +1,44 @@
 #!/bin/sh
 
-DOMAIN="ADDOMAIN"
-DOMAIN_USER="administrator"
-DOMAIN_PASSWORD="not needed"
-BATCHFILE='\\nagiosserver\nagios\install.bat'
+DOMAIN="LSH"
+DOMAIN_USER="eai-admin"
+DOMAIN_PASSWORD="BREYTA"
+BATCHFILE='c:\temp\nsclient\local_install.bat'
 TMPFILE=`mktemp`
 LOGFILE=/var/log/install_nsclient.log
 
+echo -n "Domain Name (DOMAIN): "
+read DOMAIN
+echo -n "Domain user (user): "
+read DOMAIN_USER
+stty -echo
+echo -n "Domain password: "
+read DOMAIN_PASSWORD
+stty echo
 
-read -s -p "Password for $DOMAIN/$DOMAIN_USER: " DOMAIN_PASSWORD
 echo
 
 for i in $@ ; do
-	echo -n "Starting install of $i ... " | tee $LOGFILE
-	winexe  -U $DOMAIN/$DOMAIN_USER%"$DOMAIN_PASSWORD" //$i "cmd /c $BATCHFILE" > $TMPFILE
+	echo -n "Starting install of $i ... " | tee -a $LOGFILE
+	mkdir -p /mnt/$i
+	mount -t cifs -o username="$DOMAIN_USER",password="$DOMAIN_PASSWORD"  //$i/c$ /mnt/$i/
+	if [ $? -ne 0 ]; then
+		echo " failed. Could not copy files to $i"
+		continue
+	fi
+	mkdir -p /mnt/$i/temp/
+	test -d /mnt/$i/temp/ && mv /mnt/$i/temp/nsclient /mnt/$i/temp/nsclient.old
+	cp -r /var/samba/nsclient/ /mnt/$i/temp/
+	winexe --reinstall -U $DOMAIN/$DOMAIN_USER%"$DOMAIN_PASSWORD" //$i "cmd /c $BATCHFILE" >> $TMPFILE
 	RESULT=$?
 	
 	if [ $RESULT -gt 0 ]; then
-		echo install of $i failed | tee $LOGFILE
-		cat $TMPFILE | tee $LOGFILE
+		echo install of $i failed | tee -a $LOGFILE
+		cat $TMPFILE | tee -a $LOGFILE
 	else
-		echo "Install of $i sucessful" | tee $LOGFILE
+		echo "Install of $i sucessful" | tee -a $LOGFILE
 	fi
+	umount /mnt/$i/
 done
 exit 0
 
