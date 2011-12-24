@@ -84,6 +84,7 @@ def _is_in_path(command):
 		if is_executable(full_path): return True
 	return False
 
+
 def verify():
 	"""Checks if okconfig is installed and properly configured.
 	

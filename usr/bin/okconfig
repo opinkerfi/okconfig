@@ -45,7 +45,7 @@ modes.add_option("--addhost", action="store_const", const="addhost", dest='mode'
 	help="Add a new host")
 modes.add_option("--addgroup", action="store_const", const="addgroup", dest='mode',
 	help="Add a new group")
-modes.add_option("--addtemplate", action="store_const", const="addtemplate", dest='mode',
+modes.add_option("--addtemplate",  action="store_const", const="addtemplate", dest='mode',
 	help="Add a new template")
 modes.add_option("--verify", action="store_const", const="verify", dest='mode',
 	help="Verify okconfig setup")
