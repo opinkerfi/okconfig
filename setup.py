@@ -10,7 +10,7 @@ LONG_DESC = """
 """ % NAME
 
 def get_filelist(path):
-	'Returns a list of all files in a given directory'
+	"""Returns a list of all files in a given directory"""
 	files = []
 	directories_to_check = [path]
 	while len(directories_to_check) > 0:

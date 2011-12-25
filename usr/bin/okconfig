@@ -19,13 +19,8 @@
 # No real need to change anything below here
 version="1.0"
 
-from sys import exit
-
-try:
-	import okconfig
-except ImportError:
-	print "Could not import okconfig python module.  Make sure it is in your $PYTHONPATH"
-	exit(1)
+import sys
+import okconfig
 
 
 # Parse some Arguments
@@ -45,7 +40,7 @@ modes.add_option("--addhost", action="store_const", const="addhost", dest='mode'
 	help="Add a new host")
 modes.add_option("--addgroup", action="store_const", const="addgroup", dest='mode',
 	help="Add a new group")
-modes.add_option("--addtemplate", action="store_const", const="addtemplate", dest='mode',
+modes.add_option("--addtemplate",  action="store_const", const="addtemplate", dest='mode',
 	help="Add a new template")
 modes.add_option("--verify", action="store_const", const="verify", dest='mode',
 	help="Verify okconfig setup")
@@ -82,7 +77,7 @@ try:
 		if not opts.host: parser.error("--host is required")
 		try:
 			templates = opts.template.split(',')
-		except:
+		except AttributeError:
 			templates = ()
 		f = okconfig.addhost(host_name=opts.host,address=opts.address,group_name=opts.group,use=opts.use,force=opts.force,templates=templates)
 		for i in f: print "Saved", i
@@ -108,5 +103,5 @@ try:
 		import okconfig.migration_tool
 		result = okconfig.migration_tool.upgrade_okconfig()
 except okconfig.OKConfigError, e:
-	print "Error: %s" % (e)
-	exit(1)
+	print "Error: %s" % e
+	sys.exit(1)

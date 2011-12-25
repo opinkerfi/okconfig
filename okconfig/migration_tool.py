@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-'''
+"""
 TEMPLATE_VERSION HISTORY
 # Version 2 (2011-07-01):
     * All service names have been given an okc- prefix
@@ -28,7 +28,7 @@ TEMPLATE_VERSION HISTORY
     * Requires okconfig tools version 1
 # Version 0:
     * Initial Release
-'''
+"""
 
 
 from pynag import Model
@@ -36,17 +36,16 @@ import okconfig
 
     
 def get_template_version():
-    ''' Get the version number of the template directory '''
+    """ Get the version number of the template directory """
     try:
-        filename = 'metadata'
-        file = open("%s/metadata" % (okconfig.template_directory) )
+        file = open("%s/metadata" % okconfig.template_directory)
         for line in file.readlines():
             line = line.split()
             if len(line) != 2: continue
             if line[0] == 'TEMPLATES_VERSION':
                 return float(line[1])
         return 0
-    except:
+    except Exception:
         return 0
 
 
@@ -77,9 +76,9 @@ def upgrade_to_version_2():
         old_use = service.use.split(',')
         new_use = []
         for i in old_use:
-            okc_name = 'okc-%s' % (i)
+            okc_name = 'okc-%s' % i
             if not i in all_templates and okc_name in all_templates:
-                'parent does not exist, but okc-parent does'
+                # parent does not exist, but okc-parent does
                 i = okc_name
             new_use.append( i )
         #new_use = ','.join(new_use)
@@ -90,21 +89,22 @@ def upgrade_to_version_2():
     print "ok"
 
 def rename_oktemplate_services():
-    ''' To change config version to 2.0 This is a one-off action. Not part of any upgrade '''
+    """ To change config version to 2.0 This is a one-off action. Not part of any upgrade """
     all_obj = Model.Service.objects.filter(name__contains='',filename__startswith=okconfig.template_directory)
     for i in all_obj:
         if i.name.startswith('okc-'): continue
-        i['name'] = "okc-%s" % (i.name)
+        i['name'] = "okc-%s" % i.name
         i.save()    
 
 
 
 def upgrade_okconfig():
-    'Upgrades nagios configuration to match the level of current oktemplates format'
+    """Upgrades nagios configuration to match the level of current oktemplates format"""
     template_version = get_template_version()
     print "Upgrading to version %s" % template_version
     if template_version >= 1:
-        "We dont need to do anything, the tools have been upgraded"
+        # "We dont need to do anything, the tools have been upgraded"
+		pass
     if template_version >= 1.1:
         upgrade_to_version_1_1()
     if template_version >= 2:
