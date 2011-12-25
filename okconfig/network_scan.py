@@ -16,11 +16,10 @@
 
 import subprocess
 import socket
-import sys
 from pynag import Model
 
 class ScannedHost:
-	"Simple datastructure for a recently portscanned host"
+	"""Simple datastructure for a recently portscanned host"""
 	def __init__(self, ipaddress=None, hostname=None,ismonitored=None):
 		self.ipaddress = ipaddress
 		self.hostname = hostname
@@ -28,7 +27,7 @@ class ScannedHost:
 		if hostname is None:
 			self.hostname = self.get_hostname()
 	def check(self):
-		"Runs all self.ch*. Returns nothing"
+		"""Runs all self.ch*. Returns nothing"""
 		
 		if self.is_windows():
 			self.platform = "Windows"
@@ -52,42 +51,42 @@ class ScannedHost:
 			self.port80 = "no"
 		
 	def get_hostname(self):
-		"returns hostname given a specific ip address"
+		"""returns hostname given a specific ip address"""
 		try:
 			name= socket.gethostbyaddr(self.ipaddress)
 			return name[0]
-		except:
+		except Exception:
 			return None
 	def is_windows(self):
-		"Returns true if machine replies on port 3389"
+		"""Returns true if machine replies on port 3389"""
 		return check_tcp(host=self.ipaddress, port=3389)
 	def is_agent_installed(self):
-		'Returns True if nrpe client is running'
+		"""Returns True if nrpe client is running"""
 		return check_tcp(host=self.ipaddress, port=5666)
 	def is_linux(self):
-		"Returns true if machine replies on port 22"
+		"""Returns true if machine replies on port 22"""
 		return check_tcp(host=self.ipaddress, port=22)
 	def has_webserver(self):
-		"Returns true if machine replies on port 80"
+		"""Returns true if machine replies on port 80"""
 		return check_tcp(host=self.ipaddress, port=80)
 	def has_mssql(self):
-		"Returns true if machine replies on port 1433"
+		"""Returns true if machine replies on port 1433"""
 		return check_tcp(host=self.ipaddress, port=1433)
 	def has_nrpe(self):
-		"Returns true if machine replies on port 5666"
+		"""Returns true if machine replies on port 5666"""
 		return check_tcp(host=self.ipaddress, port=5666)
 	def has_ssl(self):
-		"Returns true if machine replies on port 443"
+		"""Returns true if machine replies on port 443"""
 		return check_tcp(host=self.ipaddress, port=443)
 	def is_agent_responding(self):
-		"returns true if host responds to check_nrpe commands"
+		"""returns true if host responds to check_nrpe commands"""
 		returncode,stdout,stderr = runCommand("check_nrpe -H '%s'")
 		print returncode,stdout,stderr
 		if returncode == 0: return True
 		if returncode == 1: return False
 		return None
 	def is_agent_okconfig(self):
-		"returns true if host responds to check_nrpe commands"
+		"""returns true if host responds to check_nrpe commands"""
 		returncode,stdout,stderr = runCommand("check_nrpe -H '%s' -c get_disks")
 		if returncode == 0: return True
 		if returncode == 1: return False
@@ -101,7 +100,7 @@ def check_tcp(host="localhost", port=22, timeout=5):
 		#s.recv(1024)
 		s.close()
 		return True
-	except Exception, e:
+	except Exception:
 		#raise e
 		return False
 	
@@ -113,26 +112,26 @@ def runCommand(command):
 
 
 def get_ip_address_list():
-	'returns a list of every ip address of every host in nagios'
+	"""returns a list of every ip address of every host in nagios"""
 	hosts = Model.Host.objects.all
 	result = []
 	for host in hosts:
 		a = host['address']
-		if a != None and a not in result:
+		if not a is None and a not in result:
 			result.append(a)
 	return result
 
 def check_nrpe(host):
-	command = "check_nrpe -H '%s'" % (host)
+	command = "check_nrpe -H '%s'" % host
 
 def get_my_ip_address():
-	"Returns default ip address of this host"
+	"""Returns default ip address of this host"""
 	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 	s.connect(('google.com', 0))
 	return s.getsockname()[0]
 	
 def pingscan(network='192.168.1.0/24'):
-	'scans a specific network, returns a list of all ip that respond'
+	"""scans a specific network, returns a list of all ip that respond"""
 	command =  "fping -t 50 -i 10 -a "
 	if network.find('/') > 0: command += " -g " 
 	command += network
@@ -143,21 +142,21 @@ def pingscan(network='192.168.1.0/24'):
 	ip_list = []
 	for i in stdout.split('\n'):
 		try: socket.inet_aton(i)
-		except: continue
+		except Exception: continue
 		ip_list.append(i)
 	return ip_list
 
 def get_new_hosts(network='192.168.1.0/24'):
-	"Returns a list of ScannedHost alive in given network that do not exist in nagios"
+	"""Returns a list of ScannedHost alive in given network that do not exist in nagios"""
 	registered_ips = get_ip_address_list()
 	new_hosts =[]
-	for i in get_all_hosts():
+	for i in get_all_hosts(network=network):
 		if not i.ipaddress in registered_ips:
 			new_hosts.append(i)
 	return new_hosts
 	
 def get_all_hosts(network='192.168.1.0/24'):
-	"Returns a list of ScannedHost alive in given network"
+	"""Returns a list of ScannedHost alive in given network"""
 	scanned_ips = pingscan(network)
 	registered_ips = get_ip_address_list()
 	all_hosts = []

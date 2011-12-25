@@ -14,17 +14,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-''' This module provides helper functions for okconfig '''
+""" This module provides helper functions for okconfig """
 
 import okconfig
 from pynag import Model
 import re
 
 def add_defaultservice_to_host(host_name):
-    ''' Given a specific hostname, add default service to it '''
+    """ Given a specific hostname, add default service to it """
     # Get our host
     try: my_host = Model.Host.objects.get_by_shortname(host_name)
-    except ValueError: raise okconfig.OKConfigError("Host %s not found." % (host_name)) 
+    except ValueError: raise okconfig.OKConfigError("Host %s not found." % host_name)
     
     # Dont do anything if file already exists
     service = Model.Service.objects.filter(name=host_name)
@@ -49,11 +49,11 @@ def add_defaultservice_to_host(host_name):
     
 
 def group_exists(group_name):
-    ''' Check if a servicegroup,contactgroup or hostgroups exist with shortname == group_name
-    
+    """ Check if a servicegroup,contactgroup or hostgroups exist with shortname == group_name
+
     Returns:
         False if no groups are found, otherwise it returns a list of groups
-    '''
+    """
     servicegroups = Model.Servicegroup.objects.filter(shortname=group_name)
     contactgroups = Model.Contactgroup.objects.filter(shortname=group_name)
     hostgroups = Model.Hostgroup.objects.filter(shortname=group_name)

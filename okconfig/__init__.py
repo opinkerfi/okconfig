@@ -43,13 +43,9 @@ examples_directory= config.examples_directory
 destination_directory = config.destination_directory
 import socket
 
-from sys import exit
-from sys import argv
-from sys import path
 from pynag import Model
-from os import getenv,putenv,environ
+from os import getenv
 
-import glob
 import os
 import subprocess
 import helper_functions
@@ -70,7 +66,7 @@ def is_valid():
 	return True
 
 def _is_in_path(command):
-	''' Searches $PATH and returns true if command is found, and in path '''
+	""" Searches $PATH and returns true if command is found, and in path """
 	
 	
 	is_executable = lambda x: os.path.isfile(x) and os.access(x, os.X_OK)
@@ -98,17 +94,17 @@ def verify():
 	results = {}
 	
 	# 1) nagios_config exists
-	check = "Main configuration file %s is readable" % (nagios_config)
+	check = "Main configuration file %s is readable" % nagios_config
 	results[check] = os.access(nagios_config, os.R_OK)
 
 	# 2) template_directory exists
-	check = "template_directory %s exists" % (template_directory)
+	check = "template_directory %s exists" % template_directory
 	results[check] = os.access(template_directory, os.R_OK) and os.path.isdir(template_directory)
 	
 	# 3) destination_directory or parent exists (and is writable)
-	for ddir in [destination_directory, "%s/.." % (destination_directory)]:
+	for ddir in [destination_directory, "%s/.." % destination_directory]:
 		ddir = os.path.dirname(ddir)
-		check = "destination_directory %s is writable" % (ddir)
+		check = "destination_directory %s is writable" % ddir
 		results[check] = os.access(ddir, os.W_OK + os.R_OK) and os.path.isdir(ddir)
 		if results[check] == True: break	
 	
@@ -122,7 +118,7 @@ def verify():
 	
 	return results
 
-def addhost(host_name, address=None, group_name=None, templates=[], use=None, force=False):
+def addhost(host_name, address=None, group_name=None, templates=None, use=None, force=False):
 	"""Adds a new host to Nagios. Returns true if operation is successful.
 	
 	Args:
@@ -145,7 +141,7 @@ def addhost(host_name, address=None, group_name=None, templates=[], use=None, fo
 		try:
 			address = socket.gethostbyname(host_name)
 		except:
-			raise OKConfigError("Could not resolve hostname '%s'" % (host_name))
+			raise OKConfigError("Could not resolve hostname '%s'" % host_name)
 	if use is None:
 		if 'windows' in templates:
 			use = 'windows-server'
@@ -158,20 +154,16 @@ def addhost(host_name, address=None, group_name=None, templates=[], use=None, fo
 	okconfig_groups = get_groups()
 	if len(okconfig_groups) == 0:
 		addgroup(group_name='default',alias='OKconfig default group')
-	arguments = {}
-	arguments['PARENTHOST'] = use
-	arguments['GROUP'] = group_name
-	arguments['IPADDR'] = address
-	arguments['HOSTNAME'] = host_name
+	arguments = {'PARENTHOST': use, 'GROUP': group_name, 'IPADDR': address, 'HOSTNAME': host_name}
 	destination_dir = "%s/hosts/%s/" % (destination_directory, group_name)
 	destination_file = "%s/%s-host.cfg" % (destination_dir, host_name)
 	if not os.path.exists(destination_dir):
 		os.makedirs(destination_dir)
 	if not force:
 		if os.path.isfile(destination_file):
-			raise OKConfigError("Destination file '%s' already exists." % (destination_file))
+			raise OKConfigError("Destination file '%s' already exists." % destination_file)
 		if group_name not in get_groups():
-			raise OKConfigError("Group %s does not exist" % (group_name))
+			raise OKConfigError("Group %s does not exist" % group_name)
 		if host_name in get_hosts():
 			filename = Model.Host.objects.get_by_shortname(host_name)._meta['filename']
 			raise OKConfigError("Host named '%s' already exists in %s" % (host_name, filename))
@@ -179,7 +171,7 @@ def addhost(host_name, address=None, group_name=None, templates=[], use=None, fo
 	all_templates = get_templates().keys()
 	for i in templates:
 		if i not in all_templates:
-			raise OKConfigError("Template %s not found" % (i))
+			raise OKConfigError("Template %s not found" % i)
 		
 	result = _apply_template('host', destination_file, **arguments)
 	for i in templates:
@@ -212,9 +204,9 @@ def addtemplate(host_name, template_name, group_name=None,force=False):
 	# Lets do some templating
 	newfile = "%s/%s-%s.cfg" % (hostdir, host_name,template_name)
 	if not force:
-		'Do some basic sanity checking'
+		# 'Do some basic sanity checking'
 		if os.path.exists(newfile):
-			raise OKConfigError("Destination file '%s' already exists." % (newfile))
+			raise OKConfigError("Destination file '%s' already exists." % newfile)
 	
 	return _apply_template(template_name,newfile, HOSTNAME=host_name, GROUP=group_name)
 
@@ -232,16 +224,16 @@ def addgroup(group_name, alias=None, force=False):
 	Returns:
 	 True if operation was successful
 	""" 
-	if alias == None: alias=group_name
-	destination_dir = "%s/groups" % (destination_directory)
+	if alias is None: alias=group_name
+	destination_dir = "%s/groups" % destination_directory
 	destination_file = "%s/%s.cfg" % (destination_dir, group_name)	
 	if not force:
-		'Do some sanity checking'
+		# 'Do some sanity checking'
 		if os.path.exists(destination_file):
 			raise OKConfigError("Destination file '%s' already exists" % destination_file)
 		groups = helper_functions.group_exists(group_name)
 		if groups != False:
-			raise OKConfigError("We already have groups with name = %s" % (group_name))
+			raise OKConfigError("We already have groups with name = %s" % group_name)
 	
 	return _apply_template(template_name="group",destination_file=destination_file, GROUP=group_name, ALIAS=alias)
 
@@ -288,7 +280,7 @@ def get_hosts():
 def get_groups():
 	""" Returns a list of available groups """
 	result = []
-	group_directory = "%s/groups" % (destination_directory)
+	group_directory = "%s/groups" % destination_directory
 	if not os.path.isdir(group_directory):
 		raise OKConfigError("groups directory does not exist: %s" % group_directory)
 	filelist = os.listdir(group_directory)
@@ -337,30 +329,30 @@ def install_nrpe(remote_host, username, password=None):
 
 
 def runCommand(command):
-	'''runCommand: Runs command from the shell prompt.
-	
+	"""runCommand: Runs command from the shell prompt.
+
 	Arguments:
 		command: string containing the command line to run
 	Returns:
 		stdout/stderr of the command run
 	Raises:
 		BaseException if returncode > 0
-	'''
+	"""
 	proc = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE,stderr=subprocess.PIPE,)
 	stdout, stderr = proc.communicate('through stdin to stdout')
 	if proc.returncode > 0:
-		error_string = "Could not run command (return code= %s)\n" % (proc.returncode)
+		error_string = "Could not run command (return code= %s)\n" % proc.returncode
 		error_string += "Error: %s\n" % (stderr.strip())
-		error_string += "Command: %s\n" % (command)
+		error_string += "Command: %s\n" % command
 		if proc.returncode == 127: # File not found, lets print path
 			path=getenv("PATH")
-			error_string += "Check if y/our path is correct: %s" % (path)
+			error_string += "Check if y/our path is correct: %s" % path
 		raise BaseException( error_string )
 	else:
 		return stdout
 
 def _apply_template(template_name,destination_file, **kwargs):
-	''' Applies okconfig template to filename, doing replacements from kwargs in the meantime
+	""" Applies okconfig template to filename, doing replacements from kwargs in the meantime
     
     Arguments:
         template_name - name of the template to use
@@ -371,14 +363,14 @@ def _apply_template(template_name,destination_file, **kwargs):
         _apply_template('host','/etc/nagios/okconfig/hosts/newhost.cfg', HOSTNAME='newhost',ADDRESS='0.0.0.0',GROUP='default')
     Returns:
         List of filenames that have been written to
-    '''
+    """
 	sourcefile = "%s/%s.cfg-example" % (examples_directory,template_name)
 	
 	# Clean // from destination file
 	destination_file = destination_file.replace('//','/')
 	
 	if not os.path.isfile(sourcefile):
-		raise OKConfigError('Template %s cannot be found' % (template_name))
+		raise OKConfigError('Template %s cannot be found' % template_name)
 
 	dirname = os.path.dirname(destination_file)
 	if not os.path.exists(dirname): os.makedirs(dirname)  
@@ -395,6 +387,6 @@ class OKConfigError(Exception):
 
 #all_templates = get_templates()
 if __name__ == '__main__':
-	'This leaves room for some unit testing while being run from the command line'
+	var = 'This leaves room for some unit testing while being run from the command line'
 	print get_groups()
 
