@@ -43,7 +43,9 @@ examples_directory= config.examples_directory
 destination_directory = config.destination_directory
 import socket
 
-from pynag import Model
+import pynag
+import pynag.Model
+pynag.Model.pynag_directory = destination_directory
 from os import getenv
 
 import os
@@ -165,7 +167,7 @@ def addhost(host_name, address=None, group_name=None, templates=None, use=None, 
 		if group_name not in get_groups():
 			raise OKConfigError("Group %s does not exist" % group_name)
 		if host_name in get_hosts():
-			filename = Model.Host.objects.get_by_shortname(host_name)._meta['filename']
+			filename = pynag.Model.Host.objects.get_by_shortname(host_name)._meta['filename']
 			raise OKConfigError("Host named '%s' already exists in %s" % (host_name, filename))
 	# Do sanity checking of all templates before we add anything
 	all_templates = get_templates().keys()
@@ -236,6 +238,101 @@ def addgroup(group_name, alias=None, force=False):
 			raise OKConfigError("We already have groups with name = %s" % group_name)
 	
 	return _apply_template(template_name="group",destination_file=destination_file, GROUP=group_name, ALIAS=alias)
+def addcontact(contact_name, alias=None, force=False, group_name="default", email=None, use='generic-contact'):
+	"""Adds a new contact to Nagios.
+
+	Args:
+	 contact_name -- Name of the contact to be added (i.e. "user@example.com")
+	 alias -- Contact alias (i.e. "Full Name")
+	 force -- Force operation, overwrites configuration if it already exists
+
+	Examples:
+	 addcontact(contact_name="user@example.com", contact_groups="default", email="user@example.com")
+
+	Returns:
+	 True if operation was successful
+	"""
+	if group_name is None or group_name is '': group_name = 'default'
+	# Check if contact already exists
+	try:
+		contact = pynag.Model.Contact.objects.get_by_shortname(contact_name)
+		if not force:
+			raise OKConfigError("contact %s already exists in file %s" % (contact_name, contact.get_filename()))
+	except ValueError:
+		contact = pynag.Model.Contact()
+	contact['contact_name'] = contact_name
+	if alias is not None: contact['alias'] = alias
+	if use is not None: contact['use'] = use
+	if email is not None: contact['email'] = email
+	if group_name is not None: contact['contact_groups'] = group_name
+	result = contact.save()
+	filename = contact.get_filename()
+	if result is False:
+		raise OKConfigError("Failed to save contact to %s" % filename)
+	return [filename]
+def addservice(inherit_settings_from, host_name, service_description=None, group=None, check_command=None,force=False):
+	"""Adds a new service to Nagios.
+
+	Args:
+	 inherit_settings_from -- Name of another service to inherit from (i.e. 'generic-service')
+	 service_description -- Description of the service as it will appear in nagios (i.e. "Disk Usage")
+	 host_name -- Host that this service check belongs to
+	 force -- Force operation, overwrites configuration if it already exists
+
+	Examples:
+	 addservice(host_name="localhost, inherit_settings_from="okc-check_ping")
+
+	Returns:
+	 True if operation was successful
+	"""
+
+	# Check if host exists:
+	tmp = pynag.Model.Host.objects.filter(host_name=host_name)
+	if len(tmp) != 1:
+		raise OKConfigError("Cannot find host named '%s'." % host_name)
+	host = tmp[0]
+
+	# Find a proper filename to save to
+	dirname = os.path.dirname( host.get_filename() )
+	filename = '%s/%s-custom.cfg' % (dirname, host_name)
+
+	# Check if parent exists
+	tmp = pynag.Model.Service.objects.filter(name=inherit_settings_from)
+	if len(tmp) != 1:
+		raise OKConfigError("cannot find service '%s' to inherit settings from" % inherit_settings_from)
+	parent_service = tmp[0]
+
+	if service_description is None:
+		if parent_service.service_description is None:
+			raise OKConfigError("service_description not defined and parent '%s' does not have any." % inherit_settings_from)
+		service_description = parent_service.service_description
+	tmp = pynag.Model.Service.objects.filter(host_name=host_name,service_description=service_description)
+	if len(tmp) is 0: # Service not found. This is indeed a new service
+		service = pynag.Model.Service()
+		service._meta['filename'] = filename
+	elif len(tmp) is 1: # There is another service defined just like this one
+		service = tmp[0]
+		if not force:
+			filename = service.get_filename()
+			raise OKConfigError("service is already defined in file %s. Will not add again." % filename)
+	else: # Multiple services defined
+		files = []
+		for i in tmp:
+			files.append(i.get_filename())
+		raise OKConfigError("%s services already defined with same host_name/service_description. Will not add any more: %s " % (len(tmp), "; ".join(files)))
+
+	service['host_name'] = host_name
+	if service_description is not None:
+		service['service_description'] = service_description
+	if group is not None:
+		service['contact_groups'] = group
+	if check_command is not None:
+		service['check_command'] = check_command
+	result = service.save()
+	if result is False:
+		raise OKConfigError("Failed to save service to file" % service.get_filename())
+	else:
+		return [service.get_filename()]
 
 def findhost(host_name):
 	"""Returns the filename which defines a specied host. Returns None on failure.
@@ -248,7 +345,7 @@ def findhost(host_name):
 	"/etc/okconfig/hosts/default/host.example.com-host.cfg"
 	"""
 	try:
-		my_host = Model.Host.objects.get_by_shortname(host_name)
+		my_host = pynag.Model.Host.objects.get_by_shortname(host_name)
 		filename = my_host['meta']['filename']
 		return filename
 	except ValueError:
@@ -271,7 +368,7 @@ def get_templates():
 def get_hosts():
 	""" Returns a list of available hosts """
 	result = []
-	hosts = Model.Host.objects.all
+	hosts = pynag.Model.Host.objects.all
 	for host in hosts:
 		if host.get_shortname() not in result and host.get_shortname() is not None:
 			result.append(host.get_shortname())

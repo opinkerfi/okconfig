@@ -32,6 +32,8 @@ Examples:
 %prog --addhost\t--host examplehost.example.com --address 127.0.0.1 --group default
 %prog --addtemplate\t--host examplehost.example.com --template linux
 %prog --addgroup\t--group databases --alias "Databases"
+%prog --addcontact\t--contact nagios@example.com --alias "Nagios User"
+%prog --addservice\t--host examplehost.example.com --service_description "Custom NRPE" --check_command "check_nrpe!custom_check"
 """
 parser = OptionParser(usage=usage)
 
@@ -42,6 +44,10 @@ modes.add_option("--addgroup", action="store_const", const="addgroup", dest='mod
 	help="Add a new group")
 modes.add_option("--addtemplate",  action="store_const", const="addtemplate", dest='mode',
 	help="Add a new template")
+modes.add_option("--addcontact", action="store_const", const="addcontact", dest='mode',
+	help="Add a new contact")
+modes.add_option("--addservice", action="store_const", const="addservice", dest='mode',
+	help="Add a new service")
 modes.add_option("--verify", action="store_const", const="verify", dest='mode',
 	help="Verify okconfig setup")
 modes.add_option("--upgrade", action="store_const", const="upgrade", dest='mode',
@@ -63,6 +69,17 @@ parser.add_option("--address", dest="address", default=None,
 parser.add_option("--alias", dest="alias", default=None,
 	help="Alias to use")
 
+# contact specific
+parser.add_option("--contact_name", dest="contact_name", default=None,
+	help="contact_name")
+parser.add_option("--email", dest="email", default=None,
+	help="email for this contact")
+
+# Service specific
+parser.add_option("--service_description", dest="service_description", default=None,
+	help="service specificic: description of this service")
+parser.add_option("--check_command", dest="check_command", default=None,
+	help="service specificic: check command to use with this service.")
 
 (opts,args) = parser.parse_args()
 valid_modes = ("host","template","group",'upgrade','verify')
@@ -91,6 +108,11 @@ try:
 		f = okconfig.addtemplate(host_name=opts.host,template_name=opts.template,force=opts.force)
 		for i in f: print "Saved", i
 		message = "Template successfully added"
+	elif opts.mode == "addcontact":
+		if not opts.contact_name: parser.error("--contact_name is required with --addcontact")
+		f = okconfig.addcontact(contact_name=opts.contact_name, alias=opts.alias, force=opts.force, group_name=opts.group, email=opts.email)
+		for i in f: print "Saved", i
+		message = "Contact successfully added"
 	elif opts.mode == "verify":
 		result = okconfig.verify()
 		print "Okconfig verification"
