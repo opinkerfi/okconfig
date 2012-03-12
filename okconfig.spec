@@ -27,6 +27,7 @@ BuildRequires: python-setuptools
 %endif
 %endif
 %endif
+
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Url: http://opensource.is/trac
 BuildArch: noarch 
