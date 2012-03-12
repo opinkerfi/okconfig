@@ -76,7 +76,7 @@ rm -fr $RPM_BUILD_ROOT
 %config(noreplace) %{_sysconfdir}/profile.d/nagios.sh
 %config(noreplace) %{_sysconfdir}/okconfig.conf
 %config(noreplace) %{_sysconfdir}/bash_completion.d/okconfig
-%{_mandir}/man1/okconfig.1.gz
+#%{_mandir}/man1/okconfig.1.gz
 
 
 %changelog
