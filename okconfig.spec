@@ -5,7 +5,7 @@
 
 Summary: Python Nagios Template management and configuration power tools
 Name: okconfig
-Version: 1.0.3
+Version: 1.0.4
 Release: 1%{?dist}
 Source0: http://opensource.is/files/%{name}-%{version}.tar.gz
 License: GPLv2
@@ -84,6 +84,11 @@ rm -fr $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Mar 12 2012 Pall Sigurdsson <palli@opensource.is> 1.0.4-1
+- / added to end of every reponame. okconfig.spec now support fedora 16
+  (palli@opensource.is)
+- added more repos to releasers.conf (palli@opensource.is)
+
 * Mon Mar 12 2012 Pall Sigurdsson <palli@opensource.is> 1.0.3-1
 - tito releasers.conf added (palli@opensource.is)
 - manpages commented out (palli@opensource.is)
