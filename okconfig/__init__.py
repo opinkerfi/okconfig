@@ -120,7 +120,7 @@ def verify():
 	
 	return results
 
-def addhost(host_name, address=None, group_name=None, templates=None, use=None, force=False):
+def addhost(host_name, address=None, group_name=None, templates=None, use=None, host_template='host', force=False):
 	"""Adds a new host to Nagios. Returns true if operation is successful.
 	
 	Args:
@@ -129,6 +129,7 @@ def addhost(host_name, address=None, group_name=None, templates=None, use=None, 
 	 group_name -- Primary host/contactgroup for this host. (if none, use "default")
 	 templates -- List of template names to be added to this host
 	 use -- if this host inherits another host (i.e. "windows-server")
+	 host_template -- Use the specified host template instead of default host.cfg
 	 force -- Force operation. Overwrite config files needed.
 	
 	Examples:
@@ -171,11 +172,12 @@ def addhost(host_name, address=None, group_name=None, templates=None, use=None, 
 			raise OKConfigError("Host named '%s' already exists in %s" % (host_name, filename))
 	# Do sanity checking of all templates before we add anything
 	all_templates = get_templates().keys()
+	if host_template not in all_templates:
+		raise OKConfigError("Host Template %s not found" % host_template)
 	for i in templates:
 		if i not in all_templates:
 			raise OKConfigError("Template %s not found" % i)
-		
-	result = _apply_template('host', destination_file, **arguments)
+	result = _apply_template(host_template, destination_file, **arguments)
 	for i in templates:
 		result = result + addtemplate(host_name=host_name, template_name=i, group_name=group_name,force=force)
 	return result
