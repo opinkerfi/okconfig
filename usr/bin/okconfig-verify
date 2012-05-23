@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/python
 #
 # Copyright 2011, Pall Sigurdsson <palli@opensource.is>
 #
@@ -16,42 +16,26 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-print_usage() {
-cat << EOF
+# No real need to change anything below here
+version="1.0"
 
-Usage: $@ <command> [arguments]
-
-Common okconfig commands:
-  addhost	add a new host
-  addtemplate	add a new template to existing host
-  addgroup	add a new host/contact/service group
-  addcontact	add a new contact
-  upgrade	runs migration routines in case of okconfig upgrades
-  verify	verifies current okconfig installation
-EOF
-}
+import sys
+import okconfig
 
 
-if [ "$#" -eq "0" ]; then
-	echo "No arguments given."
-	print_usage
-	exit 1
-fi
+# Parse some Arguments
+from optparse import OptionParser,OptionGroup
 
-FULLPATH=`which okconfig-$1`
-if [ $? -eq 0 ]; then
-	exec $FULLPATH $@
-	exit $?
-elif [[ "$1" == "help" ]]; then
-	if [ ! -z $2 ]; then
-		man "okconfig-$2"
-	else
-		print_usage
-	fi
-else
-	echo "invalid command: $1"
-	print_usage
-	exit 1
-fi
+parser = OptionParser()
 
-exit $?
+try:
+	result = okconfig.verify()
+	print "Okconfig verification"
+	print "---------------------"
+	for k,v in result.items():
+		if v is True: v = "success"
+		else: v = "fail"
+		print "* %-70s...%s" % (k,v)
+except okconfig.OKConfigError, e:
+	print "Error: %s" % e
+	sys.exit(1)
