@@ -64,7 +64,10 @@ def parse_arguments():
         upgrade()
     elif sys.argv[1] == "addservice":
         addservice()
-
+    elif sys.argv[1] == "help":
+        parser.print_help()
+    elif sys.argv[1] == "--help":
+        parser.print_help()
     else:
         parser.error("Unknown command '%s'" % sys.argv[1])
 
