@@ -6,7 +6,7 @@
 Summary: Python Nagios Template management and configuration power tools
 Name: okconfig
 Version: 1.0.5
-Release: 1%{?dist}
+Release: 7%{?dist}
 Source0: http://opensource.is/files/%{name}-%{version}.tar.gz
 License: GPLv2
 Group: System Environment/Libraries
@@ -54,8 +54,9 @@ test "x$RPM_BUILD_ROOT" != "x" && rm -rf $RPM_BUILD_ROOT
 install -m 755 -d usr/share/okconfig $RPM_BUILD_ROOT/%{_datadir}/%{name}
 mkdir -p $RPM_BUILD_ROOT/etc/bash_completion.d/
 mkdir -p $RPM_BUILD_ROOT/etc/profile.d/
-mkdir -p $RPM_BUILD_ROOT/etc/nagios/okconfig/groups
-mkdir -p $RPM_BUILD_ROOT/etc/nagios/okconfig/hosts
+mkdir -m 775 -p $RPM_BUILD_ROOT/etc/nagios/okconfig
+mkdir -m 775 -p $RPM_BUILD_ROOT/etc/nagios/okconfig/groups
+mkdir -m 775 -p $RPM_BUILD_ROOT/etc/nagios/okconfig/hosts
 install -m 644 etc/okconfig.conf $RPM_BUILD_ROOT/%{_sysconfdir}/
 install -m 644 etc/bash_completion.d/* $RPM_BUILD_ROOT/%{_sysconfdir}/bash_completion.d/
 install -m 644 etc/profile.d/* $RPM_BUILD_ROOT/%{_sysconfdir}/profile.d/
@@ -73,14 +74,15 @@ rm -fr $RPM_BUILD_ROOT
 %{_bindir}/okconfig
 %doc AUTHORS README LICENSE CHANGES
 %{_datadir}/%{name}
-%dir %{_sysconfdir}/nagios/okconfig
-%dir %{_sysconfdir}/nagios/okconfig/groups
-%dir %{_sysconfdir}/nagios/okconfig/hosts
 %config(noreplace) %{_sysconfdir}/profile.d/nagios.csh
 %config(noreplace) %{_sysconfdir}/profile.d/nagios.sh
 %config(noreplace) %{_sysconfdir}/okconfig.conf
 %config(noreplace) %{_sysconfdir}/bash_completion.d/okconfig
 #%{_mandir}/man1/okconfig.1.gz
+%defattr(0775, nagios, nagios)
+%dir %{_sysconfdir}/nagios/okconfig
+%dir %{_sysconfdir}/nagios/okconfig/groups
+%dir %{_sysconfdir}/nagios/okconfig/hosts
 
 
 %changelog
