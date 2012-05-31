@@ -5,7 +5,7 @@
 
 Summary: Python Nagios Template management and configuration power tools
 Name: okconfig
-Version: 1.0.4
+Version: 1.0.5
 Release: 1%{?dist}
 Source0: http://opensource.is/files/%{name}-%{version}.tar.gz
 License: GPLv2
@@ -91,6 +91,17 @@ rm -fr $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed May 30 2012 Tomas Edwardsson <tommi@tommi.org> 1.0.5-1
+- Fixed rsync path for tito, was missing root user (tommi@tommi.org)
+- Added F17 to tito build (tommi@tommi.org)
+- new okconfig binary with new syntax (palli@opensource.is)
+- Merge branch 'master' of https://opensource.ok.is/git/okconfig
+  (palli@opensource.is)
+- addservice function added (palli@opensource.is)
+- host_template now configurable when adding new hosts (palli@opensource.is)
+- Issue #55, removed mssql till requirements are satisfied (tommi@tommi.org)
+- rhcs6 examples added (palli@opensource.is)
+
 * Mon Mar 12 2012 Pall Sigurdsson <palli@opensource.is> 1.0.4-1
 - / added to end of every reponame. okconfig.spec now support fedora 16
   (palli@opensource.is)

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/python
 #
 # Copyright 2011, Pall Sigurdsson <palli@opensource.is>
 #
@@ -16,42 +16,227 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-print_usage() {
-cat << EOF
+# No real need to change anything below here
+version="1.0"
 
-Usage: $@ <command> [arguments]
+import sys
+import okconfig
+
+
+# Parse some Arguments
+from optparse import OptionParser,OptionGroup
+
+usage = """usage: %prog <command> [arguments]
 
 Common okconfig commands:
-  addhost	add a new host
-  addtemplate	add a new template to existing host
-  addgroup	add a new host/contact/service group
-  addcontact	add a new contact
-  upgrade	runs migration routines in case of okconfig upgrades
-  verify	verifies current okconfig installation
-EOF
-}
+  addhost       add a new host
+  addtemplate   add a new template to existing host
+  addgroup      add a new host/contact/service group
+  addcontact    add a new contact
+  upgrade       runs migration routines in case of okconfig upgrades
+  verify        verifies current okconfig installation
+
+For help on specific command type:
+ %prog <command> --help
+ 
+Examples:
+ %prog addgroup linuxservers --alias "Example Linux Servers"
+ %prog addhost <host_name> --template linux --address 127.0.0.1 --group linuxservers
+ %prog addtemplate <host_name> --template oracle
+"""
+parser = OptionParser(usage=usage)
+
+def parse_arguments():
+    ''' Parse command line arguments and run command specified commands '''
+    if len(sys.argv) < 2:
+        parser.error("No command specified")
+    elif sys.argv[1] == 'verify':
+        verify()
+    elif sys.argv[1] == 'addhost':
+        addhost()
+    elif sys.argv[1] == 'addgroup':
+        addgroup()
+    elif sys.argv[1] == 'addtemplate':
+        addtemplate()
+    elif sys.argv[1] == 'addcontact':
+        addcontact()
+    elif sys.argv[1] == "upgrade":
+        upgrade()
+    elif sys.argv[1] == "addservice":
+        addservice()
+
+    else:
+        parser.error("Unknown command '%s'" % sys.argv[1])
 
 
-if [ "$#" -eq "0" ]; then
-	echo "No arguments given."
-	print_usage
-	exit 1
-fi
 
-FULLPATH=`which okconfig-$1`
-if [ $? -eq 0 ]; then
-	exec $FULLPATH $@
-	exit $?
-elif [[ "$1" == "help" ]]; then
-	if [ ! -z $2 ]; then
-		man "okconfig-$2"
-	else
-		print_usage
-	fi
-else
-	echo "invalid command: $1"
-	print_usage
-	exit 1
-fi
 
-exit $?
+
+def verify():
+	''' Verify that current install of okconfig is functional. '''
+	result = okconfig.verify()
+	print "Okconfig verification"
+	print "---------------------"
+	for k,v in result.items():
+		if v is True: v = "success"
+		else: v = "fail"
+		print "* %-70s...%s" % (k,v)
+
+def addgroup():
+    ''' Add new group to current nagios configuration files '''
+    parser.usage = ''' %prog addgroup <group_name> [options]
+
+Examples:
+  # %prog addgroup linuxservers --alias "My Linux Servers"
+
+Run %prog addgroup --help for full list of command line arguments.
+'''
+    parser.add_option("--group", dest="group",
+                      help="Name of group")
+    parser.add_option("--force", dest="force", action="store_true",
+                      default=False,help="Overwrite files if needed")
+    parser.add_option("--alias", dest="alias", default=None,
+                      help="Friendly name for this group")
+    (opts,args) = parser.parse_args(sys.argv[2:])
+    
+    if opts.group: args.append(opts.group)
+
+    if len(args) == 0: parser.error("Please specify at least one group on the command line.")    
+    
+    for group in args:
+        f = okconfig.addgroup(group_name=group,alias=opts.alias,force=opts.force)
+        for i in f: print "Saved", i
+
+def addcontact():
+    ''' Add new contact to current nagios configuration files '''
+    parser.usage = ''' %prog addcontact <contact_name> [options]
+
+Examples:
+  # %prog addcontact "webmasters" --email "webmaster@example.com" 
+  # %prog addcontact "admin" --email "admin@local" --alias "sysadmin group" 
+
+Run %prog addcontact --help for full list of command line arguments.
+'''
+    parser.add_option("--contact", dest="contact", default=None,
+                      help="contact_name")
+    parser.add_option("--email", dest="email", default=None,
+                      help="email for this contact")
+    parser.add_option("--force", dest="force", action="store_true",
+                      default=False,help="Overwrite files if needed")
+    parser.add_option("--alias", dest="alias", default=None,
+                      help="Friendly name for this contact")
+    parser.add_option("--group", dest="group",
+                      help="Put contact in the this contactgroup")
+
+    (opts,args) = parser.parse_args(sys.argv[2:])
+    
+    if opts.contact: args.append(opts.contact)
+
+    if len(args) == 0: parser.error("Please specify a contact on the command line. See --help.")       
+    f = okconfig.addcontact(contact_name=opts.contact, alias=opts.alias, force=opts.force, group_name=opts.group, email=opts.email)
+    for i in f: print "Saved", i
+
+
+def addtemplate():
+    ''' Add new template to a current nagios host '''
+    parser.usage = ''' %prog addtemplate <host_name> <template_name>
+
+Examples:
+  # %prog addtemplate myhost.example.com --template linux
+  # %prog addtemplate myhost.example.com --template brocade
+  # %prog addtemplate myhost.example.com --template ciscoswitch
+
+Run %prog addtemplate --help for full list of command line arguments.
+'''
+    parser.add_option("--host", dest="host",
+                      help="Name of host to add")
+    parser.add_option("--template", dest="template",
+                      help="Name of template to use")
+    parser.add_option("--force", dest="force", action="store_true",
+                      default=False,help="Overwrite files if needed")
+    (opts,args) = parser.parse_args(sys.argv[2:])
+    
+    if not opts.host:
+        if len(args) > 0: opts.host = args[0]
+    if not opts.template:
+        if len(args) > 1: opts.template = args[1]
+    if not opts.template or not opts.host:
+        parser.error("Please specify both host and template. See --help")
+    f = okconfig.addtemplate(host_name=opts.host,template_name=opts.template,force=opts.force)
+    for i in f: print "Saved", i
+
+def addhost():
+    ''' Add new host to nagios configuration files '''
+    parser.usage = ''' %prog addhost <host_name> [options]
+
+Examples:
+  # %prog addhost switch1.example.com --template ciscoswitch --alias "My main switch"
+  # %prog addhost www.example.com --template linux --group webservers
+  # %prog addhost localhost2 --address 127.0.0.2 --alias "my other localhost"
+
+Run %prog addhost --help for full list of command line arguments.
+'''
+
+    parser.add_option("--host", dest="host",
+                      help="Name of host to add")
+    parser.add_option("--group", dest="group",default="default",
+                      help="Group this host belongs to",)
+    parser.add_option("--template", dest="template",
+                      help="Add specified templates to this host")
+    parser.add_option("--force", dest="force", action="store_true",
+                      default=False,help="Overwrite files if needed")
+    parser.add_option("--use", dest="use", default=None,
+                      help="Inherit settings from specified template")
+    parser.add_option("--address", dest="address", default=None,
+                      help="IP Address of host")
+    parser.add_option("--alias", dest="alias", default=None,
+                      help="Alias to use")
+    parser.add_option("--host_template", dest="ht", default="host",
+                      help="Name of host template to use")
+    
+    (opts,args) = parser.parse_args(sys.argv[2:])
+    
+    if opts.host: args.append(opts.host)
+    
+    if len(args) == 0: parser.error("Please specify at least one host on the command line.")
+	
+    try: templates = opts.template.split(',')
+    except AttributeError: templates = ()
+    for host in args:
+        f = okconfig.addhost(host_name=host,address=opts.address,group_name=opts.group,use=opts.use,force=opts.force,templates=templates,host_template=opts.ht)		
+        for i in f: print "Saved", i	
+
+def upgrade():
+    ''' Upgrade current nagios configuration in case okconfig tools have been updated '''
+    import okconfig.migration_tool
+    result = okconfig.migration_tool.upgrade_okconfig()
+
+def addservice():
+    ''' Add a single service check to host '''
+    parser.usage = ''' %prog addservice [attribute1=value1] [attribute2=value2] ...
+
+Examples:
+  # %prog addservice host_name=myhost use=okc-windows-updates service_description="My service check" 
+
+Run %prog addservice --help for full list of command line arguments.
+'''
+    parser.add_option("--filename", dest="file", default=None,
+                      help="Save the new service to specified filename")
+    
+    (opts,args) = parser.parse_args(sys.argv[2:])
+    service_attributes = {}
+    for arg in args:
+        if not arg.find('=') > 0:
+            parser.error('Attribute not in the form of key=value: \n %s \n See --help')
+        key,value = arg.split('=',1)
+        service_attributes[key] = value
+    from pynag import Model
+    new_service = Model.Service(filename=opts.file)
+    for k,v in service_attributes.items():
+        new_service[k] = v
+        new_service.save()
+    print "# Saved: \n%s \n# To %s" % (new_service, new_service.get_filename()) 
+    
+
+if __name__ == '__main__':
+    parse_arguments()
