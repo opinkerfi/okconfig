@@ -45,7 +45,6 @@ Examples:
  %prog addtemplate <host_name> --template oracle
 """
 parser = OptionParser(usage=usage)
-
 def parse_arguments():
     ''' Parse command line arguments and run command specified commands '''
     if len(sys.argv) < 2:
@@ -242,4 +241,7 @@ Run %prog addservice --help for full list of command line arguments.
     
 
 if __name__ == '__main__':
-    parse_arguments()
+    try:
+        parse_arguments()
+    except Exception, e:
+        print "Error: ", e
