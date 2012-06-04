@@ -57,6 +57,7 @@ mkdir -p $RPM_BUILD_ROOT/etc/profile.d/
 mkdir -m 775 -p $RPM_BUILD_ROOT/etc/nagios/okconfig
 mkdir -m 775 -p $RPM_BUILD_ROOT/etc/nagios/okconfig/groups
 mkdir -m 775 -p $RPM_BUILD_ROOT/etc/nagios/okconfig/hosts
+mkdir -m 775 -p $RPM_BUILD_ROOT/etc/nagios/okconfig/templates
 install -m 644 etc/okconfig.conf $RPM_BUILD_ROOT/%{_sysconfdir}/
 install -m 644 etc/bash_completion.d/* $RPM_BUILD_ROOT/%{_sysconfdir}/bash_completion.d/
 install -m 644 etc/profile.d/* $RPM_BUILD_ROOT/%{_sysconfdir}/profile.d/
@@ -83,6 +84,7 @@ rm -fr $RPM_BUILD_ROOT
 %dir %{_sysconfdir}/nagios/okconfig
 %dir %{_sysconfdir}/nagios/okconfig/groups
 %dir %{_sysconfdir}/nagios/okconfig/hosts
+%dir %{_sysconfdir}/nagios/okconfig/templates
 
 
 %changelog
