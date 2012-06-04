@@ -354,6 +354,19 @@ def findhost(host_name):
 	except ValueError:
 		return None
 
+def removehost(host_name, recursive=True):
+	""" Removes a specified host. And possibly all services for that host.
+	
+	Args:
+		host_name -- Name of the host to remove
+		recursive -- If true: Also delete all services that belong to this host.
+	Examples:
+	>>> removehost('host.example.com', recursive=True)
+	"""
+	my_host = pynag.Model.Host.objects.get_by_shortname(host_name)
+	my_host.delete(cascade=recursive)
+	return True
+
 def get_templates():
 	""" Returns a list of available templates """
 	result = {}
