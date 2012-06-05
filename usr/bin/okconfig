@@ -262,7 +262,7 @@ Run %prog removehost --help for full list of command line arguments.
     if len(args) == 0: parser.error("Please specify a host_name on the command line. See --help.")       
     for i in args:
         okconfig.removehost(host_name=i, recursive=opts.recursive)
-    print "Host %s removed." % (opts.host)
+        print "Host %s removed." % (i)
     
 
 if __name__ == '__main__':
