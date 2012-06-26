@@ -46,12 +46,6 @@ if __name__ == "__main__":
 		license='GPL',
 		scripts = [
 			'usr/bin/okconfig',
-			'usr/bin/okconfig-addhost',
-			'usr/bin/okconfig-addtemplate',
-			'usr/bin/okconfig-addgroup',
-			'usr/bin/okconfig-verify',
-			'usr/bin/okconfig-upgrade',
-			'usr/bin/okconfig-addcontact',
 		],
 		packages = [
 			'okconfig',

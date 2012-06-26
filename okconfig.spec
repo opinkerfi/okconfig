@@ -74,12 +74,6 @@ rm -fr $RPM_BUILD_ROOT
 %dir %{python_sitelib}/okconfig
 %{python_sitelib}/okconfig/*.py*
 %{_bindir}/okconfig
-%{_bindir}/okconfig-addhost
-%{_bindir}/okconfig-addgroup
-%{_bindir}/okconfig-addtemplate
-%{_bindir}/okconfig-addcontact
-%{_bindir}/okconfig-verify
-%{_bindir}/okconfig-upgrade
 %doc AUTHORS README LICENSE CHANGES
 %{_datadir}/%{name}
 %config(noreplace) %{_sysconfdir}/profile.d/nagios.csh
