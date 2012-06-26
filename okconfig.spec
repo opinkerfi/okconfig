@@ -86,6 +86,8 @@ rm -fr $RPM_BUILD_ROOT
 %dir %{_sysconfdir}/nagios/okconfig/hosts
 %dir %{_sysconfdir}/nagios/okconfig/templates
 
+%post
+okconfig init
 
 %changelog
 * Thu May 31 2012 Tomas Edwardsson <tommi@tommi.org> 1.0.5-7

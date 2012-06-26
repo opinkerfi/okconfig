@@ -21,6 +21,7 @@ version="1.0"
 
 import sys
 import okconfig
+import os
 
 
 # Parse some Arguments
@@ -33,6 +34,7 @@ Common okconfig commands:
   addtemplate   add a new template to existing host
   addgroup      add a new host/contact/service group
   addcontact    add a new contact
+  init          Initilize nagios to use okconfig
   upgrade       runs migration routines in case of okconfig upgrades
   verify        verifies current okconfig installation
 
@@ -65,6 +67,8 @@ def parse_arguments():
         addservice()
     elif sys.argv[1] == "removehost":
         removehost()
+    elif sys.argv[1] == "init":
+        init()
     elif sys.argv[1] == "help":
         parser.print_help()
     elif sys.argv[1] == "--help":
@@ -85,6 +89,33 @@ def verify():
 		if v is True: v = "success"
 		else: v = "fail"
 		print "* %-70s...%s" % (k,v)
+
+def init():
+    ''' Initilize nagios configuration to use okconfig '''
+    print "Initilizating nagios to use okconfig..."
+    maincfg = okconfig.config.nagios_config
+    template_dir = okconfig.config.template_directory
+    dest_dir = okconfig.config.destination_directory
+    print "Using configuration file %s" % (okconfig.config.config_file)
+    if not os.path.exists(maincfg):
+        raise okconfig.OKConfigError('Error: Nagios configuration file not found under %s' % (maincfg))
+    print "Using Nagios configuration file %s" % (maincfg)
+    
+    import pynag.Parsers
+    c = pynag.Parsers.config(cfg_file=maincfg)
+    c._edit_static_file(attribute="cfg_dir", new_value=dest_dir, filename=maincfg)
+    c._edit_static_file(attribute="cfg_dir", new_value=template_dir, filename=maincfg)
+    if not os.path.exists(template_dir):
+        print "Creating %s" % ( template_dir )
+        os.makedirs(template_dir)
+    if not os.path.exists(dest_dir):
+        print "Creating %s" % ( dest_dir )
+        os.makedirs(dest_dir)
+    print 'All Done. Run "%s verify" to verify everything is working' % sys.argv[0]
+    
+    
+    
+    
 
 def addgroup():
     ''' Add new group to current nagios configuration files '''
