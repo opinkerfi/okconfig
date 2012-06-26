@@ -1,22 +1,12 @@
-_addhost() 
+_okconfig() 
 {
     local cur prev opts
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
-    #opts="--host --help --group --templates"
     case "${COMP_WORDS[0]}" in
 	okconfig)
-		opts="--host --help --group --templates --address --parent --force --addhost --addgroup --addtemplate --alias"
-		;;
-	addhost)
-    		opts="--host --help --group --templates --ip --parent --force"
-		;;
-	addtemplate)
-    		opts="--host --help --group --template --force "
-		;;
-	addgroup)
-		opts="--group --help --alias --force"
+		opts="--help addhost addgroup addtemplate addcontact addservice upgrade verify init"
 		;;
 	findhost)
 		opts=$(grep host_name /var/log/nagios/objects.cache | awk '{ print $2 }' | sort | uniq)
@@ -32,7 +22,7 @@ _addhost()
     esac
 
     case "${prev}" in
-	--templates)
+	--template)
 		local templates=$(cd /usr/share/okconfig/examples; /bin/ls *.cfg-example|sed 's/.cfg-example//')
 		completion=$templates
    	;;
@@ -40,6 +30,10 @@ _addhost()
 		local templates=$(cd /usr/share/okconfig/examples; /bin/ls *.cfg-example|sed 's/.cfg-example//')
 		completion=$templates
    	;;
+	addtemplate)
+                local hosts=$(grep host_name /var/log/nagios/objects.cache | awk '{ print $2 }' | sort | uniq)
+    		opts="--host --help --template --force $hosts"
+		;;
 	--group)
                 local groups=$(grep hostgroup_name /var/log/nagios/objects.cache | awk '{ print $2 }' | sort | uniq)
 		completion=$groups
@@ -48,6 +42,22 @@ _addhost()
                 local hosts=$(grep host_name /var/log/nagios/objects.cache | awk '{ print $2 }' | sort | uniq)
 		completion=$hosts
         ;;
+	addhost)
+                local hosts=$(grep host_name /var/log/nagios/objects.cache | awk '{ print $2 }' | sort | uniq)
+    		completion="--alias --host  --host_template --help --group --template --address --use --force $hosts"
+		;;
+	addgroup)
+		completion="--group --help --alias --force"
+		;;
+	addservice)
+		completion="--help"
+		;;
+	upgrade)
+		completion="--help"
+		;;
+	verify)
+		completion="--help"
+		;;
    	*)
 	completion=$opts
    	;;
@@ -59,9 +69,6 @@ _addhost()
 
 
 
-complete -F _addhost addhost
-complete -F _addhost addtemplate
-complete -F _addhost addgroup
 complete -F _addhost findhost
 complete -F _addhost vimcfg
-complete -F _addhost okconfig
+complete -F _okconfig okconfig

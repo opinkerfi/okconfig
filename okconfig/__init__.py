@@ -166,7 +166,8 @@ def addhost(host_name, address=None, group_name=None, templates=None, use=None, 
 		if os.path.isfile(destination_file):
 			raise OKConfigError("Destination file '%s' already exists." % destination_file)
 		if group_name not in get_groups():
-			raise OKConfigError("Group %s does not exist" % group_name)
+			#raise OKConfigError("Group %s does not exist" % group_name)
+			addgroup(group_name)
 		if host_name in get_hosts():
 			filename = pynag.Model.Host.objects.get_by_shortname(host_name)._meta['filename']
 			raise OKConfigError("Host named '%s' already exists in %s" % (host_name, filename))
@@ -352,6 +353,19 @@ def findhost(host_name):
 		return filename
 	except ValueError:
 		return None
+
+def removehost(host_name, recursive=True):
+	""" Removes a specified host. And possibly all services for that host.
+	
+	Args:
+		host_name -- Name of the host to remove
+		recursive -- If true: Also delete all services that belong to this host.
+	Examples:
+	>>> removehost('host.example.com', recursive=True)
+	"""
+	my_host = pynag.Model.Host.objects.get_by_shortname(host_name)
+	my_host.delete(cascade=recursive)
+	return True
 
 def get_templates():
 	""" Returns a list of available templates """

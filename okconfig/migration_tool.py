@@ -17,6 +17,13 @@
 
 """
 TEMPLATE_VERSION HISTORY
+
+# Version 2.1 (2012-05-30)
+    * All check_commands in templates directory have been given an okc- prefix
+    * Deprecated host templates have been removed
+    * default-host changed to okc-default-host
+    * hostgroups removed
+
 # Version 2 (2011-07-01):
     * All service names have been given an okc- prefix
 
@@ -87,6 +94,57 @@ def upgrade_to_version_2():
             print ".. %s updated" % new_use
             service.save()
     print "ok"
+def upgrade_to_version_2_1():
+    """ Upgrades all nagios configuration file according to new okconfig templates
+    
+    Biggest change here is that all template commands have been given a okc- prefix
+    
+    We have to find all services that have invalid check_command.
+    """
+    print "Upgrading to config version 2.1 ...",
+    all_commands = Model.Command.objects.all
+    all_commands = map(lambda x: x.command_name, all_commands)
+    my_services = Model.Service.objects.all
+    for i in my_services:
+        # Only work on services that actually define check_command
+        if not i._defined_attributes.has_key('check_command'): continue
+        
+        # We only need the actual command, not any parameters
+        check_command = i.check_command.split('!',1)[0]
+        
+        # If check_command is valid, then there is nothing to do
+        if check_command in all_commands: continue
+        
+        # if command is missing, it might have been renamed by okconfig:
+        if "okc-%s"%check_command in all_commands:
+            i.check_command = "okc-%s"%i.check_command
+            i.save()
+            print "%s renamed to okc-%s"%(check_command,check_command)
+            
+    # Check for hosts
+    deprecated_hostnames = ('generic-server-dev', 'generic-server-prod', 'generic-server-crit', 'generic-server', 'default-host')
+    new_hostname = "okc-default-host"
+    
+    all_templates = Model.Host.objects.filter(name__contains='')
+    all_templates = map(lambda x: x.name, all_templates)
+    my_hosts = Model.Host.objects.filter(use__contains="")
+    for host in my_hosts:
+        old_use = host.use.split(',')
+        new_use = []
+        for i in old_use:
+            okc_name = 'okc-%s' % i
+            if not i in all_templates and okc_name in all_templates:
+                # parent does not exist, but okc-parent does
+                i = okc_name
+            elif not i in all_templates and i in deprecated_hostnames:
+                i = new_hostname
+            new_use.append( i )
+        #new_use = ','.join(new_use)
+        if old_use != new_use:
+            host.use = ','.join(new_use)
+            print ".. %s updated" % old_use
+            host.save() 
+    print "ok"
 
 def rename_oktemplate_services():
     """ To change config version to 2.0 This is a one-off action. Not part of any upgrade """
@@ -109,6 +167,8 @@ def upgrade_okconfig():
         upgrade_to_version_1_1()
     if template_version >= 2:
         upgrade_to_version_2()
+    if template_version >= 2.1:
+        upgrade_to_version_2_1()
 
 if __name__ == '__main__':
     upgrade_okconfig()
