@@ -6,7 +6,7 @@ _okconfig()
     prev="${COMP_WORDS[COMP_CWORD-1]}"
     case "${COMP_WORDS[0]}" in
 	okconfig)
-		opts="--help addhost addgroup addtemplate addcontact addservice upgrade verify init"
+		opts="--help addhost addgroup addtemplate addcontact addservice upgrade verify install init"
 		;;
 	findhost)
 		opts=$(grep host_name /var/log/nagios/objects.cache | awk '{ print $2 }' | sort | uniq)

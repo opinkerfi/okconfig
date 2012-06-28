@@ -421,7 +421,7 @@ def install_nsclient(remote_host, domain, username, password):
 		raise OKConfigError('Cannot reach remote_host on port 445, aborting...')
 	
 	# Try to authenticate with remote host
-	authcommand = 'winexe --reinstall -U %s/%s%%"%s" //%s cmd /c dir' % (domain,username,password,remote_host)
+	authcommand = 'winexe --reinstall -U %s/%s%%"%s" //%s "cmd /c dir"' % (domain,username,password,remote_host)
 	result = runCommand(authcommand)
 	if result == False:
 		raise OKConfigError('Cannot authenticate')
@@ -520,12 +520,13 @@ def runCommand(command):
 	stdout, stderr = proc.communicate('through stdin to stdout')
 	if proc.returncode > 0:
 		error_string = "Could not run command (return code= %s)\n" % proc.returncode
-		error_string += "Error: %s\n" % (stderr.strip())
+		error_string += "Error was: %s\n" % (stderr.strip())
 		error_string += "Command: %s\n" % command
+		error_string += "Output: %s\n" % (stdout.strip())
 		if proc.returncode == 127: # File not found, lets print path
 			path=getenv("PATH")
 			error_string += "Check if y/our path is correct: %s" % path
-		raise BaseException( error_string )
+		raise OKConfigError( error_string )
 	else:
 		return stdout
 
