@@ -420,12 +420,13 @@ def install_nsclient(remote_host, domain, username, password):
 	if not network_scan.check_tcp(remote_host, 445, timeout=5):
 		raise OKConfigError('Cannot reach remote_host on port 445, aborting...')
 	
-	# Try to authenticate with remote host
-	authcommand = 'winexe --reinstall -U %s/%s%%"%s" //%s "cmd /c dir"' % (domain,username,password,remote_host)
+	# Try to authenticate with remote host and run a test command
+	authcommand = 'winexe --reinstall -U "%s/%s%%%s" "//%s" "cmd /c echo test"' % (domain,username,password,remote_host)
 	result = runCommand(authcommand)
-	if result == False:
+	if result[0] != 0:
 		raise OKConfigError('Cannot authenticate')
-	raise NotImplementedError()
+	result = runCommand("%s/install_nsclient.sh '%s' --domain '%s' --user '%s' --password '%s'" % (config.nsclient_installfiles,remote_host,domain,username,password))
+	return result
 
 def check_agent(host_name):
 	""" Checks a remote host if it has a valid okconfig client configuration
@@ -518,17 +519,18 @@ def runCommand(command):
 	"""
 	proc = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE,stderr=subprocess.PIPE,)
 	stdout, stderr = proc.communicate('through stdin to stdout')
+	result = proc.returncode,stdout,stderr
 	if proc.returncode > 0:
-		error_string = "Could not run command (return code= %s)\n" % proc.returncode
-		error_string += "Error was: %s\n" % (stderr.strip())
-		error_string += "Command: %s\n" % command
-		error_string += "Output: %s\n" % (stdout.strip())
+		error_string = "* Could not run command (return code= %s)\n" % proc.returncode
+		error_string += "* Error was:\n%s\n" % (stderr.strip())
+		error_string += "* Command was:\n%s\n" % command
+		error_string += "* Output was:\n%s\n" % (stdout.strip())
 		if proc.returncode == 127: # File not found, lets print path
 			path=getenv("PATH")
 			error_string += "Check if y/our path is correct: %s" % path
 		raise OKConfigError( error_string )
 	else:
-		return stdout
+		return result
 
 def _apply_template(template_name,destination_file, **kwargs):
 	""" Applies okconfig template to filename, doing replacements from kwargs in the meantime
@@ -567,5 +569,6 @@ class OKConfigError(Exception):
 #all_templates = get_templates()
 if __name__ == '__main__':
 	var = 'This leaves room for some unit testing while being run from the command line'
-	print install_nrpe('eftirlit.ok.is', "prufa","prufa")
+	for i in install_okagent(remote_host='ok-mgmt.ok.is', username="palli", password="this is a good land", domain="ok"):
+		print i
 

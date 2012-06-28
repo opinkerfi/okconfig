@@ -86,7 +86,7 @@ def remote_install():
 
 Examples:
   # %prog install mylinuxserver --ssh --user root --password lol" 
-  # %prog install mywinserver --winexe --user administrator --password lol" 
+  # %prog install mywinserver --winexe --user administrator --password lol --domain lol" 
 
 Run %prog install --help for full list of command line arguments.
 '''
@@ -94,6 +94,8 @@ Run %prog install --help for full list of command line arguments.
                       help="Username with admin privileges on remote box")
     parser.add_option("--password", dest="password",
                       help="Password to use to connect",default=None)
+    parser.add_option("--domain", dest="domain",
+                      help="Use this windows domain (works with --winexe)",default=None)
     parser.add_option("--ssh", dest="ssh", action="store_true",
                       default=False,help="Use ssh to connect")
     parser.add_option("--verbose", dest="verbose", action="store_true",
@@ -114,7 +116,7 @@ Run %prog install --help for full list of command line arguments.
         method = None    
     
     for host in args:
-        exit_status,stdout,stderr = okconfig.install_okagent(remote_host=host, username=opts.user, password=opts.password)
+        exit_status,stdout,stderr = okconfig.install_okagent(remote_host=host, domain=opts.domain, username=opts.user, password=opts.password)
         if exit_status == 0:
             print "Install script on %s successful" % ( host )
         else:
