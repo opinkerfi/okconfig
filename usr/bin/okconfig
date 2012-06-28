@@ -35,6 +35,7 @@ Common okconfig commands:
   addgroup      add a new host/contact/service group
   addcontact    add a new contact
   init          Initilize nagios to use okconfig
+  install       Install an agent on a remote server
   upgrade       runs migration routines in case of okconfig upgrades
   verify        verifies current okconfig installation
 
@@ -69,6 +70,8 @@ def parse_arguments():
         removehost()
     elif sys.argv[1] == "init":
         init()
+    elif sys.argv[1] == "install":
+        remote_install()
     elif sys.argv[1] == "help":
         parser.print_help()
     elif sys.argv[1] == "--help":
@@ -77,6 +80,50 @@ def parse_arguments():
         parser.error("Unknown command '%s'" % sys.argv[1])
 
 
+def remote_install():
+    ''' Install an ok agent on a remote server '''
+    parser.usage = ''' %prog install <remote_server> [options]
+
+Examples:
+  # %prog install mylinuxserver --ssh --user root --password lol" 
+  # %prog install mywinserver --winexe --user administrator --password lol" 
+
+Run %prog install --help for full list of command line arguments.
+'''
+    parser.add_option("--user", dest="user",
+                      help="Username with admin privileges on remote box")
+    parser.add_option("--password", dest="password",
+                      help="Password to use to connect",default=None)
+    parser.add_option("--ssh", dest="ssh", action="store_true",
+                      default=False,help="Use ssh to connect")
+    parser.add_option("--verbose", dest="verbose", action="store_true",
+                      default=False,help="Show output of install script")
+    parser.add_option("--winexe", dest="winexe", action="store_true",
+                      default=False,help="use winexe to connect")
+    parser.add_option("--host", dest="host", help="remote host to connect to")
+    (opts,args) = parser.parse_args(sys.argv[2:])
+    if opts.host: args.append(opts.host)
+
+    if len(args) == 0: parser.error("Please specify at least one host on the command line.")    
+
+    if opts.ssh:
+        method = "ssh"
+    elif opts.winexe:
+        method = "winexe"
+    else:
+        method = None    
+    
+    for host in args:
+        exit_status,stdout,stderr = okconfig.install_okagent(remote_host=host, username=opts.user, password=opts.password)
+        if exit_status == 0:
+            print "Install script on %s successful" % ( host )
+        else:
+            print "Install script on %s failed with exit_status %s" % (host, exit_status)
+            print "Errors:"
+            print stderr
+        if opts.verbose:
+            print "Script output:"
+            print stdout
 
 
 

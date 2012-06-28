@@ -1,31 +1,59 @@
 #!/bin/sh
 
-DOMAIN="LSH"
-DOMAIN_USER="eai-admin"
-DOMAIN_PASSWORD="BREYTA"
+DOMAIN=""
+DOMAIN_USER=""
+DOMAIN_PASSWORD=""
+HOSTLIST=""
 BATCHFILE='c:\temp\nsclient\local_install.bat'
 TMPFILE=`mktemp`
 LOGFILE=/var/log/install_nsclient.log
 
-echo -n "Domain Name (DOMAIN): "
-read DOMAIN
-echo -n "Domain user (user): "
-read DOMAIN_USER
-stty -echo
-echo -n "Domain password: "
-read DOMAIN_PASSWORD
-stty echo
+while [ $# -gt 0 ]; do
+	arg=$1 ; shift
+	case $arg in
+	"--domain")
+		DOMAIN=$1 ; shift ;;
+	"--user")
+		DOMAIN_USER="$1" ; shift;;
+	"--password")
+		DOMAIN_PASSWORD="$1" ; shift;;
+	*)
+		HOSTLIST="$HOSTLIST $arg" ; exit 3 ;;
 
-echo
+	esac
+done
 
-for i in $@ ; do
+
+if [ -z "$DOMAIN" ]; then
+	echo -n "Domain Name (DOMAIN): "
+	read DOMAIN
+fi
+
+
+if [ -z "$DOMAIN_USER" ]; then
+  echo -n "Domain user (user): "
+  read DOMAIN_USER
+fi
+
+
+if [ -z "$DOMAIN_PASSWORD" ]; then
+  stty -echo
+  echo -n "Domain password: "
+  read DOMAIN_PASSWORD
+  stty echo
+fi
+
+exit
+
+for i in $HOSTLIST ; do
 	echo -n "Starting install of $i ... " | tee -a $LOGFILE
 	mkdir -p /mnt/$i
 	mount -t cifs -o username="$DOMAIN_USER",password="$DOMAIN_PASSWORD"  //$i/c$ /mnt/$i/
 	if [ $? -ne 0 ]; then
-		echo " failed. Could not copy files to $i"
+		echo " failed. Could not mount $i"
 		continue
 	fi
+	
 	mkdir -p /mnt/$i/temp/
 	test -d /mnt/$i/temp/ && mv /mnt/$i/temp/nsclient /mnt/$i/temp/nsclient.old
 	cp -r /var/samba/nsclient/ /mnt/$i/temp/

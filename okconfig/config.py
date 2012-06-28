@@ -26,7 +26,7 @@ nagios_config           = "/etc/nagios/nagios.cfg"
 template_directory      = "/etc/nagios/okconfig/templates"
 examples_directory      = "/etc/nagios/okconfig/examples"
 destination_directory   = "/etc/nagios/okconfig/"
-
+install_nrpe_script     = "/tmp/install_nrpe.sh"
 try:
     if os.path.isfile(config_file):
         for line in open(config_file).readlines():
@@ -40,5 +40,6 @@ try:
             elif keyword == "template_directory": template_directory = value
             elif keyword == "examples_directory": examples_directory = value
             elif keyword == "destination_directory": destination_directory = value
+            elif keyword == "install_nrpe_script": install_nrpe_script = value
 except ImportError:
     raise

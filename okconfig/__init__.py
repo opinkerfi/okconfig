@@ -13,6 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from okconfig import network_scan
 
 """This module provides an interface to okconfig utilities
 and operations such as adding new hosts to Nagios or adding
@@ -45,6 +46,7 @@ import socket
 
 import pynag
 import pynag.Model
+import paramiko
 pynag.Model.pynag_directory = destination_directory
 from os import getenv
 
@@ -404,7 +406,7 @@ def get_groups():
 	result.sort()
 	return result
 		
-def install_nsclient(remote_host, username, password):
+def install_nsclient(remote_host, domain, username, password):
 	""" Logs into remote (windows) host and installs NSClient.
 	
 	Args:
@@ -415,6 +417,14 @@ def install_nsclient(remote_host, username, password):
 	Returns:
 	 True if operation was successful. Otherwise False
 	"""
+	if not network_scan.check_tcp(remote_host, 445, timeout=5):
+		raise OKConfigError('Cannot reach remote_host on port 445, aborting...')
+	
+	# Try to authenticate with remote host
+	authcommand = 'winexe --reinstall -U %s/%s%%"%s" //%s cmd /c dir' % (domain,username,password,remote_host)
+	result = runCommand(authcommand)
+	if result == False:
+		raise OKConfigError('Cannot authenticate')
 	raise NotImplementedError()
 
 def check_agent(host_name):
@@ -427,6 +437,29 @@ def check_agent(host_name):
 	"""
 	raise NotImplementedError()
 
+def install_okagent(remote_host,username,password=None, domain=None, install_method=None):
+	''' Installs an okagent to remote host using either winexe or ssh method
+	
+	Args:
+	 remote_host    -- Hostname/IPAddress of remote host
+	 username       -- Username to use
+	 password       -- Password to use. If None, try to use ssh keys
+	 install_method -- Use either "winexe" or "ssh". Leave empty for autodetect. 
+	Returns:
+	 exit_status,stdout,stderr
+    '''
+	if not install_method or install_method == '':
+		if network_scan.check_tcp(remote_host, 22, timeout=5):
+			install_method = 'ssh'
+		elif network_scan.check_tcp(remote_host, 445, timeout=5):
+			install_method = 'winexe'
+	
+	if install_method == 'ssh':
+		return install_nrpe(remote_host=remote_host,username=username, password=password)
+	elif install_method == 'winexe':
+		return install_nsclient(remote_host=remote_host,username=username, password=password, domain=domain)
+	raise OKConfigError("Cannot connect to %s on port 22 or 445. No install method available" % (remote_host))
+
 def install_nrpe(remote_host, username, password=None):
 	""" Logs into remote (unix) host and install nrpe-client.
 	
@@ -438,7 +471,39 @@ def install_nrpe(remote_host, username, password=None):
 	Returns:
 	 True if operation was successful.
 	"""
-	raise NotImplementedError()
+	if not network_scan.check_tcp(remote_host, 22, timeout=5):
+		raise OKConfigError('Cannot reach remote_host on port 22, aborting...')
+	ssh = paramiko.SSHClient()
+	ssh.set_missing_host_key_policy( paramiko.AutoAddPolicy() )
+	ssh.connect(remote_host, username=username, password=password)
+	
+	
+	# Try a test command on the remote server to see if we are connected
+	test_command = 'echo -e connection test'
+	chan = ssh.get_transport().open_session()
+	chan.exec_command( test_command )
+	exit_status = chan.recv_exit_status()
+	stdout = chan.recv(-1).strip()
+	stderr = chan.recv_stderr(-1).strip()
+	if exit_status != 0:
+		ssh.close()
+		raise OKConfigError('Exit code %s when trying to run test command\noutput: %s\nstderr: %s' % (chan.exit_status, stdout,stderr) )
+	
+	# Uploading install script to remote server
+	sftp = ssh.open_sftp()
+	sftp.put(config.install_nrpe_script, 'install_nrpe.sh')
+	
+	# Executing remote script 
+	# We need to do some hoola-hoops to get the exit code
+	chan = ssh.get_transport().open_session()
+	chan.exec_command('bash install_nrpe.sh')
+	exit_status = chan.recv_exit_status()
+	stdout = chan.recv(-1).strip()
+	stderr = chan.recv_stderr(-1).strip()
+	
+	return exit_status,stdout,stderr
+	
+	
 
 
 def runCommand(command):
@@ -501,5 +566,5 @@ class OKConfigError(Exception):
 #all_templates = get_templates()
 if __name__ == '__main__':
 	var = 'This leaves room for some unit testing while being run from the command line'
-	print get_groups()
+	print install_nrpe('eftirlit.ok.is', "prufa","prufa")
 
