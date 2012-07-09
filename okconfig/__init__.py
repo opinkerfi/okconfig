@@ -41,6 +41,7 @@ import config
 nagios_config = config.nagios_config
 template_directory =config.template_directory
 examples_directory= config.examples_directory
+examples_directory_local= config.examples_directory_local
 destination_directory = config.destination_directory
 import socket
 
@@ -376,11 +377,13 @@ def get_templates():
 		raise OKConfigError("Examples directory does not exist: %s" % examples_directory)
 	filelist = os.listdir(examples_directory)
 	for file in filelist:
-		if os.path.isfile(examples_directory + "/" + file) and file.endswith('.cfg-example'):
+		if os.path.isfile(examples_directory + "/" + file): filename = examples_directory + "/" + file
+		if os.path.isfile(examples_directory_local + "/" + file): filename = examples_directory_local + "/" + file
+		if file.endswith('.cfg-example'):
 			template_name = file[:-12]
 			template_parents = []
 			template_friendly_name = ''
-			result[template_name] = {'parents':template_parents, 'name':template_friendly_name}
+			result[template_name] = {'parents':template_parents, 'filename':filename, 'name':template_friendly_name}
 	return result
 
 def get_hosts():
@@ -545,7 +548,10 @@ def _apply_template(template_name,destination_file, **kwargs):
     Returns:
         List of filenames that have been written to
     """
-	sourcefile = "%s/%s.cfg-example" % (examples_directory,template_name)
+	all_examples = get_templates()
+	if not all_examples.has_key(template_name):
+		raise OKConfigError('Template %s cannot be found' % template_name)
+	sourcefile = all_examples[template_name]['filename'] 
 	
 	# Clean // from destination file
 	destination_file = destination_file.replace('//','/')

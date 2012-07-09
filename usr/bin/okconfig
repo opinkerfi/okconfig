@@ -48,6 +48,8 @@ Examples:
  %prog addtemplate <host_name> --template oracle
 """
 parser = OptionParser(usage=usage)
+parser.add_option("--debug", dest="debug", action="store_true",
+	default=False,help="Print extra debugging information")
 def parse_arguments():
     ''' Parse command line arguments and run command specified commands '''
     if len(sys.argv) < 2:
@@ -349,5 +351,5 @@ if __name__ == '__main__':
     try:
         parse_arguments()
     except Exception, e:
-        print "Error: ", e
+        	print "Error: ", e
 
