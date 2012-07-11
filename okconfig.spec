@@ -5,8 +5,8 @@
 
 Summary: Python Nagios Template management and configuration power tools
 Name: okconfig
-Version: 1.0.5
-Release: 7%{?dist}
+Version: 1.0.6
+Release: 1%{?dist}
 Source0: http://opensource.is/files/%{name}-%{version}.tar.gz
 License: GPLv2
 Group: System Environment/Libraries
@@ -93,6 +93,22 @@ rm -fr $RPM_BUILD_ROOT
 okconfig init
 
 %changelog
+* Wed Jul 11 2012 Pall Sigurdsson <palli@opensource.is> 1.0.6-1
+- support for local .examples files implemented (palli@opensource.is)
+- improvements to remote installation for windows (palli@opensource.is)
+- dependencies for .spec file updated. Winexe fixes (palli@opensource.is)
+- install_okagent.sh placed for linux agent installation (palli@opensource.is)
+- install_nrpe and install_nsclient implemented (palli@opensource.is)
+- Default thresholds for linux check_proc increased to warning=500
+  critical=1000 (palli@opensource.is)
+- init subcommand feature added (palli@opensource.is)
+- bugfix in removehost when removing multiple hosts (palli@opensource.is)
+- okconfig- deprecated and removed (palli@opensource.is)
+- okc- prefix added to all commands. migrate script included
+  (palli@opensource.is)
+- removehost functionality added (palli@opensource.is)
+-  etc/nagios/okconfig/templates directory added to rpm (palli@opensource.is)
+
 * Thu May 31 2012 Tomas Edwardsson <tommi@tommi.org> 1.0.5-7
 - Fixed permissions in spec file for /etc/nagios/okconfig (tommi@tommi.org)
 - bash_completion updated to reflect new syntax (palli@opensource.is)
