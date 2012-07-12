@@ -8,8 +8,8 @@ define host {
 	host_name	HOSTNAME
 	address		IPADDR
 
-        contact_groups  +GROUP
-        hostgroups      +GROUP
+        contact_groups  GROUP
+        hostgroups      GROUP
 };
 
 
@@ -21,8 +21,8 @@ define service {
 	name				HOSTNAME
 	use				GROUP-default_service
 	host_name			HOSTNAME
-	contact_groups			+GROUP
-	service_groups			+GROUP
+	contact_groups			GROUP
+	service_groups			GROUP
 	register			0
 }
 
@@ -31,7 +31,7 @@ define service {
 # We are still using Ping as a service in addition to check-host-alive, all hosts
 # deserve a ping
 define service {
-        use                             HOSTNAME,generic-service
+        use                             generic-service
         host_name                       HOSTNAME
         service_description             Ping
         check_command                   check_ping!100.0,20%!500.0,60%

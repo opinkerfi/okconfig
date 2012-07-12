@@ -1,9 +1,10 @@
 # TODO: Dont forget to set SNMP Community
 
+
+# cisco-HOSTNAME -- A template for all cisco checks to inherit snmp settings from
 define service {
 	name			cisco-HOSTNAME
-	#use			_ROLE_-_STAGE_
-	#host_name		_HOSTNAME_
+	#host_name		HOSTNAME
 	
 	#_SNMP_COMMUNITY	public
 	register		0

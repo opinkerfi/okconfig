@@ -3,8 +3,9 @@
 # check disk usage on linux host
 # __EXTRAOPTS = Optional Extra arguments to pass into disks
 define service {
-	use			HOSTNAME,okc-linux-check_disks
-	#host_name		HOSTNAME
+	use			okc-linux-check_disks
+	host_name		HOSTNAME
+	contact_groups		GROUP
 
 	#service_description	Disk Usage
 	#__EXTRAOPTS		-f /var:10:5,/boot:0:0
@@ -12,8 +13,9 @@ define service {
 
 
 define service {
-	use			HOSTNAME,okc-linux-check_load
-	#host_name		HOSTNAME
+	use			okc-linux-check_load
+	host_name		HOSTNAME
+	contact_groups		GROUP
 
 	#service_description	Load
 	#__WARNING		15,15,15
@@ -22,8 +24,9 @@ define service {
 
 
 define service {
-	use			HOSTNAME,okc-linux-check_uptime
-	#host_name		HOSTNAME
+	use			okc-linux-check_uptime
+	host_name		HOSTNAME
+	contact_groups		GROUP
 
 
 	#service_description	Uptime
@@ -32,8 +35,9 @@ define service {
 
 
 define service {
-	use			HOSTNAME,okc-linux-check_procs
-	#host_name		HOSTNAME
+	use			okc-linux-check_procs
+	host_name		HOSTNAME
+	contact_groups		GROUP
 
 	#service_description	Running Processes
 	#__WARNING		250
@@ -42,8 +46,9 @@ define service {
 }
 
 define service {
-        use                   HOSTNAME,okc-linux-check_time
-	#host_name		HOSTNAME
+        use                   okc-linux-check_time
+	host_name		HOSTNAME
+	contact_groups		GROUP
 
 
         #service_description	Time
@@ -53,8 +58,10 @@ define service {
 
 
 define service {
-        use                    HOSTNAME,okc-linux-check_proc
-	#host_name		HOSTNAME
+        use                    okc-linux-check_proc
+	host_name		HOSTNAME
+	contact_groups		GROUP
+
         __NAME                  crond
         __WARNING               1:
         __CRITICAL              :10
@@ -66,8 +73,10 @@ define service {
 
 
 define service {
-        use                    HOSTNAME,okc-linux-check_ssh
+        use                    okc-linux-check_ssh
 	host_name		HOSTNAME
+	contact_groups		GROUP
+
 
 
         #service_description     SSH Connectivity
@@ -76,8 +85,9 @@ define service {
 
 
 define service {
-        use                    HOSTNAME,okc-linux-check_swap
+        use                    okc-linux-check_swap
         host_name               HOSTNAME
+	contact_groups		GROUP
 
 	#__WARNING		50   ; Default 50%
 	#__CRITICAL		20   ; Default 20%
@@ -85,15 +95,19 @@ define service {
 }
 
 define service {
-	use			HOSTNAME,okc-linux-check_cpu
+	use			okc-linux-check_cpu
 	host_name		HOSTNAME
+	contact_groups		GROUP
+	
 	#service_description	Uptime
 }
 
 
 define service {
-	use			HOSTNAME,okc-linux-check_updates
+	use			okc-linux-check_updates
 	host_name		HOSTNAME
+	contact_groups		GROUP
+
 	#service_description	Security Updates
 	register		0
 }
@@ -104,8 +118,9 @@ define service {
 # These are not enabled by default
 
 define service {
-	use			HOSTNAME,okc-linux-check_selinux
+	use			okc-linux-check_selinux
 	host_name		HOSTNAME
+	contact_groups		GROUP
 	
 	register		0
 	#__STATUS		Enforcing
@@ -114,8 +129,9 @@ define service {
 
 
 define service {
-	use			HOSTNAME,okc-linux-check_bond
+	use			okc-linux-check_bond
 	host_name		HOSTNAME
+	contact_groups		GROUP
 	
 	register		0
 	#__INTERFACE		bond0
@@ -124,8 +140,9 @@ define service {
 
 
 define service {
-	use			HOSTNAME,okc-linux-check_multipath
+	use			okc-linux-check_multipath
 	host_name		HOSTNAME
+	contact_groups		GROUP
 	
 	register		0
 	#__NUMBER_OF_PATHS	4

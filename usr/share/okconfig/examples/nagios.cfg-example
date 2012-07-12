@@ -1,29 +1,37 @@
 
 
 define service {
-        #service_description     Nagios Configuration
-        use                    HOSTNAME,okc-nagios-check_configuration
+        #service_description	Nagios Configuration
+        use			okc-nagios-check_configuration
+	host_name		HOSTNAME
+	contact_groups		GROUP
 }
 
 
 define service {
 	#service_description	Nagios Ghost Services
-	use			HOSTNAME,okc-nagios-check_ghostservices
+	use			okc-nagios-check_ghostservices
+	host_name		HOSTNAME
+	contact_groups		GROUP
 }
 
 
 define service {
-         __NAME                         nagios
-         use                            HOSTNAME,okc-linux-check_proc
-         host_name                      HOSTNAME
-         service_description            Process nagios
+	use			okc-linux-check_proc
+	host_name		HOSTNAME
+	contact_groups		GROUP
+	
+	__NAME			nagios
+	service_description	Process nagios
 }
 
 
 define service {
-         __NAME                         npcd
-         use                            HOSTNAME,okc-linux-check_proc
-         host_name                      HOSTNAME
-         service_description            Process npcd
+	use                            okc-linux-check_proc
+	host_name                      HOSTNAME
+	contact_groups			GROUP
+        
+	__NAME                         npcd
+	service_description            Process npcd
 }
 
