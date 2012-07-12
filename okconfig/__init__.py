@@ -56,6 +56,7 @@ import subprocess
 import helper_functions
 required_gateways = []
 
+pynag.Model.cfg_file = config.nagios_config
 
 
 def is_valid():
@@ -156,7 +157,7 @@ def addhost(host_name, address=None, group_name=None, templates=None, use=None, 
 		elif 'ciscoswitch' in templates:
 			use = 'generic-switch'		
 		else:
-			use = 'default-host'
+			use = 'okc-default-host'
 	okconfig_groups = get_groups()
 	if len(okconfig_groups) == 0:
 		addgroup(group_name='default',alias='OKconfig default group')
@@ -199,8 +200,16 @@ def addtemplate(host_name, template_name, group_name=None,force=False):
 	Returns:
 	 True if operation is succesful.
 	"""
-	hostfile = findhost(host_name)
-	if group_name is None: group_name="default"
+	try:
+		host = pynag.Model.Host.objects.get_by_shortname(host_name)
+	except ValueError:
+		raise OKConfigError("Host '%s' was not found" % host_name)		
+	hostfile = host.get_filename()
+	
+	# If no group name is specified, try host.contact_groups
+	if group_name is None: group_name = host.contact_groups
+	if group_name is None: group_name = "default"
+	
 	if hostfile is None:
 		raise OKConfigError("Host '%s' was not found" % host_name)
 	if template_name not in get_templates().keys():
@@ -399,8 +408,9 @@ def get_groups():
 	""" Returns a list of available groups """
 	result = []
 	group_directory = "%s/groups" % destination_directory
+	# If group_directory does not exist, we dont have any groups
 	if not os.path.isdir(group_directory):
-		raise OKConfigError("groups directory does not exist: %s" % group_directory)
+		return result
 	filelist = os.listdir(group_directory)
 	for file in filelist:
 		if os.path.isfile(group_directory + "/" + file) and file.endswith('.cfg'):
