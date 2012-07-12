@@ -5,7 +5,7 @@
 
 Summary: Python Nagios Template management and configuration power tools
 Name: okconfig
-Version: 1.0.6
+Version: 1.0.7
 Release: 1%{?dist}
 Source0: http://opensource.is/files/%{name}-%{version}.tar.gz
 License: GPLv2
@@ -93,6 +93,11 @@ rm -fr $RPM_BUILD_ROOT
 okconfig init
 
 %changelog
+* Thu Jul 12 2012 Pall Sigurdsson <palli@opensource.is> 1.0.7-1
+- Getting rid of multi-inheritance in examples (palli@opensource.is)
+- unspecified group in addtemplate now uses the same group as host
+  (palli@opensource.is)
+
 * Wed Jul 11 2012 Pall Sigurdsson <palli@opensource.is> 1.0.6-1
 - support for local .examples files implemented (palli@opensource.is)
 - improvements to remote installation for windows (palli@opensource.is)
