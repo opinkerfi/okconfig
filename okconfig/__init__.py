@@ -435,10 +435,10 @@ def install_nsclient(remote_host, domain, username, password):
 	
 	# Try to authenticate with remote host and run a test command
 	authcommand = 'winexe --reinstall -U "%s/%s%%%s" "//%s" "cmd /c echo test"' % (domain,username,password,remote_host)
-	result = runCommand(authcommand)
+	result = helper_functions.runCommand(authcommand)
 	if result[0] != 0:
 		raise OKConfigError('Cannot authenticate')
-	result = runCommand("%s/install_nsclient.sh '%s' --domain '%s' --user '%s' --password '%s'" % (config.nsclient_installfiles,remote_host,domain,username,password))
+	result = helper_functions.runCommand("%s/install_nsclient.sh '%s' --domain '%s' --user '%s' --password '%s'" % (config.nsclient_installfiles,remote_host,domain,username,password))
 	return result
 
 def check_agent(host_name):
@@ -516,34 +516,6 @@ def install_nrpe(remote_host, username, password=None):
 	stderr = chan.recv_stderr(-1).strip()
 	
 	return exit_status,stdout,stderr
-	
-	
-
-
-def runCommand(command):
-	"""runCommand: Runs command from the shell prompt.
-
-	Arguments:
-		command: string containing the command line to run
-	Returns:
-		stdout/stderr of the command run
-	Raises:
-		BaseException if returncode > 0
-	"""
-	proc = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE,stderr=subprocess.PIPE,)
-	stdout, stderr = proc.communicate('through stdin to stdout')
-	result = proc.returncode,stdout,stderr
-	if proc.returncode > 0:
-		error_string = "* Could not run command (return code= %s)\n" % proc.returncode
-		error_string += "* Error was:\n%s\n" % (stderr.strip())
-		error_string += "* Command was:\n%s\n" % command
-		error_string += "* Output was:\n%s\n" % (stdout.strip())
-		if proc.returncode == 127: # File not found, lets print path
-			path=getenv("PATH")
-			error_string += "Check if y/our path is correct: %s" % path
-		raise OKConfigError( error_string )
-	else:
-		return result
 
 def _apply_template(template_name,destination_file, **kwargs):
 	""" Applies okconfig template to filename, doing replacements from kwargs in the meantime

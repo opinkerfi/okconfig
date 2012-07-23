@@ -17,6 +17,7 @@
 import subprocess
 import socket
 from pynag import Model
+from helper_functions import runCommand
 
 class ScannedHost:
 	"""Simple datastructure for a recently portscanned host"""

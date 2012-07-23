@@ -62,7 +62,30 @@ def group_exists(group_name):
         return False
     return result
 
+def runCommand(command):
+    """runCommand: Runs command from the shell prompt.
 
+     Arguments:
+         command: string containing the command line to run
+     Returns:
+         stdout/stderr of the command run
+     Raises:
+         BaseException if returncode > 0
+     """
+    proc = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE,stderr=subprocess.PIPE,)
+    stdout, stderr = proc.communicate('through stdin to stdout')
+    result = proc.returncode,stdout,stderr
+    if proc.returncode > 0:
+        error_string = "* Could not run command (return code= %s)\n" % proc.returncode
+        error_string += "* Error was:\n%s\n" % (stderr.strip())
+        error_string += "* Command was:\n%s\n" % command
+        error_string += "* Output was:\n%s\n" % (stdout.strip())
+        if proc.returncode == 127: # File not found, lets print path
+            path=getenv("PATH")
+            error_string += "Check if y/our path is correct: %s" % path
+        raise OKConfigError( error_string )
+    else:
+        return result
 
 default_service_template = '''
 # This is a template service for HOSTNAME
