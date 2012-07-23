@@ -8,3 +8,4 @@ build
 dist
 etc/version
 rpm-build
+.idea
