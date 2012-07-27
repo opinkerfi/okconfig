@@ -5,48 +5,56 @@
 
 
 define service {
-	use		HOSTNAME,okc-mail-check_bl
+	use		okc-mail-check_bl
 	host_name	HOSTNAME
+	contact_groups	GROUP
 }
 define service {
-	use		HOSTNAME,okc-mail-check_imap
+	use		okc-mail-check_imap
 	host_name	HOSTNAME
+	contact_groups	GROUP
 }
 
 define service {
-	use		HOSTNAME,okc-mail-check_smtp
+	use		okc-mail-check_smtp
 	host_name	HOSTNAME
-}
-
-
-
-
-define service {
-	use		HOSTNAME,okc-exchange-pending-routing
-	host_name	HOSTNAME
+	contact_groups	GROUP
 }
 
 
 
 
 define service {
-	use		HOSTNAME,okc-exchange-remote-queue-length	
+	use		okc-exchange-pending-routing
 	host_name	HOSTNAME
+	contact_groups	GROUP
+}
+
+
+
+
+define service {
+	use		okc-exchange-remote-queue-length	
+	host_name	HOSTNAME
+	contact_groups	GROUP
 }
 define service {
-	use		HOSTNAME,okc-exchange-check_owa
+	use		okc-exchange-check_owa
 	host_name	HOSTNAME
+	contact_groups	GROUP
 }
 define service {
-	use		HOSTNAME,okc-exchange-check_owa_https
+	use		okc-exchange-check_owa_https
 	host_name	HOSTNAME
+	contact_groups	GROUP
 }
 # exchange-check_services
 # __EXCHANGE_SKIP_SERVICES = Use this if any specific exchange services
 # are not supposed to be running.
 define service {
-	use		HOSTNAME,okc-exchange-check_services
+	use		okc-exchange-check_services
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	register	0
 
 	#__EXCHANGE_SKIP_SERVICES	exclude=MSExchangeImap4
@@ -56,193 +64,224 @@ define service {
 
 # Following is mostly for statistics and such
 define service {
-	use		HOSTNAME,okc-exchange-mem-max
+	use		okc-exchange-mem-max
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange Maximum Memory
         check_command 	exc-mem-max
 }
 define service {
-	use		HOSTNAME,okc-exchange-mem-cur
+	use		okc-exchange-mem-cur
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange Current Memory
         check_command 	exc-mem-cur
 }
 define service {
-	use		HOSTNAME,okc-exchange-mem-all
+	use		okc-exchange-mem-all
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange Memory Allocated
         check_command 	exc-mem-all
 }
 define service {
-	use		HOSTNAME,okc-exchange-mem-cur-all
+	use		okc-exchange-mem-cur-all
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange Memory Current Allocated
         check_command 	exc-mem-cur-all
 }
 define service {
-	use		HOSTNAME,okc-exchange-msg-sent
+	use		okc-exchange-msg-sent
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange Messages Sent
         check_command    exc-msg-sent
 }
 define service {
-	use		HOSTNAME,okc-exchange-msg-delivered
+	use		okc-exchange-msg-delivered
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange Messages Delivered
         check_command    exc-msg-deliv
 }
 define service {
-	use		HOSTNAME,okc-exchange-msg-sub
+	use		okc-exchange-msg-sub
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange Messages Submitted
         check_command    exc-msg-sub
 }
 define service {
-	use		HOSTNAME,okc-exchange-msg-rsc-tot
+	use		okc-exchange-msg-rsc-tot
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange Messages Received Total
         check_command    exc-msg-rsc-tot
 }
 define service {
-	use		HOSTNAME,okc-exchange-service
+	use		okc-exchange-service
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange Messages Sent Total
         check_command    exc-msg-sent-tot
 }
 define service {
-	use		HOSTNAME,okc-exchange-service
+	use		okc-exchange-service
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange Messages Submitted Total
         check_command    exc-msg-sub-tot
 }
 define service {
-	use		HOSTNAME,okc-exchange-service
+	use		okc-exchange-service
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange Bytes Sent Total  
         check_command    exc-byte-sent-tot
 }
 define service {
-	use		HOSTNAME,okc-exchange-service
+	use		okc-exchange-service
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange Bytes Received Total
         check_command    exc-byte-recv-tot
 }
 define service {
-	use		HOSTNAME,okc-exchange-service
+	use		okc-exchange-service
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL0
         check_command    exc-scl0
 }
 define service {
-	use		HOSTNAME,okc-exchange-service
+	use		okc-exchange-service
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL1       
         check_command    exc-scl1
 }
 define service {
-	use		HOSTNAME,okc-exchange-service
+	use		okc-exchange-service
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL2
         check_command    exc-scl2
 }
 define service {
-	use		HOSTNAME,okc-exchange-service
+	use		okc-exchange-service
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL3
         check_command    exc-scl3
 }
 define service {
-	use		HOSTNAME,okc-exchange-service
+	use		okc-exchange-service
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL4
         check_command    exc-scl4
 }
 define service {
-	use		HOSTNAME,okc-exchange-service
+	use		okc-exchange-service
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL5
         check_command    exc-scl5
 }
 
 define service {
-	use		HOSTNAME,okc-exchange-service
+	use		okc-exchange-service
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL6
         check_command    exc-scl6
 }
 define service {
-	use		HOSTNAME,okc-exchange-service
+	use		okc-exchange-service
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL7
         check_command    exc-scl7
 }
 define service {
-	use		HOSTNAME,okc-exchange-service
+	use		okc-exchange-service
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL8
         check_command    exc-scl8
 }
 
 define service {
-	use		HOSTNAME,okc-exchange-service
+	use		okc-exchange-service
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL9
         check_command    exc-scl8
 }
 
 
 define service {
-	use		HOSTNAME,okc-exchange-service
+	use		okc-exchange-service
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange Messages Scanned
         check_command    exc-msg-scan
 }
 define service {
-	use		HOSTNAME,okc-exchange-service
+	use		okc-exchange-service
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange Messages Bypassed
         check_command    exc-msg-bypass
 }
 define service {
-	use		HOSTNAME,okc-exchange-service
+	use		okc-exchange-service
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange Messages Deleted
         check_command    exc-msg-del
 }
 define service {
-	use		HOSTNAME,okc-exchange-service
+	use		okc-exchange-service
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange Messages Rejected
         check_command    exc-msg-rej
 }
 define service {
-	use		HOSTNAME,okc-exchange-service
+	use		okc-exchange-service
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange Messages Quarantined
         check_command    exc-msg-quar
 }
 define service {
-	use		HOSTNAME,okc-exchange-service
+	use		okc-exchange-service
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange Messages Unknown
         check_command    exc-msg-unkn
 }
 define service {
-	use		HOSTNAME,okc-exchange-service
+	use		okc-exchange-service
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange User Count
         check_command    exc-msg-user
 }
 define service {
-	use		HOSTNAME,okc-exchange-service
+	use		okc-exchange-service
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange Active Users
         check_command    exc-msg-active-user
 }
 
 define service {
-	use		HOSTNAME,okc-exchange-service
+	use		okc-exchange-service
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	service_description	Microsoft Exchange Unique OWA Users
         check_command    exc-msg-unique-usr
 } 
@@ -254,8 +293,9 @@ define service {
 #
 
 define service {
-        use                    HOSTNAME,okc-windows-check_service
+        use                    okc-windows-check_service
 	host_name		HOSTNAME
+	contact_groups	GROUP
         action_url
 
         __SERVICE               msftesql-Exchange
@@ -263,8 +303,9 @@ define service {
 }
 
 define service {
-        use                    HOSTNAME,okc-windows-check_service
+        use                    okc-windows-check_service
 	host_name		HOSTNAME
+	contact_groups	GROUP
         action_url
 
         __SERVICE               MSExchangeTransportLogSearch
@@ -272,8 +313,9 @@ define service {
 }
 
 define service {
-        use                    HOSTNAME,okc-windows-check_service
+        use                    okc-windows-check_service
 	host_name		HOSTNAME
+	contact_groups	GROUP
         action_url
 
         __SERVICE               MSExchangeADTopology
@@ -281,8 +323,9 @@ define service {
 }
 
 define service {
-        use                    HOSTNAME,okc-windows-check_service
+        use                    okc-windows-check_service
 	host_name		HOSTNAME
+	contact_groups	GROUP
         action_url
 
         __SERVICE               MSExchangeIS
@@ -290,8 +333,9 @@ define service {
 }
 
 define service {
-        use                    HOSTNAME,okc-windows-check_service
+        use                    okc-windows-check_service
 	host_name		HOSTNAME
+	contact_groups	GROUP
         action_url
 
         __SERVICE               MSExchangeMailboxAssistants
@@ -299,8 +343,9 @@ define service {
 }
 
 define service {
-        use                    HOSTNAME,okc-windows-check_service
+        use                    okc-windows-check_service
 	host_name		HOSTNAME
+	contact_groups	GROUP
         action_url
 
         __SERVICE               MSExchangeMailSubmission
@@ -309,8 +354,9 @@ define service {
 }
 
 define service {
-        use                    HOSTNAME,okc-windows-check_service
+        use                    okc-windows-check_service
 	host_name		HOSTNAME
+	contact_groups	GROUP
         action_url
 
         __SERVICE               MSExchangeRepl
@@ -318,8 +364,9 @@ define service {
 }
 
 define service {
-        use                    HOSTNAME,okc-windows-check_service
+        use                    okc-windows-check_service
 	host_name		HOSTNAME
+	contact_groups	GROUP
         action_url
 
         __SERVICE               MSExchangeRPC
@@ -327,8 +374,9 @@ define service {
 }
 
 define service {
-        use                    HOSTNAME,okc-windows-check_service
+        use                    okc-windows-check_service
 	host_name		HOSTNAME
+	contact_groups	GROUP
         action_url
 
         __SERVICE               MSExchangeSA
@@ -336,8 +384,9 @@ define service {
 }
 
 define service {
-        use                    HOSTNAME,okc-windows-check_service
+        use                    okc-windows-check_service
 	host_name		HOSTNAME
+	contact_groups	GROUP
         action_url
 
         __SERVICE               MSExchangeSearch
@@ -346,8 +395,9 @@ define service {
 }
 
 define service {
-        use                    HOSTNAME,okc-windows-check_service
+        use                    okc-windows-check_service
 	host_name		HOSTNAME
+	contact_groups	GROUP
         action_url
 
         __SERVICE               MSExchangeServiceHost
@@ -355,8 +405,9 @@ define service {
 
 }
 define service {
-        use                    HOSTNAME,okc-windows-check_service
+        use                    okc-windows-check_service
         host_name               HOSTNAME
+	contact_groups	GROUP
         action_url
 
         __SERVICE               MSExchangeThrottling
@@ -376,8 +427,9 @@ define service {
 
 
 define service {
-        use                    HOSTNAME,okc-windows-check_service
+        use                    okc-windows-check_service
         host_name               HOSTNAME
+	contact_groups	GROUP
         action_url
 
         __SERVICE              MSExchangeAB 
@@ -386,8 +438,9 @@ define service {
 
 }
 define service {
-        use                    HOSTNAME,okc-windows-check_service
+        use                    okc-windows-check_service
         host_name               HOSTNAME
+	contact_groups	GROUP
         action_url
 
         __SERVICE               MSExchangeAntispamUpdate
@@ -395,8 +448,9 @@ define service {
 
 }
 define service {
-        use                    HOSTNAME,okc-windows-check_service
+        use                    okc-windows-check_service
         host_name               HOSTNAME
+	contact_groups	GROUP
         action_url
 
         __SERVICE               MSExchangeFBA
@@ -404,8 +458,9 @@ define service {
 
 }
 define service {
-        use                    HOSTNAME,okc-windows-check_service
+        use                    okc-windows-check_service
         host_name               HOSTNAME
+	contact_groups	GROUP
         action_url
 
         __SERVICE               MSExchangeFDS
@@ -418,8 +473,9 @@ define service {
 
 
 define service {
-        use                    HOSTNAME,okc-windows-check_service
+        use                    okc-windows-check_service
         host_name               HOSTNAME
+	contact_groups	GROUP
         action_url
 
         __SERVICE               MSExchangeImap4
@@ -428,8 +484,9 @@ define service {
 
 }
 define service {
-        use                    HOSTNAME,okc-windows-check_service
+        use                    okc-windows-check_service
         host_name               HOSTNAME
+	contact_groups	GROUP
         action_url
 
         __SERVICE               MSExchangeMailboxReplication
@@ -437,8 +494,9 @@ define service {
 
 }
 define service {
-        use                    HOSTNAME,okc-windows-check_service
+        use                    okc-windows-check_service
         host_name               HOSTNAME
+	contact_groups	GROUP
         action_url
 
         __SERVICE               MSExchangePop3
@@ -447,8 +505,9 @@ define service {
 
 }
 define service {
-        use                    HOSTNAME,okc-windows-check_service
+        use                    okc-windows-check_service
         host_name               HOSTNAME
+	contact_groups	GROUP
         action_url
 
         __SERVICE               MSExchangeProtectedServiceHost
@@ -457,8 +516,9 @@ define service {
 
 }
 define service {
-        use                    HOSTNAME,okc-windows-check_service
+        use                    okc-windows-check_service
         host_name               HOSTNAME
+	contact_groups	GROUP
         action_url
 
         __SERVICE               MSExchangeTransport
@@ -467,8 +527,9 @@ define service {
 
 }
 define service {
-        use                    HOSTNAME,okc-windows-check_service
+        use                    okc-windows-check_service
         host_name               HOSTNAME
+	contact_groups	GROUP
         action_url
 
         __SERVICE               MSExchangeUM
@@ -477,8 +538,9 @@ define service {
 
 }
 define service {
-        use                    HOSTNAME,okc-windows-check_service
+        use                    okc-windows-check_service
         host_name               HOSTNAME
+	contact_groups	GROUP
         action_url
 
         __SERVICE               MSSpeechService
@@ -491,8 +553,9 @@ define service {
 
 
 define service {
-        use                    HOSTNAME,okc-windows-check_service
+        use                    okc-windows-check_service
         host_name               HOSTNAME
+	contact_groups	GROUP
         action_url
 
         __SERVICE              MSExchangeEdgeSync

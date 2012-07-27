@@ -4,7 +4,8 @@
 # cisco-HOSTNAME -- A template for all cisco checks to inherit snmp settings from
 define service {
 	name			cisco-HOSTNAME
-	#host_name		HOSTNAME
+	host_name		HOSTNAME
+	contact_groups		GROUP
 	
 	#_SNMP_COMMUNITY	public
 	register		0

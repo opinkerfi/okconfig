@@ -2,7 +2,9 @@
 
 # Generic SNMP Connectivity check
 define service {
-	use			HOSTNAME,okc-hp-check_snmp_connectivity
+	use			okc-hp-check_snmp_connectivity
+	host_name		HOSTNAME
+	contact_groups		GROUP
 	#service_description	SNMP Connectivity
 
 	#_SNMP_COMMUNITY		public
@@ -10,7 +12,9 @@ define service {
 
 # HP Hardware check via SNMP
 define service {
-	use			HOSTNAME,okc-hp-check_hpasm
+	use			okc-hp-check_hpasm
+	host_name		HOSTNAME
+	contact_groups		GROUP
 	#service_description	Hardware Status
 
 	#_SNMP_COMMUNITY		public

@@ -5,6 +5,7 @@ define service {
 	use			okc-check-mssql-template
 	name			check-mssql-HOSTNAME	; Unique name for the service	
 	host_name		HOSTNAME	; This is the host that will run the check
+	contact_groups		GROUP		; This is the host that will run the check
         _MSSQL_HOSTNAME         HOSTNAME	; This is the name of the SQL server
         #_MSSQL_PORT             1433		; This is the Port the SQL Server is listening on
         #_MSSQL_USERNAME         nagios		; The user that connects to SQL Server

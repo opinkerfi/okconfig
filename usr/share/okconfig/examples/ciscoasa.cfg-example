@@ -7,6 +7,7 @@
 define service {
 	name			cisco-HOSTNAME
 	host_name		HOSTNAME
+	contact_groups		GROUP
 	
 	#_SNMP_COMMUNITY		public
 	register		0
@@ -18,6 +19,7 @@ define service {
 define service {
         use                     cisco-HOSTNAME,okc-cisco-check_snmp_connectivity
         host_name               HOSTNAME
+	contact_groups		GROUP
         #service_description    SNMP Connectivity
 
         #_SNMP_COMMUNITY                public
@@ -26,6 +28,7 @@ define service {
 define service {
         use			cisco-HOSTNAME,okc-cisco-check_cpu
 	host_name		HOSTNAME
+	contact_groups		GROUP
 
         #check_command           check_cisco_cpu!lesabara!30,30,30!80,80,80
 	#_WARNING		30,30,30
@@ -38,6 +41,7 @@ define service {
 define service {
         use			cisco-HOSTNAME,okc-cisco-check_mem
         host_name               HOSTNAME
+	contact_groups		GROUP
 
         #check_command           check_cisco_mem!lesabara!90%!98%
 	#_WARNING		90%
@@ -48,6 +52,7 @@ define service {
 define service {
         use                     cisco-HOSTNAME,okc-cisco-check_env
         host_name               HOSTNAME
+	contact_groups		GROUP
 
         #check_command           check_cisco_env!lesabara
         register                0
@@ -56,6 +61,7 @@ define service {
 define service {
         use                     cisco-HOSTNAME,okc-cisco-check_int
         host_name		HOSTNAME
+	contact_groups		GROUP
         #__REGEX1               ".*Ethernet.*"
         #__REGEX2
         #service_description    Interface Status
@@ -67,6 +73,7 @@ define service {
 define service {
         use                     cisco-HOSTNAME,okc-cisco-check_all_interfaces
         host_name               HOSTNAME
+	contact_groups		GROUP
         }
 
 
@@ -74,6 +81,7 @@ define service {
 define service {
         use                     cisco-HOSTNAME,okc-cisco-check_asa_patchlevel
         host_name               HOSTNAME
+	contact_groups		GROUP
         }
 
 
@@ -81,6 +89,7 @@ define service {
 define service {
         use                     cisco-HOSTNAME,okc-cisco-check_vpn_sessions
         host_name               HOSTNAME
+	contact_groups		GROUP
 	#__WARNING		:10 		; Default :10
 	#__CRITICAL		:20 		; Default :20
 	#_SNMP_COMMUNITY	public 		; Default public

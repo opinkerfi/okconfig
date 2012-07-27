@@ -3,7 +3,7 @@
 # check disk usage on aix host
 # __EXTRAOPTS = Optional Extra arguments to pass into disks
 define service {
-	use			HOSTNAME,okc-aix-check_disks
+	use			okc-aix-check_disks
 	host_name		HOSTNAME
 
 	#service_description	Disk Usage
@@ -12,7 +12,7 @@ define service {
 
 
 define service {
-	use			HOSTNAME,okc-aix-check_load
+	use			okc-aix-check_load
 	host_name		HOSTNAME
 
 	#service_description	Load
@@ -22,7 +22,7 @@ define service {
 
 
 define service {
-	use			HOSTNAME,okc-aix-check_uptime
+	use			okc-aix-check_uptime
 	host_name		HOSTNAME
 
 
@@ -32,7 +32,7 @@ define service {
 
 
 define service {
-	use			HOSTNAME,okc-aix-check_procs
+	use			okc-aix-check_procs
 	host_name		HOSTNAME
 
 	#service_description	Running Processes
@@ -40,7 +40,7 @@ define service {
 }
 
 define service {
-        use                    HOSTNAME,okc-aix-check_time
+        use                    okc-aix-check_time
 	host_name		HOSTNAME
 
 
@@ -51,7 +51,7 @@ define service {
 
 
 define service {
-        use                    HOSTNAME,okc-aix-check_proc
+        use                    okc-aix-check_proc
 	host_name		HOSTNAME
         __NAME                  cron
         __WARNING               1:
@@ -64,7 +64,7 @@ define service {
 
 
 define service {
-        use                    HOSTNAME,okc-aix-check_ssh
+        use                    okc-aix-check_ssh
 	host_name		HOSTNAME
 
 
@@ -74,7 +74,7 @@ define service {
 
 
 define service {
-        use                    HOSTNAME,okc-aix-check_swap
+        use                    okc-aix-check_swap
         host_name               HOSTNAME
 
 	#__WARNING		50   ; Default 50%

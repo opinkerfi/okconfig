@@ -5,6 +5,7 @@ define service {
 	use		generic-service
 	name		vmware-HOSTNAME
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	_SNMP_COMMUNITY	public
 }
 

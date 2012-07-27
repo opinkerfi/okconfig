@@ -2,6 +2,7 @@ define host {
 	use 		okc-generic-emc-array
 
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	address		IPADDRESS
 	#parents		core-hri-vel-1
 }
@@ -10,37 +11,44 @@ define service {
 	use generic-networks-ping
 
 	host_name	HOSTNAME
+	contact_groups	GROUP
 }
 
 define service {
 	use		okc-check-emc-disk
 	host_name	HOSTNAME
+	contact_groups	GROUP
 }
 
 define service {
         use             okc-check-emc-sp-a
         host_name       HOSTNAME
+	contact_groups	GROUP
 }
 
 define service {
         use             okc-check-emc-sp-b
         host_name       HOSTNAME
+	contact_groups	GROUP
 }
 
 
 define service {
         use             okc-check-emc-portstate-a
         host_name       HOSTNAME
+	contact_groups	GROUP
 }
 
 define service {
         use             okc-check-emc-portstate-b
         host_name       HOSTNAME
+	contact_groups	GROUP
 }
 
 define service {
         use             okc-check-emc-cache
         host_name       HOSTNAME
+	contact_groups	GROUP
 }
 
 

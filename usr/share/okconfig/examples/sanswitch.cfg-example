@@ -1,9 +1,10 @@
 # TODO: Remember to change default SNMP community of public!
 
 define host {
-	use 		HOSTNAME,okc-generic-distribution-switch
+	use 		okc-generic-distribution-switch
 
 	host_name	HOSTNAME
+	contact_groups	GROUP
 	address		IPADDRESS
 	hostgroups	network-distribution
 	#parents		core-hri-vel-1

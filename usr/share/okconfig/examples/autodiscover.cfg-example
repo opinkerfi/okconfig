@@ -1,28 +1,38 @@
 define service {
-	use			HOSTNAME,okc-check_reverse_lookup
+	use			okc-check_reverse_lookup
+	host_name		HOSTNAME
+	contact_groups		GROUP
 }
 define service {
-	use			HOSTNAME,okc-check_forward_lookup
-}
-
-define service {
-	use			HOSTNAME,okc-check_nrpe_connectivity
-}
-
-define service {
-	use			HOSTNAME,okc-check_ports
+	use			okc-check_forward_lookup
+	contact_groups		GROUP
+	host_name		HOSTNAME
 }
 
 define service {
-	use			HOSTNAME,generic-service
+	use			okc-check_nrpe_connectivity
+	contact_groups		GROUP
+	host_name		HOSTNAME
+}
+
+define service {
+	use			okc-check_ports
+	contact_groups		GROUP
+	host_name		HOSTNAME
+}
+
+define service {
+	use			generic-service
 	service_description	Nagios Configuration
 	check_command		execute!$USER1$/check_nagios_needs_reload
+	contact_groups			GROUP
+	host_name		HOSTNAME
 }
 
 
 #### The following are used with an SMS modem only ###
 define service {
-	use			HOSTNAME,generic-service
+	use			generic-service
 	service_description	SMS Manual test
 	max_check_attempts	1
 	is_volatile		1

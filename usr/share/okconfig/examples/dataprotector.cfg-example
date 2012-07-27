@@ -1,8 +1,9 @@
 # Dataprotector backup Stats
 # Provides Useful Statics of todays backups
 define service {
-	use			HOSTNAME,okc-dataprotector-backups
+	use			okc-dataprotector-backups
 	host_name		HOSTNAME
+	contact_groups		GROUP
         
 	#service_description     Dataprotector Backup Stats
         #check_command           check_nrpe!check_dp_backups
@@ -14,8 +15,9 @@ define service {
 # Dataprotector Internal Database Backup
 # Warns if Internal Database backup is more than two days old
 define service {
-	use			HOSTNAME,okc-dataprotector-idb_backup
+	use			okc-dataprotector-idb_backup
 	host_name		HOSTNAME
+	contact_groups		GROUP
 	
 	#service_description	Dataprotector IDB Backup
 	#check_command		check_nrpe!check_dp_idb
@@ -26,8 +28,9 @@ define service {
 # Dataprotector Mediapools
 # Warns if Mediapools are Free Media are getting low
 define service {
-	use			HOSTNAME,okc-dataprotector-pool
+	use			okc-dataprotector-pool
 	host_name		HOSTNAME
+	contact_groups		GROUP
         
 	#service_description     Dataprotector Mediapools
         #check_command           check_nrpe!check_dp_pool
@@ -36,8 +39,9 @@ define service {
 # Dataprotector Mount Requests
 # Warns if there are active mountrequests
 define service {
-	use			HOSTNAME,okc-dataprotector-mountrequest
+	use			okc-dataprotector-mountrequest
 	host_name		HOSTNAME
+	contact_groups		GROUP
         
 	#service_description     Dataprotector Mount Requests
         #check_command           check_nrpe!check_dp_mountrequest
@@ -48,8 +52,9 @@ define service {
 # Dataprotector Tablespaces
 # Warns if any tablespaces are full
 define service {
-	use			HOSTNAME,okc-dataprotector-tablespace
+	use			okc-dataprotector-tablespace
 	host_name		HOSTNAME
+	contact_groups		GROUP
         
 	#service_description     Dataprotector Tablespaces
         #check_command           check_nrpe!check_dp_tablespace

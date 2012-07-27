@@ -1,7 +1,8 @@
 
 define service {
-	use				HOSTNAME,okc-apc-check_health
+	use				okc-apc-check_health
 	host_name			HOSTNAME
+	contact_groups			GROUP
 
 	#__SNMP_COMMUNITY		public
         #check_command                   apc-check_health!$_SERVICESNMP_COMMUNITY$
@@ -10,8 +11,9 @@ define service {
 
 
 define service {
-	use				HOSTNAME,okc-apc-check_snmp
+	use				okc-apc-check_snmp
 	host_name			HOSTNAME
+	contact_groups			GROUP
 
 	#__SNMP_COMMUNITY		public
         #service_description             SNMP Connectivity

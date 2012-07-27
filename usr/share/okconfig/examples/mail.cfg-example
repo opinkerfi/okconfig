@@ -1,11 +1,13 @@
 
 define service {
-        use             HOSTNAME,okc-mail-check_bl
+        use             okc-mail-check_bl
         host_name       HOSTNAME
+	contact_groups	GROUP
 }
 define service {
-        use             HOSTNAME,okc-mail-check_smtp
+        use             okc-mail-check_smtp
         host_name       HOSTNAME
+	contact_groups	GROUP
 }
 
 

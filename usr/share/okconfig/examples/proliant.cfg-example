@@ -2,9 +2,9 @@
 
 # Generic SNMP Connectivity check
 define service {
-	use			HOSTNAME,okc-hp-check_snmp_connectivity
-	#host_name		HOSTNAME
-	#contact_groups		+GROUP-admins
+	use			okc-hp-check_snmp_connectivity
+	host_name		HOSTNAME
+	contact_groups		GROUP
 	#service_description	SNMP Connectivity
 
 	#_SNMP_COMMUNITY		public
@@ -12,19 +12,19 @@ define service {
 
 # HP Hardware check via SNMP
 define service {
-	use			HOSTNAME,okc-hp-check_hpasm
-	#host_name		HOSTNAME
-	#contact_groups		+GROUP-admins
 	#service_description	Hardware Status
+	use			okc-hp-check_hpasm
+	host_name		HOSTNAME
+	contact_groups		GROUP
 
 	#_SNMP_COMMUNITY		public
 }
 
 # Check Hardware Raid via hpacucli
 define service {
-	use			HOSTNAME,okc-hp-check_hpacucli
-	#host_name		HOSTNAME
-	#contact_groups		+GROUP-admins
-	#service_description	Hardware Status
+	#service_description	Hardware Raid
+	use			okc-hp-check_hpacucli
+	host_name		HOSTNAME
+	contact_groups		GROUP
 
 }

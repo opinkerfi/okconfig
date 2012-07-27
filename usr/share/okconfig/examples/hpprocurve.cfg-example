@@ -4,6 +4,7 @@
 define service {
 	use			HOSTNAME,okc-procurve-check_snmp_connectivity
 	host_name		HOSTNAME
+	contact_groups		GROUP
 	#service_description	SNMP Connectivity
 
 	#_SNMP_COMMUNITY		public

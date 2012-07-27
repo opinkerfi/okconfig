@@ -1,6 +1,7 @@
 define service {
 	name			ironport-HOSTNAME
 	use			HOSTNAME
+	contact_groups		GROUP	
 	
 	# This user and password should be able to log in to
 	# https://HOSTNAME/xml/status

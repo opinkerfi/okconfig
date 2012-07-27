@@ -7,6 +7,7 @@ define service {
 	name				hplibrary-HOSTNAME
 	use				HOSTNAME,okc-hplibrary-service
 	host_name			HOSTNAME
+	contact_groups			GROUP
 	register			0
 
 	#_SNMP_COMMUNITY			public

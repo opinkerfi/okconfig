@@ -3,6 +3,7 @@
 
 define service {
 	host_name		HOSTNAME
+	contact_groups		GROUP
 	name			mysql-service-HOSTNAME
 	use			okc-mysql-service
 	register		0
