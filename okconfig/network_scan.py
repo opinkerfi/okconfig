@@ -82,7 +82,6 @@ class ScannedHost:
 	def is_agent_responding(self):
 		"""returns true if host responds to check_nrpe commands"""
 		returncode,stdout,stderr = runCommand("check_nrpe -H '%s'")
-		print returncode,stdout,stderr
 		if returncode == 0: return True
 		if returncode == 1: return False
 		return None
@@ -136,7 +135,6 @@ def pingscan(network='192.168.1.0/24'):
 	command =  "fping -t 50 -i 10 -a "
 	if network.find('/') > 0: command += " -g " 
 	command += network
-	print command
 	r,stdout,stderr = runCommand(command)
 	if r > 1:
 		raise Exception("Error running %s: %s" % (command,stderr) )
@@ -169,7 +167,4 @@ def get_all_hosts(network='192.168.1.0/24'):
 
 if __name__ == '__main__':
 	s = ScannedHost(ipaddress='94.142.158.5')
-	#print s.is_windows()
-	#print s.is_linux()
 	print s.is_agent_responding()
-	#print check_tcp(host="94.142.158.5", port=22,timeout=3)
