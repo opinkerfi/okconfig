@@ -95,9 +95,6 @@ service nagios-nrpe-server reload
 
 install_rhel() {
 
-echo "RHEL compatible distro... Installing rpms"
-echo $PLUGINDIR - $NRPE_D
-exit
 cat << EOF > /etc/yum.repos.d/ok.repo
 [ok]
 name=Opin Kerfi Public Repo - \$basearch
