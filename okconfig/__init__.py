@@ -384,7 +384,7 @@ def get_templates():
 	result = {}
 	if not os.path.isdir(examples_directory):
 		raise OKConfigError("Examples directory does not exist: %s" % examples_directory)
-	filelist = os.listdir(examples_directory)
+	filelist = set( os.listdir(examples_directory) + os.listdir(examples_directory_local) )
 	for file in filelist:
 		if os.path.isfile(examples_directory + "/" + file): filename = examples_directory + "/" + file
 		if os.path.isfile(examples_directory_local + "/" + file): filename = examples_directory_local + "/" + file
