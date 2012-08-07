@@ -1,0 +1,8 @@
+
+define service {
+	use			okc-check_openmanage_nrpe
+	host_name		HOSTNAME
+	contact_groups		GROUP
+	#service_description	Dell Hardware Status
+	#__ARGUMENTS		--no-storage
+}
