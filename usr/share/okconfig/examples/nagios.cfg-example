@@ -15,6 +15,14 @@ define service {
 	contact_groups		GROUP
 }
 
+define service {
+        #service_description    Nagios config up-to-date
+        use                     okc-nagios-check_reload
+        host_name               HOSTNAME
+        contact_groups          GROUP
+}
+
+
 
 define service {
 	use			okc-linux-check_proc
