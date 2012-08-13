@@ -6,7 +6,7 @@ define service {
 	contact_groups		GROUP
         
 	#service_description     Dataprotector Backup Stats
-        #check_command           check_nrpe!check_dp_backups
+        #check_command           okc-check_nrpe!check_dp_backups
         #normal_check_interval   240
         #retry_check_interval    240
 }
@@ -20,7 +20,7 @@ define service {
 	contact_groups		GROUP
 	
 	#service_description	Dataprotector IDB Backup
-	#check_command		check_nrpe!check_dp_idb
+	#check_command		okc-check_nrpe!check_dp_idb
 	#normal_check_internal	600
 	#retry_check_interval	600
 }
@@ -33,7 +33,7 @@ define service {
 	contact_groups		GROUP
         
 	#service_description     Dataprotector Mediapools
-        #check_command           check_nrpe!check_dp_pool
+        #check_command           okc-check_nrpe!check_dp_pool
 }
 
 # Dataprotector Mount Requests
@@ -44,7 +44,7 @@ define service {
 	contact_groups		GROUP
         
 	#service_description     Dataprotector Mount Requests
-        #check_command           check_nrpe!check_dp_mountrequest
+        #check_command           okc-check_nrpe!check_dp_mountrequest
 }
 
 
@@ -57,7 +57,7 @@ define service {
 	contact_groups		GROUP
         
 	#service_description     Dataprotector Tablespaces
-        #check_command           check_nrpe!check_dp_tablespace
+        #check_command           okc-check_nrpe!check_dp_tablespace
         #normal_check_interval   600
         #retry_check_interval    600
 }

@@ -4,5 +4,5 @@ define service {
 
 	contact_groups		GROUP	
 	service_description	DRBD Status
-	check_command		check_nrpe!check_drbd
+	check_command		okc-check_nrpe!check_drbd
 }

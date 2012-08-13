@@ -12,7 +12,7 @@ define service {
         __NAME                  qdiskd
         __WARNING               1
         __CRITICAL              1
-        check_command           check_nrpe!check_procs -a $_SERVICE_WARNING$ $_SERVICE_CRITICAL$ $_SERVICE_NAME$
+        check_command           okc-check_nrpe!check_procs -a $_SERVICE_WARNING$ $_SERVICE_CRITICAL$ $_SERVICE_NAME$
         service_description     RHCS qdiskd
         check_interval          1
 }
@@ -25,7 +25,7 @@ define service {
         __NAME                 clvmd 
         __WARNING               1
         __CRITICAL              1
-        check_command           check_nrpe!check_procs -a $_SERVICE_WARNING$ $_SERVICE_CRITICAL$ $_SERVICE_NAME$
+        check_command           okc-check_nrpe!check_procs -a $_SERVICE_WARNING$ $_SERVICE_CRITICAL$ $_SERVICE_NAME$
         service_description     RHCS clvmd
         check_interval          1
 }
@@ -37,7 +37,7 @@ define service {
         __NAME                 clurgmgrd 
         __WARNING               1:
         __CRITICAL              1:5
-        check_command           check_nrpe!check_procs -a $_SERVICE_WARNING$ $_SERVICE_CRITICAL$ $_SERVICE_NAME$
+        check_command           okc-check_nrpe!check_procs -a $_SERVICE_WARNING$ $_SERVICE_CRITICAL$ $_SERVICE_NAME$
         service_description     RHCS clurgmgrd
         check_interval          1
 }

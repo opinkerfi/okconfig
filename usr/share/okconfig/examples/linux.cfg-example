@@ -42,7 +42,7 @@ define service {
 	#service_description	Running Processes
 	#__WARNING		250
 	#__CRITICAL		400
-	#check_command		check_nrpe!check_total_procs!$_SERVICE_WARNING$!$_SERVICE_CRITICAL$
+	#check_command		okc-check_nrpe!check_total_procs!$_SERVICE_WARNING$!$_SERVICE_CRITICAL$
 }
 
 define service {

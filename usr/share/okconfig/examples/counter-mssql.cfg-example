@@ -15,7 +15,7 @@ define service {
 	
 
 define service {
-        use                    check-mssql-HOSTNAME,okc-okc-check-mssql-connect
+        use                    check-mssql-HOSTNAME,okc-check-mssql-connect
 	#host_name		HOSTNAME
         #service_description     mssql Connect Time
 	#_MSSQL_MODE		connection-time
@@ -31,7 +31,7 @@ define service {
 
 
 define service {
-        use                    check-mssql-HOSTNAME,okc-okc-check-mssql-transactions
+        use                    check-mssql-HOSTNAME,okc-check-mssql-transactions
 	#host_name		HOSTNAME
         #service_description     mssql transactions
         #_MSSQL_MODE             transactions
