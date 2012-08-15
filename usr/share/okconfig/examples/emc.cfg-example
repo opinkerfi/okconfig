@@ -4,7 +4,6 @@ define host {
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	address		IPADDRESS
-	#parents		core-hri-vel-1
 }
 
 define service {
