@@ -127,7 +127,7 @@ def check_nrpe(host):
 def get_my_ip_address():
 	"""Returns default ip address of this host"""
 	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-	s.connect(('google.com', 0))
+	s.connect(('94.142.154.11', 80))
 	return s.getsockname()[0]
 	
 def pingscan(network='192.168.1.0/24'):
