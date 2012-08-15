@@ -57,7 +57,7 @@ for i in $HOSTLIST ; do
 		echo "Error: Directory $INSTALL_LOCATION/nsclient not found" >&2
 		exit 1
 	fi
-	smbclient -d 0 //$i/c$ "$DOMAIN_PASSWORD" -W "$DOMAIN" -u "$DOMAIN_USER" -c  "cd /temp ; recurse ; prompt ; mput nsclient"
+	smbclient -d 0 //$i/c$ "$DOMAIN_PASSWORD" -W "$DOMAIN" -U "$DOMAIN_USER" -c  "cd /temp ; recurse ; prompt ; mput nsclient"
 	RESULT=$?
 	
 	if [ $RESULT -gt 0 ]; then
