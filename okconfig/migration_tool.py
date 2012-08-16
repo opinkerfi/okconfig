@@ -120,7 +120,17 @@ def upgrade_to_version_2_1():
             i.check_command = "okc-%s"%i.check_command
             i.save()
             print "%s renamed to okc-%s"%(check_command,check_command)
-            
+
+    # Update notification commands on all contacts
+    for i in Model.Contact.objects.all:
+        current = i.service_notification_commands
+        if current not in all_commands and "okc-%s"%current in all_commands:
+            i.service_notification_commands = "okc-%s"%current
+            i.save()
+        current = i.host_notification_commands
+        if current not in all_commands and "okc-%s"%current in all_commands:
+            i.host_notification_commands = "okc-%s"%current
+            i.save()
     # Check for hosts
     deprecated_hostnames = ('generic-server-dev', 'generic-server-prod', 'generic-server-crit', 'generic-server', 'default-host')
     new_hostname = "okc-default-host"
