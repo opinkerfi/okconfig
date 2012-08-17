@@ -5,7 +5,7 @@
 
 Summary: Python Nagios Template management and configuration power tools
 Name: okconfig
-Version: 1.0.7
+Version: 1.0.8
 Release: 1%{?dist}
 Source0: http://opensource.is/files/%{name}-%{version}.tar.gz
 License: GPLv2
@@ -93,6 +93,42 @@ rm -fr $RPM_BUILD_ROOT
 okconfig init
 
 %changelog
+* Fri Aug 17 2012 Pall Sigurdsson <palli@opensource.is> 1.0.8-1
+- MMCSS added to default excluded services (palli@opensource.is)
+- "okconfig upgrade" now also detects deprecated host and service notification
+  commands (Closes #8) (palli@opensource.is)
+- fixed need for dns lookup to find default ip address (palli@opensource.is)
+- invalid check_commands fixed in emc templates (palli@opensource.is)
+- fixed typo in smbclient parameters (palli@opensource.is)
+- Merge branch 'master' of github.com:opinkerfi/okconfig (palli@opensource.is)
+- check_nrpe check command renamed to okc-check_nrpe (palli@opensource.is)
+- Object definition rewritten (tommi@darkstar)
+- Object definition rewritten (tommi@darkstar)
+- Added register 0 to dell openmanage templates (tommi@tommi.org)
+- bugfix, fixed mixing of sets and list in get_template (palli@opensource.is)
+- Nagios config up-to-date added to nagios example (palli@opensource.is)
+- fixed unhandled exception when examples_directory_local does not exist
+  (palli@opensource.is)
+- Templates for Dell Openmanage monitoring added (palli@opensource.is)
+- Bugfix, get_templates() now returns templates that only exist in the local
+  templates directory (root@mgmt.clarahq.com)
+- bugfix where rhel6 distro was skipped (root@mgmt.clarahq.com)
+- debian support for install_okagent.sh (palli@opensource.is)
+- cleanup of print statements (palli@opensource.is)
+- Merge branch 'master' of https://opensource.ok.is/git/okconfig
+  (palli@opensource.is)
+- template cleanup (palli@opensource.is)
+- HOSTNAME, multi-inheritance removed (palli@opensource.is)
+- Added missing register 0 for oracle and apache (tommi@tommi.org)
+- runCommand() moved to helper_functions module (palli@opensource.is)
+- .idea added to .gitignore (palli@opensource.is)
+- releasers.conf updated to include source tarballs (palli@opensource.is)
+- Merge branch 'master' of https://opensource.ok.is/git/okconfig
+  (palli@opensource.is)
+- releasers.conf updated and is now split into production and testing
+  (palli@opensource.is)
+- host-passive template renamed to .cfg-example (palli@opensource.is)
+
 * Thu Jul 12 2012 Pall Sigurdsson <palli@opensource.is> 1.0.7-1
 - Getting rid of multi-inheritance in examples (palli@opensource.is)
 - unspecified group in addtemplate now uses the same group as host
