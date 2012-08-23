@@ -43,3 +43,46 @@ define service {
 	service_description            Process npcd
 }
 
+
+define service {
+        use                            okc-linux-check_proc
+        host_name                      HOSTNAME
+        contact_groups                  GROUP
+
+        __NAME                         nsca
+        service_description            Process nsca
+	register			0
+}
+
+
+define service {
+        use                            okc-linux-check_proc
+        host_name                      HOSTNAME
+        contact_groups                  GROUP
+
+        __NAME                         gearmand
+        service_description            Process gearmand
+        register                        0
+}
+
+
+define service {
+        use                            okc-linux-check_proc
+        host_name                      HOSTNAME
+        contact_groups                  GROUP
+
+        __NAME                         mod_gearman_worker
+        service_description            Process mod_gearman_worker
+        register                        0
+}
+
+
+
+define service {
+        use                            okc-nagios-check_gearman-server
+        host_name                      HOSTNAME
+        contact_groups                  GROUP
+
+        register                        0
+}
+
