@@ -1,0 +1,28 @@
+
+define service {
+	host_name		HOSTNAME
+	contact_groups		GROUP
+	service_description	HTTPS HOSTNAME
+	check_command		okc-check_https
+	use			generic-service
+
+	__URI			/
+	__SEARCH_STRING
+	__RESPONSE_WARNING	2
+	__RESPONSE_CRITICAL	10
+
+}
+
+
+define service {
+	host_name		HOSTNAME
+	contact_groups		GROUP
+	service_description	HTTPS SSL Certificate HOSTNAME
+	check_command		okc-check_https_certificate
+	use			generic-service
+
+	__CERTIFICATE_AGE_WARNING	21
+	__CERTIFICATE_AGE_CRITICAL	2
+}
+
+

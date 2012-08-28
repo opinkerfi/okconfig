@@ -1,0 +1,16 @@
+
+define service {
+	host_name		HOSTNAME
+	contact_groups		GROUP
+	service_description	HTTP HOSTNAME
+	check_command		okc-check_http
+	use			generic-service
+
+	__URI			/
+	__SEARCH_STRING
+	__RESPONSE_WARNING	2
+	__RESPONSE_CRITICAL	10
+
+}
+
+
