@@ -37,11 +37,14 @@ __status__ = "Development"
 
 
 
+packdir="/usr/share/okconfig/packs"
 import config
 nagios_config = config.nagios_config
 template_directory =config.template_directory
 examples_directory= config.examples_directory
 examples_directory_local= config.examples_directory_local
+pack_directory=config.pack_directory
+pack_examples_directory= config.pack_examples_directory
 destination_directory = config.destination_directory
 import socket
 
@@ -54,7 +57,9 @@ from os import getenv
 import os
 import subprocess
 import helper_functions
+import simplejson as json
 required_gateways = []
+discover_inet_cache = {}
 
 pynag.Model.cfg_file = config.nagios_config
 
@@ -124,7 +129,7 @@ def verify():
 	
 	return results
 
-def addhost(host_name, address=None, group_name=None, templates=None, use=None, host_template='host', force=False):
+def addhost(host_name, address=None, group_name=None, templates=None, use=None, host_template='host', force=False, discover=False):
 	"""Adds a new host to Nagios. Returns true if operation is successful.
 	
 	Args:
@@ -135,6 +140,7 @@ def addhost(host_name, address=None, group_name=None, templates=None, use=None, 
 	 use -- if this host inherits another host (i.e. "windows-server")
 	 host_template -- Use the specified host template instead of default host.cfg
 	 force -- Force operation. Overwrite config files needed.
+	 discover -- Runs discovery on the host
 	
 	Examples:
 	 addhost(host_name="example_host",group="database_servers")
@@ -149,6 +155,10 @@ def addhost(host_name, address=None, group_name=None, templates=None, use=None, 
 			address = socket.gethostbyname(host_name)
 		except:
 			raise OKConfigError("Could not resolve hostname '%s'" % host_name)
+
+	okconfig_groups = get_groups()
+	if len(okconfig_groups) == 0:
+		addgroup(group_name='default',alias='OKconfig default group')
 	if use is None:
 		if 'windows' in templates:
 			use = 'windows-server'
@@ -158,10 +168,13 @@ def addhost(host_name, address=None, group_name=None, templates=None, use=None, 
 			use = 'generic-switch'		
 		else:
 			use = 'okc-default-host'
-	okconfig_groups = get_groups()
-	if len(okconfig_groups) == 0:
-		addgroup(group_name='default',alias='OKconfig default group')
 	arguments = {'PARENTHOST': use, 'GROUP': group_name, 'IPADDR': address, 'HOSTNAME': host_name}
+	if discover:
+		packs = get_packs()
+		discovered = run_discovery(address, packs, **arguments)
+		for d in discovered:
+			# Append discovered templates
+			templates += discovered[d]
 	destination_dir = "%s/hosts/%s/" % (destination_directory, group_name)
 	destination_file = "%s/%s-host.cfg" % (destination_dir, host_name)
 	if not os.path.exists(destination_dir):
@@ -389,8 +402,13 @@ def get_templates():
 		for i in os.listdir(examples_directory_local):
 			if i not in filelist:
 				filelist.append(i)
+	if os.path.isdir(pack_examples_directory):
+		for i in os.listdir(pack_examples_directory):
+			if i not in filelist:
+				filelist.append(i)
 	for file in filelist:
 		if os.path.isfile(examples_directory + "/" + file): filename = examples_directory + "/" + file
+		if os.path.isfile(pack_examples_directory + "/" + file): filename = pack_examples_directory + "/" + file
 		if os.path.isfile(examples_directory_local + "/" + file): filename = examples_directory_local + "/" + file
 		if file.endswith('.cfg-example'):
 			template_name = file[:-12]
@@ -557,6 +575,75 @@ def _apply_template(template_name,destination_file, **kwargs):
 
 class OKConfigError(Exception):
 	pass
+
+def get_packs():
+	packs = {}
+
+	for f in os.listdir(pack_directory):
+		if f.endswith('.json') == False:
+			continue
+		try:
+			fh = open("%s/%s" % (packdir, f))
+			packs[f[:-5]] = json.load(fh)
+		except Exception, e:
+			raise OKConfigError("Warning: Unable to parse pack description %s/%s: %s" % (packdir, f, e))
+	return packs
+
+def run_discovery(host_name, packs, **kwargs):
+
+	# Reset cache
+	discover_inet_cache = {}
+
+	discovered = {}
+	# Go through all the packs
+	for p in packs:
+		discovered[p] = []
+		# And loop through the discovery methods
+		for d in packs[p]['discovery']:
+			# We have a builtin method
+			if d[0]:
+				method, args = d[0].split(' ', 1)
+				# Inet scanner invoked
+				if method == 'inet':
+					# Port open
+					if discover_inet(host_name, args):
+						# Append affected services
+						for package in d[2:]:
+							discovered[p].append(package)
+				elif method == 'plugin':
+					command = args
+					for old_string,new_string in kwargs.items():
+						command = command.replace(old_string,new_string)
+					ret, stdout, stderr = network_scan.runCommand(command)
+					print command, ret, stdout, stderr
+					if ret == 0:
+						for package in d[2:]:
+							discovered[p].append(package)
+				else:
+					raise Exception('Unsupported discovery method "%s"' % method)
+			elif d[1]:
+				raise Exception('shell discovery not implemented')
+			else:
+				raise Exception('No discovery defined')
+			
+	return discovered
+
+def discover_inet(host_name, service):
+	# Check if we have already checked this
+	if discover_inet_cache.has_key("%s,%s" % (host_name, service)):
+		return discover_inet_cache["%s,%s" % (host_name, service)]
+
+	# services come in 25/tcp or 53/udp
+	port, proto = service.split("/", 1)
+
+	# Do the actual scan
+	scan_result = network_scan.check_tcp(host_name, int(port))
+
+	# Let's cache it
+	discover_inet_cache["%s,%s" % (host_name, service)] = scan_result
+
+	return scan_result
+	
 
 #all_templates = get_templates()
 if __name__ == '__main__':

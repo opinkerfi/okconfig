@@ -1,0 +1,9 @@
+define service {
+        use			generic-service
+        host_name               HOSTNAME
+        contact_groups          GROUP
+
+	check_command		okc-check_ssh
+        service_description     SSH Connectivity
+}
+
