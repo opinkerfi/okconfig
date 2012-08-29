@@ -1,0 +1,15 @@
+
+
+define service {
+	host_name		HOSTNAME
+	contact_groups		GROUP
+	service_description	IMAP
+	check_command		okc-check_imap
+	use			generic-service
+
+	__RESPONSE_TIME_WARNING	2
+	__RESPONSE_TIME_CRITICAL	10
+
+}
+
+

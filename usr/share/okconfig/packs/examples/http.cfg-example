@@ -1,15 +1,16 @@
 
+
 define service {
 	host_name		HOSTNAME
 	contact_groups		GROUP
-	service_description	HTTP HOSTNAME
+	service_description	http://HOSTNAME
 	check_command		okc-check_http
 	use			generic-service
 
 	__URI			/
 	__SEARCH_STRING
-	__RESPONSE_WARNING	2
-	__RESPONSE_CRITICAL	10
+	__RESPONSE_TIME_WARNING	2
+	__RESPONSE_TIME_CRITICAL	10
 
 }
 

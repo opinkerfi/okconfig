@@ -279,6 +279,8 @@ Run %prog addhost --help for full list of command line arguments.
                       help="Alias to use")
     parser.add_option("--host_template", dest="ht", default="host",
                       help="Name of host template to use")
+    parser.add_option("--discover", dest="discover", action="store_true",
+                      default=False,help="Discover host services")
     
     (opts,args) = parser.parse_args(sys.argv[2:])
     
@@ -287,9 +289,9 @@ Run %prog addhost --help for full list of command line arguments.
     if len(args) == 0: parser.error("Please specify at least one host on the command line.")
 	
     try: templates = opts.template.split(',')
-    except AttributeError: templates = ()
+    except AttributeError: templates = []
     for host in args:
-        f = okconfig.addhost(host_name=host,address=opts.address,group_name=opts.group,use=opts.use,force=opts.force,templates=templates,host_template=opts.ht)		
+        f = okconfig.addhost(host_name=host,address=opts.address,group_name=opts.group,use=opts.use,force=opts.force,templates=templates,host_template=opts.ht,discover=opts.discover)		
         for i in f: print "Saved", i	
 
 def upgrade():
