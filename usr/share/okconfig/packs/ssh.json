@@ -1,16 +1,16 @@
 {
-"name": "Web",
-"summary":"Standard web checks, like http response times and SSL checks",
-"description":"Includes checks for http and https response times plus SSL certificate expiration",
-"path":"internet/",
-"discovery": [ 
-	["plugin check_ssh -H HOSTNAME -t 2", "", "ssh-connectivity"]
-],
-"services": {
+    "name": "SSH",
+    "summary":"Checks availability of Secure Shell Daemon",
+    "description":"Basic connectivity and ssh greeting is checked",
+    "path":"internet/remote_cli",
+    "discovery": [
+        ["plugin check_ssh -H HOSTNAME -t 2", "", "ssh-connectivity"]
+    ],
+    "services": {
         "ssh-connectivity": {
-		"config_file": "ssh-connectivity.cfg-example",
-                "macros": {
-                }
+            "config_file": "ssh-connectivity.cfg-example",
+            "macros": {
+            }
         }
-}
+    }
 }

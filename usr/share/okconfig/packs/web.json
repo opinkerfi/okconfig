@@ -1,84 +1,84 @@
 {
-"name": "Web",
-"summary":"Standard web checks, like http response times and SSL checks",
-"description":"Includes checks for http and https response times plus SSL certificate expiration",
-"path":"internet/",
-"discovery": [ 
-	["inet 80/tcp", "", "http"],
-	["inet 443/tcp", "", "https", "https-certificate"]
-],
-"services": {
+    "name": "Web",
+    "summary":"Standard web checks, like http response times and SSL checks",
+    "description":"Includes checks for http and https response times plus SSL certificate expiration",
+    "path":"internet/web",
+    "discovery": [
+        ["inet 80/tcp", "", "http"],
+        ["inet 443/tcp", "", "https", "https-certificate"]
+    ],
+    "services": {
         "http": {
-		"config_file": "http.cfg-example",
-                "macros": {
-                        "_RESPONSE_TIME_WARNING": {
-                                "description": "How long a request can take before warning",
-                                "type": "seconds",
-                                "default": "1.0"
-                        },
-                        "_RESPONSE_TIME_CRITICAL": {
-                                "description": "How long a request can take before critical",
-                                "type": "seconds",
-                                "default": "10.0"
-                        },
-                        "_URI": {
-                                "description": "How long a request can take before critical",
-                                "type": "string",
-                                "default": "/"
-                        },
-                        "_SEARCH_STRING": {
-                                "type": "string",
-                                "default": ""
-                        }
+            "config_file": "http.cfg-example",
+            "macros": {
+                "_RESPONSE_TIME_WARNING": {
+                    "description": "How long a request can take before warning",
+                    "type": "seconds",
+                    "default": "1.0"
+                },
+                "_RESPONSE_TIME_CRITICAL": {
+                    "description": "How long a request can take before critical",
+                    "type": "seconds",
+                    "default": "10.0"
+                },
+                "_URI": {
+                    "description": "How long a request can take before critical",
+                    "type": "string",
+                    "default": "/"
+                },
+                "_SEARCH_STRING": {
+                    "type": "string",
+                    "default": ""
                 }
+            }
         },
         "https": {
-		"config_file": "https.cfg-example",
-                "macros": {
-                        "_RESPONSE_TIME_WARNING": {
-                                "description": "How long a request can take before warning",
-                                "type": "seconds",
-                                "default": "1.0"
-                        },
-                        "_RESPONSE_TIME_CRITICAL": {
-                                "description": "How long a request can take before critical",
-                                "type": "seconds",
-                                "default": "10.0"
-                        },
-                        "_URI": {
-                                "description": "How long a request can take before critical",
-                                "type": "string",
-                                "default": "/"
-                        },
-                        "_SEARCH_STRING": {
-                                "type": "string",
-                                "default": ""
-                        }
+            "config_file": "https.cfg-example",
+            "macros": {
+                "_RESPONSE_TIME_WARNING": {
+                    "description": "How long a request can take before warning",
+                    "type": "seconds",
+                    "default": "1.0"
+                },
+                "_RESPONSE_TIME_CRITICAL": {
+                    "description": "How long a request can take before critical",
+                    "type": "seconds",
+                    "default": "10.0"
+                },
+                "_URI": {
+                    "description": "How long a request can take before critical",
+                    "type": "string",
+                    "default": "/"
+                },
+                "_SEARCH_STRING": {
+                    "type": "string",
+                    "default": ""
                 }
+            }
         },
         "https-certificate": {
-		"config_file": "https-certificate.cfg-example",
-                "macros": {
-                        "_RESPONSE_TIME_WARNING": {
-                                "description": "How long a request can take before warning",
-                                "type": "seconds",
-                                "default": "1.0"
-                        },
-                        "_RESPONSE_TIME_CRITICAL": {
-                                "description": "How long a request can take before critical",
-                                "type": "seconds",
-                                "default": "10.0"
-                        },
-                        "_URI": {
-                                "description": "How long a request can take before critical",
-                                "type": "string",
-                                "default": "/"
-                        },
-                        "_SEARCH_STRING": {
-                                "type": "string",
-                                "default": ""
-                        }
+            "config_file": "https-certificate.cfg-example",
+            "macros": {
+                "_RESPONSE_TIME_WARNING": {
+                    "description": "How long a request can take before warning",
+                    "type": "seconds",
+                    "default": "1.0"
+                },
+                "_RESPONSE_TIME_CRITICAL": {
+                    "description": "How long a request can take before critical",
+                    "type": "seconds",
+                    "default": "10.0"
+                },
+                "_URI": {
+                    "description": "How long a request can take before critical",
+                    "type": "string",
+                    "default": "/"
+                },
+                "_SEARCH_STRING": {
+                    "type": "string",
+                    "default": ""
                 }
+            }
         }
-}
+    }
 }
