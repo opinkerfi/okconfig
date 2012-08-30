@@ -1,101 +1,101 @@
 {
-"name": "Mail Server",
-"summary":"Standard Mail Server checks, like smtp, pop...",
-"description":"Includes checks for smtp, pop, imap and blacklist checking",
-"path":"internet/",
-"discovery": [ 
-	["inet 25/tcp", "", "smtp", "mail-blacklist"],
-	["plugin check_smtp -H HOSTNAME -S -t 2", "", "smtp-tls", "smtp-tls-certificate"],
-	["inet 110/tcp", "", "pop3"],
-	["inet 995/tcp", "", "pop3s"],
-	["inet 143/tcp", "", "imap"],
-	["inet 993/tcp", "", "imaps"]
-],
-"services": {
+    "name": "Mail Server",
+    "summary":"Standard Mail Server checks, like smtp, pop...",
+    "description":"Includes checks for smtp, pop, imap and blacklist checking",
+    "path":"internet/mail",
+    "discovery": [
+        ["inet 25/tcp", "", "smtp", "mail-blacklist"],
+        ["plugin check_smtp -H HOSTNAME -S -t 2", "", "smtp-tls", "smtp-tls-certificate"],
+        ["inet 110/tcp", "", "pop3"],
+        ["inet 995/tcp", "", "pop3s"],
+        ["inet 143/tcp", "", "imap"],
+        ["inet 993/tcp", "", "imaps"]
+    ],
+    "services": {
         "smtp": {
-		"config_file": "smtp.cfg-example",
-                "macros": {
-                        "_RESPONSE_TIME_WARNING": {
-                                "description": "How long a request can take before warning",
-                                "type": "seconds",
-                                "default": "1.0"
-                        },
-                        "_RESPONSE_TIME_CRITICAL": {
-                                "description": "How long a request can take before critical",
-                                "type": "seconds",
-                                "default": "10.0"
-                        }
+            "config_file": "smtp.cfg-example",
+            "macros": {
+                "_RESPONSE_TIME_WARNING": {
+                    "description": "How long a request can take before warning",
+                    "type": "seconds",
+                    "default": "1.0"
+                },
+                "_RESPONSE_TIME_CRITICAL": {
+                    "description": "How long a request can take before critical",
+                    "type": "seconds",
+                    "default": "10.0"
                 }
+            }
         },
         "smtp-tls": {
-		"config_file": "smtp-tls.cfg-example",
-                "macros": {
-                }
+            "config_file": "smtp-tls.cfg-example",
+            "macros": {
+            }
         },
         "smtp-tls-certificate": {
-		"config_file": "smtp-tls-certificate.cfg-example",
-                "macros": {
-                }
+            "config_file": "smtp-tls-certificate.cfg-example",
+            "macros": {
+            }
         },
         "pop3": {
-		"config_file": "pop3.cfg-example",
-                "macros": {
-                        "_RESPONSE_TIME_WARNING": {
-                                "description": "How long a request can take before warning",
-                                "type": "seconds",
-                                "default": "1.0"
-                        },
-                        "_RESPONSE_TIME_CRITICAL": {
-                                "description": "How long a request can take before critical",
-                                "type": "seconds",
-                                "default": "10.0"
-                        }
+            "config_file": "pop3.cfg-example",
+            "macros": {
+                "_RESPONSE_TIME_WARNING": {
+                    "description": "How long a request can take before warning",
+                    "type": "seconds",
+                    "default": "1.0"
+                },
+                "_RESPONSE_TIME_CRITICAL": {
+                    "description": "How long a request can take before critical",
+                    "type": "seconds",
+                    "default": "10.0"
                 }
+            }
         },
         "pop3s": {
-		"config_file": "pop3s.cfg-example",
-                "macros": {
-                        "_RESPONSE_TIME_WARNING": {
-                                "description": "How long a request can take before warning",
-                                "type": "seconds",
-                                "default": "1.0"
-                        },
-                        "_RESPONSE_TIME_CRITICAL": {
-                                "description": "How long a request can take before critical",
-                                "type": "seconds",
-                                "default": "10.0"
-                        }
+            "config_file": "pop3s.cfg-example",
+            "macros": {
+                "_RESPONSE_TIME_WARNING": {
+                    "description": "How long a request can take before warning",
+                    "type": "seconds",
+                    "default": "1.0"
+                },
+                "_RESPONSE_TIME_CRITICAL": {
+                    "description": "How long a request can take before critical",
+                    "type": "seconds",
+                    "default": "10.0"
                 }
+            }
         },
         "imap": {
-		"config_file": "imap.cfg-example",
-                "macros": {
-                        "_RESPONSE_TIME_WARNING": {
-                                "description": "How long a request can take before warning",
-                                "type": "seconds",
-                                "default": "1.0"
-                        },
-                        "_RESPONSE_TIME_CRITICAL": {
-                                "description": "How long a request can take before critical",
-                                "type": "seconds",
-                                "default": "10.0"
-                        }
+            "config_file": "imap.cfg-example",
+            "macros": {
+                "_RESPONSE_TIME_WARNING": {
+                    "description": "How long a request can take before warning",
+                    "type": "seconds",
+                    "default": "1.0"
+                },
+                "_RESPONSE_TIME_CRITICAL": {
+                    "description": "How long a request can take before critical",
+                    "type": "seconds",
+                    "default": "10.0"
                 }
+            }
         },
         "imaps": {
-		"config_file": "imaps.cfg-example",
-                "macros": {
-                        "_RESPONSE_TIME_WARNING": {
-                                "description": "How long a request can take before warning",
-                                "type": "seconds",
-                                "default": "1.0"
-                        },
-                        "_RESPONSE_TIME_CRITICAL": {
-                                "description": "How long a request can take before critical",
-                                "type": "seconds",
-                                "default": "10.0"
-                        }
+            "config_file": "imaps.cfg-example",
+            "macros": {
+                "_RESPONSE_TIME_WARNING": {
+                    "description": "How long a request can take before warning",
+                    "type": "seconds",
+                    "default": "1.0"
+                },
+                "_RESPONSE_TIME_CRITICAL": {
+                    "description": "How long a request can take before critical",
+                    "type": "seconds",
+                    "default": "10.0"
                 }
+            }
         }
-}
+    }
 }
