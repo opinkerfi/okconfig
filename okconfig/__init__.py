@@ -645,8 +645,7 @@ def discover_nrpe(host_name, command, args):
         return discovery_cache['nrpe']["%s,%s,%s" % (host_name, command, args)]
 
     ret = network_scan.runCommand("check_nrpe -H %s -c %s %s" % (host_name, command, args))
-    print ret
-    if ret == 0:
+    if ret[0] == 0:
         discovery_cache['nrpe']["%s,%s,%s" % (host_name, command, args)] = True
         return True
     discovery_cache['nrpe']["%s,%s,%s" % (host_name, command, args)] = False
