@@ -16,9 +16,11 @@
 
 """ This module provides helper functions for okconfig """
 
+import re
+
 import okconfig
 from pynag import Model
-import re
+import subprocess
 
 def add_defaultservice_to_host(host_name):
     """ Given a specific hostname, add default service to it """
