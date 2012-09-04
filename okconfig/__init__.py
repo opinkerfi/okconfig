@@ -58,7 +58,7 @@ required_gateways = []
 
 pynag.Model.cfg_file = config.nagios_config
 
-
+version = __version__
 def is_valid():
 	"""Checks if okconfig is installed and properly configured.
 	
