@@ -27,6 +27,12 @@
                     "default": "/"
                 },
                 "_SEARCH_STRING": {
+                    "description": "Search content for this string",
+                    "type": "string",
+                    "default": ""
+                },
+                "_AUTH_PAIR": {
+                    "description": "Pass basic authentication in the form of username:password",
                     "type": "string",
                     "default": ""
                 }
@@ -51,6 +57,11 @@
                     "default": "/"
                 },
                 "_SEARCH_STRING": {
+                    "type": "string",
+                    "default": ""
+                },
+                "_AUTH_PAIR": {
+                    "description": "Pass basic authentication in the form of username:password",
                     "type": "string",
                     "default": ""
                 }
