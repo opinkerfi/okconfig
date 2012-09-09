@@ -1,0 +1,15 @@
+
+
+define service {
+	host_name		HOSTNAME
+	contact_groups		GROUP
+	service_description	SMTP
+	check_command		okc-check_smtp
+	use			generic-service
+
+	__RESPONSE_TIME_WARNING		2
+	__RESPONSE_TIME_CRITICAL	10
+
+}
+
+

@@ -1,0 +1,19 @@
+define service {
+        use			            generic-service
+        host_name               HOSTNAME
+        contact_groups          GROUP
+
+        check_command		    okc-check_disks_v2
+        service_description     Disk Usage
+
+        # Percent free space to send warning alert
+        __PERCENT_FREE_WARNING  10
+        # Percent free space to send critical alert
+        __PERCENT_FREE_CRITICAL 5
+
+        # Sets specific free spacethresholds per filesystem, format 'fs:warn:crit,fs:warn:crit,...'.
+        # Example '/tmp:10M:20M,/home:10:20'.
+        # Threshholds can be K, M, G, T or none for percent
+        __PER_FS_THRESHOLDS
+}
+

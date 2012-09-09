@@ -1,0 +1,12 @@
+
+define service {
+	host_name		HOSTNAME
+	contact_groups		GROUP
+	service_description	https://HOSTNAME Certificate
+	check_command		okc-check_https_certificate
+	use			generic-service
+
+	__CERTIFICATE_AGE_WARNING	21
+}
+
+

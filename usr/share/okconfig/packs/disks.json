@@ -1,0 +1,31 @@
+{
+    "name": "Disks",
+    "summary":"Checks free space on disks",
+    "description":"Checks for free space on disks",
+    "path":["os/linux", "os/windows", "os/aix", "os/hpux"],
+    "discovery": [
+        ["nrpe get_disks", "", "disks"]
+    ],
+    "services": {
+        "disks": {
+            "config_file": "ssh-connectivity.cfg-example",
+            "macros": {
+                "__PERCENT_FREE_WARNING": {
+                    "description": "Percent free space to send warning alert",
+                    "type": "percent",
+                    "default": "10"
+                },
+                "__PERCENT_FREE_CRITICAL": {
+                    "description": "Percent free space to send critical alert",
+                    "type": "percent",
+                    "default": "5"
+                },
+                "__PER_FS_THRESHOLDS": {
+                    "description": "Sets specific free spacethresholds per filesystem, format 'fs:warn:crit,fs:warn:crit,...'. Example '/tmp:10M:20M,/home:10:20'. Threshholds can be K, M, G, T or none for percent",
+                    "type": "string",
+                    "default": ""
+                }
+            }
+        }
+    }
+}
