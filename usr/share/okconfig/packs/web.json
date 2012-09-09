@@ -70,25 +70,11 @@
         "https-certificate": {
             "config_file": "https-certificate.cfg-example",
             "macros": {
-                "_RESPONSE_TIME_WARNING": {
-                    "description": "How long a request can take before warning",
-                    "type": "seconds",
-                    "default": "1.0"
-                },
-                "_RESPONSE_TIME_CRITICAL": {
-                    "description": "How long a request can take before critical",
-                    "type": "seconds",
-                    "default": "10.0"
-                },
-                "_URI": {
-                    "description": "How long a request can take before critical",
-                    "type": "string",
-                    "default": "/"
-                },
-                "_SEARCH_STRING": {
-                    "type": "string",
-                    "default": ""
-                }
+		"__CERTIFICATE_EXPIRY_WARNING_DAYS": {
+		    "description": "Warn on this many days till expiry of certificate",
+		    "type": "int",
+		    "default": "21"
+		}
             }
         }
     }

@@ -7,7 +7,6 @@ define service {
 	use			generic-service
 
 	__CERTIFICATE_AGE_WARNING	21
-	__CERTIFICATE_AGE_CRITICAL	2
 }
 
 
