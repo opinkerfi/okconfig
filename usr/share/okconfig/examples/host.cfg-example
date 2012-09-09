@@ -31,10 +31,13 @@ define service {
 # We are still using Ping as a service in addition to check-host-alive, all hosts
 # deserve a ping
 define service {
-        use                             generic-service
+        use                             okc-check_ping
         host_name                       HOSTNAME
         service_description             Ping
-        check_command                   check_ping!100.0,20%!500.0,60%
+	#__CRITICAL_PACKETLOSS		40%
+	#__CRITICAL_ROUND_TRIP		500.0
+	#__WARNING_PACKETLOSS		20%
+	#__WARNING_ROUND_TRIP		100.0
 }
 
 
