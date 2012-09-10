@@ -22,7 +22,7 @@ version="1.0"
 import sys
 import okconfig
 import os
-
+import getpass
 
 # Parse some Arguments
 from optparse import OptionParser,OptionGroup
@@ -116,7 +116,9 @@ Run %prog install --help for full list of command line arguments.
         method = "winexe"
     else:
         method = None    
-    
+
+    if not opts.password is None and opts.password.lower() == 'ask':
+        opts.password = getpass.getpass("Password: ")
     for host in args:
         exit_status,stdout,stderr = okconfig.install_okagent(remote_host=host, domain=opts.domain, username=opts.user, password=opts.password)
         if exit_status == 0:

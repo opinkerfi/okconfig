@@ -85,7 +85,7 @@ def runCommand(command):
         if proc.returncode == 127: # File not found, lets print path
             path=getenv("PATH")
             error_string += "Check if y/our path is correct: %s" % path
-        raise OKConfigError( error_string )
+        raise okconfig.OKConfigError( error_string )
     else:
         return result
 

@@ -13,7 +13,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from okconfig import network_scan
 
 """This module provides an interface to okconfig utilities
 and operations such as adding new hosts to Nagios or adding
@@ -36,6 +35,7 @@ __email__ = "palli@opensource.is"
 __status__ = "Development"
 
 
+from okconfig import network_scan
 
 import config
 nagios_config = config.nagios_config
