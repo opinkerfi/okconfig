@@ -436,7 +436,7 @@ def install_nsclient(remote_host, domain, username, password):
 	"""
 	if not network_scan.check_tcp(remote_host, 445, timeout=5):
 		raise OKConfigError('Cannot reach remote_host on port 445, aborting...')
-	
+
 	# Try to authenticate with remote host and run a test command
 	authcommand = 'winexe --reinstall -U "%s/%s%%%s" "//%s" "cmd /c echo test"' % (domain,username,password,remote_host)
 	result = helper_functions.runCommand(authcommand)
