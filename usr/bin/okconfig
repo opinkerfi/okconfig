@@ -120,7 +120,12 @@ Run %prog install --help for full list of command line arguments.
     if not opts.password is None and opts.password.lower() == 'ask':
         opts.password = getpass.getpass("Password: ")
     for host in args:
-        exit_status,stdout,stderr = okconfig.install_okagent(remote_host=host, domain=opts.domain, username=opts.user, password=opts.password)
+        try:
+            exit_status,stdout,stderr = okconfig.install_okagent(remote_host=host, domain=opts.domain, username=opts.user, password=opts.password)
+        except okconfig.OKConfigError, e:
+            exit_status=128
+            stdout = "Exception occured while running install_okagent"
+            stderr = str(e)
         if exit_status == 0:
             print "Install script on %s successful" % ( host )
         else:
