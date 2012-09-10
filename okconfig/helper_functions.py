@@ -73,8 +73,8 @@ def runCommand(command):
          stdout/stderr of the command run
      Raises:
          BaseException if returncode > 0
-     """
-    proc = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE,stderr=subprocess.PIPE,)
+    """
+    proc = subprocess.Popen(command, shell=True, stdin=subprocesses.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE,)
     stdout, stderr = proc.communicate('through stdin to stdout')
     result = proc.returncode,stdout,stderr
     if proc.returncode > 0:
