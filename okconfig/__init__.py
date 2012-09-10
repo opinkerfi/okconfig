@@ -273,7 +273,7 @@ def addcontact(contact_name, alias=None, force=False, group_name="default", emai
 		contact = pynag.Model.Contact.objects.get_by_shortname(contact_name)
 		if not force:
 			raise OKConfigError("contact %s already exists in file %s" % (contact_name, contact.get_filename()))
-	except ValueError:
+	except KeyError:
 		contact = pynag.Model.Contact()
 	contact['contact_name'] = contact_name
 	if alias is not None: contact['alias'] = alias
