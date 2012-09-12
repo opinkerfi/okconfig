@@ -11,6 +11,7 @@ fi
 
 grep -q "release 6" /etc/redhat-release 2>/dev/null && DISTRO=rhel6
 grep -q "release 5" /etc/redhat-release 2>/dev/null && DISTRO=rhel5
+grep -q "openSUSE 11" /etc/SuSE-release 2>/dev/null && DISTRO=opensuse
 test -f /etc/debian_version && DISTRO=debian
 
 
@@ -25,74 +26,35 @@ mkdir -p $NRPE_D
 #mkdir -p /var/run/$NAGIOS_USER
 #chown $NAGIOS_USER /var/run/$NAGIOS_USER
 
-# Throw in a check_procs script
-cat << EOF > $PLUGINDIR/check_procs.sh
-#!/bin/bash
-LINE=\`$PLUGINDIR/check_procs \$*\`
-RC=$?
-COUNT=\`echo \$LINE | awk '{print \$3}'\`
-echo \$LINE \| procs=\$COUNT
-exit \$RC
-EOF
-
-chmod a+x $PLUGINDIR/check_procs.sh
-
-
-# Throw in check_cpu.sh
-cd $PLUGINDIR
-wget http://pall.sigurdsson.is/filez/check_cpu.sh
-chmod a+rx check_cpu.sh
-
-cat << EOF > $NRPE_D/check_cpu.cfg
-command[check_cpu]=/usr/lib/nagios/plugins/check_cpu.sh
-EOF
-
-
-
+install_check_procs;
+install_check_cpu;
 
 rm -rf $NRPE_D/config
-
-
-
 
 clean_nrpe
 
 
-cat << EOF > $NRPE_D/ok-bundle.cfg
-# OK Nrpe configuration
-# Try to be as flexible as possible, with as little dependencies as possible
-command[get_disks]=/bin/df -k -x none -x tmpfs -x shmfs -x unknown -x iso9660
-command[get_time]=/bin/date +%s
-command[get_proc]=ps -Aw -o pid,ppid,user,start,state,pri,pcpu,time,pmem,rsz,vsz,cmd
-command[get_netstat]=netstat -an
-command[get_ifconfig]=/sbin/ifconfig
-command[get_uptime]=uptime
-command[get_selinux]=getenfore
-command[get_lvm_vgs]=sudo /sbin/vgs --all -o all --nameprefixes --noheadings
-command[get_lvm_lvs]=sudo /sbin/lvs --all -o all --nameprefixes --noheadings
-command[get_lvm_pvs]=sudo /sbin/pvs --all -o all --nameprefixes --noheadings
-command[get_rpms]=rpm -qa --queryformat 'PACKAGES="%{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}" NAME="%{NAME}" INSTALLTIME="%{INSTALLTIME}" VERSION="%{VERSION}" RELEASE="%{RELEASE}" ARCH="%{ARCH}" VENDOR="%{VENDOR}" LICENSE="%{LICENSE}"\n'
-
-
-
-# The following require dont_blame_nrpe to be on
-# Please be careful what commands you add here
-command[check_ntp_time]=$PLUGINDIR/check_ntp_time -H '\$ARG1\$' -w '\$ARG2\$' -c '\$ARG3\$' 
-command[check_procs]=$PLUGINDIR/check_procs.sh -w '\$ARG1\$' -c '\$ARG2\$' -C '\$ARG3\$'
-command[check_swap]=$PLUGINDIR/check_swap -w '\$ARG1\$' -c '\$ARG2\$' --allswaps
-command[check_disk]=$PLUGINDIR/check_disk -w '\$ARG1\$' -c '\$ARG2\$' -p '\$ARG3\$'
-command[check_load]=$PLUGINDIR/check_load -w '\$ARG1\$' -c '\$ARG2\$'
-command[check_total_procs]=$PLUGINDIR/check_procs.sh -w '\$ARG1\$' -c '\$ARG2\$'
-
-EOF
-
+configure_ok_bundle;
 
 service nagios-nrpe-server restart
 service nagios-nrpe-server reload
 
 }
 
+install_opensuse() {
+	zypper install nagios-nrpe nagios-plugins
 
+	clean_nrpe;
+	install_check_procs;
+	install_check_cpu;
+	configure_ok_bundle;
+	
+	service nrpe restart
+	chkconfig nrpe on
+
+	echo "install complete"
+	exit 0
+}
 install_rhel() {
 
 cat << EOF > /etc/yum.repos.d/ok.repo
@@ -137,6 +99,8 @@ exit  0
 }
 
 clean_nrpe() {
+
+mkdir -p $NRPE_D
 echo "Cleaning up stock /etc/nagios/nrpe.cfg"
 cat << EOF > /etc/nagios/nrpe.cfg
 log_facility=daemon
@@ -161,9 +125,77 @@ echo "allowed_hosts=$NAGIOS_SERVER"> $NRPE_D/allowed_hosts.cfg
 }
 
 
+install_check_procs() {
+
+# Throw in a check_procs script
+cat << EOF > $PLUGINDIR/check_procs.sh
+#!/bin/bash
+LINE=\`$PLUGINDIR/check_procs \$*\`
+RC=$?
+COUNT=\`echo \$LINE | awk '{print \$3}'\`
+echo \$LINE \| procs=\$COUNT
+exit \$RC
+EOF
+
+chmod a+x $PLUGINDIR/check_procs.sh
 
 
-if [ "$DISTRO" == "rhel6" ]; then
+}
+
+install_check_cpu() {
+# Throw in check_cpu.sh
+cd $PLUGINDIR
+wget http://pall.sigurdsson.is/filez/check_cpu.sh
+chmod a+rx check_cpu.sh
+
+cat << EOF > $NRPE_D/check_cpu.cfg
+command[check_cpu]=/usr/lib/nagios/plugins/check_cpu.sh
+EOF
+}
+
+configure_ok_bundle() {
+cat << EOF > $NRPE_D/ok-bundle.cfg
+# OK Nrpe configuration
+# Try to be as flexible as possible, with as little dependencies as possible
+command[get_disks]=/bin/df -k -x none -x tmpfs -x shmfs -x unknown -x iso9660
+command[get_time]=/bin/date +%s
+command[get_proc]=ps -Aw -o pid,ppid,user,start,state,pri,pcpu,time,pmem,rsz,vsz,cmd
+command[get_netstat]=netstat -an
+command[get_ifconfig]=/sbin/ifconfig
+command[get_uptime]=uptime
+command[get_selinux]=getenfore
+command[get_lvm_vgs]=sudo /sbin/vgs --all -o all --nameprefixes --noheadings
+command[get_lvm_lvs]=sudo /sbin/lvs --all -o all --nameprefixes --noheadings
+command[get_lvm_pvs]=sudo /sbin/pvs --all -o all --nameprefixes --noheadings
+command[get_rpms]=rpm -qa --queryformat 'PACKAGES="%{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}" NAME="%{NAME}" INSTALLTIME="%{INSTALLTIME}" VERSION="%{VERSION}" RELEASE="%{RELEASE}" ARCH="%{ARCH}" VENDOR="%{VENDOR}" LICENSE="%{LICENSE}"\n'
+
+
+
+# The following require dont_blame_nrpe to be on
+# Please be careful what commands you add here
+command[check_ntp_time]=$PLUGINDIR/check_ntp_time -H '\$ARG1\$' -w '\$ARG2\$' -c '\$ARG3\$' 
+command[check_procs]=$PLUGINDIR/check_procs.sh -w '\$ARG1\$' -c '\$ARG2\$' -C '\$ARG3\$'
+command[check_swap]=$PLUGINDIR/check_swap -w '\$ARG1\$' -c '\$ARG2\$' --allswaps
+command[check_disk]=$PLUGINDIR/check_disk -w '\$ARG1\$' -c '\$ARG2\$' -p '\$ARG3\$'
+command[check_load]=$PLUGINDIR/check_load -w '\$ARG1\$' -c '\$ARG2\$'
+command[check_total_procs]=$PLUGINDIR/check_procs.sh -w '\$ARG1\$' -c '\$ARG2\$'
+
+EOF
+
+
+}
+
+
+if [ "$DISTRO" == "opensuse" ]; then
+	PLUGINDIR=/usr/lib64/nagios/plugins/
+	NRPE_USER=nagios
+	if [ $HOSTTYPE == "i386" ]; then
+		PLUGINDIR=`echo $PLUGINDIR | sed 's/lib64/lib/'`
+	fi	
+	NRPE_D=/etc/nrpe.d/
+	install_opensuse;
+
+elif [ "$DISTRO" == "rhel6" ]; then
 	PLUGINDIR=/usr/lib64/nagios/plugins/
 	NRPE_USER=nrpe
 	if [ $HOSTTYPE == "i386" ]; then
