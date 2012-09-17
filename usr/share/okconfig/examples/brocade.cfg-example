@@ -11,7 +11,7 @@ define service {
 }
 # Check Hardware Health on Brocade SAN Switches
 define service {
-	use			okc-check-generic-brocade-prod-health
+	use			okc-brocade-check_health
 	host_name		HOSTNAME
 	contact_groups		GROUP
 
