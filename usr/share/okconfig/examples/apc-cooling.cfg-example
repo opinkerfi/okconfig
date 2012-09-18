@@ -1,0 +1,132 @@
+
+define service {
+        use                    okc-apc-check_acrcstatus
+	host_name              HOSTNAME
+	contact_groups         GROUP
+        __SNMP_COMMUNITY       public
+        #service_description   System status
+        #__MODE                acrcstatus
+        #__WARNING             ''
+        #__CRITICAL            ''
+}
+
+
+define service {
+        use                    okc-apc-check_acrcoutput
+	host_name              HOSTNAME
+	contact_groups         GROUP
+        __SNMP_COMMUNITY       public
+        #service_description   Cooling output
+        #__MODE                acrcoutput
+        #__WARNING             ''
+        #__CRITICAL            ''
+}
+
+
+define service {
+        use                    okc-apc-check_acrcracktemp
+	host_name              HOSTNAME
+	contact_groups         GROUP
+        __SNMP_COMMUNITY       public
+        #service_description   Rack inlet temp
+        #__MODE                acrcracktemp
+        #__WARNING             ''
+        #__CRITICAL            ''
+}
+
+
+define service {
+        use                    okc-apc-check_acrcretair
+	host_name              HOSTNAME
+	contact_groups         GROUP
+        __SNMP_COMMUNITY       public
+        #service_description   Return air
+        #__MODE                acrcretair
+        #__WARNING             ''
+        #__CRITICAL            ''
+}
+
+
+define service {
+        use                    okc-apc-check_acrcfluidflow
+	host_name              HOSTNAME
+	contact_groups         GROUP
+        __SNMP_COMMUNITY       public
+        #service_description   Fluid flow
+        #__MODE                acrcfluidflow
+        #__WARNING             ''
+        #__CRITICAL            ''
+}
+
+
+define service {
+        use                    okc-apc-check_acrcflrettemp
+	host_name              HOSTNAME
+	contact_groups         GROUP
+        __SNMP_COMMUNITY       public
+        #service_description   Fluid return temp
+        #__MODE                acrcflrettemp
+        #__WARNING             ''
+        #__CRITICAL            ''
+}
+
+
+define service {
+        use                    okc-apc-check_acrcload
+	host_name              HOSTNAME
+	contact_groups         GROUP
+        __SNMP_COMMUNITY       public
+        #service_description   Cooling load
+        #__MODE                acrcload
+        #__WARNING             ''
+        #__CRITICAL            ''
+}
+
+
+define service {
+        use                    okc-apc-check_acrcairflow
+	host_name              HOSTNAME
+	contact_groups         GROUP
+        __SNMP_COMMUNITY       public
+        #service_description   Air flow
+        #__MODE                acrcairflow
+        #__WARNING             ''
+        #__CRITICAL            ''
+}
+
+
+define service {
+        use                    okc-apc-check_acrcsupair
+	host_name              HOSTNAME
+	contact_groups         GROUP
+        __SNMP_COMMUNITY       public
+        #service_description   Supply air
+        #__MODE                acrcsupair
+        #__WARNING             ''
+        #__CRITICAL            ''
+}
+
+
+define service {
+        use                    okc-apc-check_acrcfanspeed
+	host_name              HOSTNAME
+	contact_groups         GROUP
+        __SNMP_COMMUNITY       public
+        #service_description   Fan speed
+        #__MODE                acrcfanspeed
+        #__WARNING             ''
+        #__CRITICAL            ''
+}
+
+
+define service {
+        use                    okc-apc-check_acrcflenttemp
+	host_name              HOSTNAME
+	contact_groups         GROUP
+        __SNMP_COMMUNITY       public
+        #service_description   Fluid entering temp
+        #__MODE                acrcflenttemp
+        #__WARNING             ''
+        #__CRITICAL            ''
+}
+
