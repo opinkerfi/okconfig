@@ -1,0 +1,36 @@
+
+define service {
+        use                    okc-apc-nbmstemp
+	host_name              HOSTNAME
+	contact_groups         GROUP
+        __SNMP_COMMUNITY       public
+        #service_description   NetBotz main sensor temp
+        #__MODE                nbmstemp
+        #__WARNING             100000
+        #__CRITICAL            100000
+}
+
+
+define service {
+        use                    okc-apc-nbmshum
+	host_name              HOSTNAME
+	contact_groups         GROUP
+        __SNMP_COMMUNITY       public
+        #service_description   NetBotz main sensor humidity
+        #__MODE                nbmshum
+        #__WARNING             100000
+        #__CRITICAL            100000
+}
+
+
+define service {
+        use                    okc-apc-nbmsairflow
+	host_name              HOSTNAME
+	contact_groups         GROUP
+        __SNMP_COMMUNITY       public
+        #service_description   NetBotz main sensor airflow
+        #__MODE                nbmsairflow
+        #__WARNING             100000
+        #__CRITICAL            100000
+}
+

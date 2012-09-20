@@ -1,0 +1,96 @@
+
+define service {
+        use                    okc-apc-acscstatus
+	host_name              HOSTNAME
+	contact_groups         GROUP
+        __SNMP_COMMUNITY       public
+        #service_description   System status
+        #__MODE                acscstatus
+        #__WARNING             100000
+        #__CRITICAL            100000
+}
+
+
+define service {
+        use                    okc-apc-acscload
+	host_name              HOSTNAME
+	contact_groups         GROUP
+        __SNMP_COMMUNITY       public
+        #service_description   Cooling load
+        #__MODE                acscload
+        #__WARNING             100000
+        #__CRITICAL            100000
+}
+
+
+define service {
+        use                    okc-apc-acscoutput
+	host_name              HOSTNAME
+	contact_groups         GROUP
+        __SNMP_COMMUNITY       public
+        #service_description   Cooling output
+        #__MODE                acscoutput
+        #__WARNING             100000
+        #__CRITICAL            100000
+}
+
+
+define service {
+        use                    okc-apc-acscsupair
+	host_name              HOSTNAME
+	contact_groups         GROUP
+        __SNMP_COMMUNITY       public
+        #service_description   Supply air
+        #__MODE                acscsupair
+        #__WARNING             100000
+        #__CRITICAL            100000
+}
+
+
+define service {
+        use                    okc-apc-acscairflow
+	host_name              HOSTNAME
+	contact_groups         GROUP
+        __SNMP_COMMUNITY       public
+        #service_description   Air flow
+        #__MODE                acscairflow
+        #__WARNING             100000
+        #__CRITICAL            100000
+}
+
+
+define service {
+        use                    okc-apc-acscracktemp
+	host_name              HOSTNAME
+	contact_groups         GROUP
+        __SNMP_COMMUNITY       public
+        #service_description   Rack inlet temp
+        #__MODE                acscracktemp
+        #__WARNING             100000
+        #__CRITICAL            100000
+}
+
+
+define service {
+        use                    okc-apc-acsccondin
+	host_name              HOSTNAME
+	contact_groups         GROUP
+        __SNMP_COMMUNITY       public
+        #service_description   Condenser input temp
+        #__MODE                acsccondin
+        #__WARNING             100000
+        #__CRITICAL            100000
+}
+
+
+define service {
+        use                    okc-apc-acsccondout
+	host_name              HOSTNAME
+	contact_groups         GROUP
+        __SNMP_COMMUNITY       public
+        #service_description   Condenser outlet temp
+        #__MODE                acsccondout
+        #__WARNING             100000
+        #__CRITICAL            100000
+}
+
