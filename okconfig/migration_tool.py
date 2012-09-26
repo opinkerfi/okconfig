@@ -18,6 +18,9 @@
 """
 TEMPLATE_VERSION HISTORY
 
+# Version 2.2 (2012-09-26)
+    * Brocade templates reworked. _SNMP_COMMUNITY macro renamed to __SNMP_COMMUNITY
+    
 # Version 2.1 (2012-05-30)
     * All check_commands in templates directory have been given an okc- prefix
     * Deprecated host templates have been removed
@@ -155,6 +158,24 @@ def upgrade_to_version_2_1():
             print ".. %s updated" % old_use
             host.save() 
     print "ok"
+def upgrade_to_version_2_2():
+    """ Upgrades all nagios configuration file according to new okconfig templates
+
+    Biggest Change here is that brocade templates previously had macro _SNMP_COMMUNITY which has been
+    renamed to __SNMP_COMMUNITY
+    """
+    print "Upgrading to config version 2.2 ...",
+    my_services = Model.Service.objects.filter(use__contains='okc-brocade')
+    for service in my_services:
+        if service.host_name is None:
+            continue
+        if service['_SNMP_COMMUNITY'] in (None,'public'):
+            continue
+        if not service['__SNMP_COMMUNITY'] == 'public':
+            continue
+        print "..", service.get_description(), "renamed _SNMP_COMMUNITY %s to __SNMP_COMMUNITY" % (service['_SNMP_COMMUNITY'])
+    print "ok"
+
 
 def rename_oktemplate_services():
     """ To change config version to 2.0 This is a one-off action. Not part of any upgrade """
@@ -179,6 +200,8 @@ def upgrade_okconfig():
         upgrade_to_version_2()
     if template_version >= 2.1:
         upgrade_to_version_2_1()
+    if template_version >= 2.2:
+        upgrade_to_version_2_2()
 
 if __name__ == '__main__':
     upgrade_okconfig()

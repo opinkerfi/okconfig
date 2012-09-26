@@ -7,7 +7,8 @@ define service {
 	host_name		HOSTNAME
 	contact_groups		GROUP
 
-	#_SNMP_COMMUNITY	public
+	#service_description	SNMP Connectivity
+	#__SNMP_COMMUNITY	public
 }
 # Check Hardware Health on Brocade SAN Switches
 define service {
@@ -26,6 +27,7 @@ define service {
 	contact_groups		GROUP
 
         #service_description     Interface Status
-        #_SNMP_COMMUNITY         public
+        #__SNMP_COMMUNITY         public
 }
+
 
