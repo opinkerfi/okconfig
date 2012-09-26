@@ -23,6 +23,13 @@ define service {
 	host_name			HOSTNAME
 	contact_groups			GROUP
 	service_groups			GROUP
+
+        active_checks_enabled           0
+        check_freshness                 1
+        freshness_threshold             600
+        check_command                   not-fresh
+
+
 	register			0
 }
 
