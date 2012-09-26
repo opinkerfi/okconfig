@@ -20,7 +20,7 @@ TEMPLATE_VERSION HISTORY
 
 # Version 2.2 (2012-09-26)
     * Brocade templates reworked. _SNMP_COMMUNITY macro renamed to __SNMP_COMMUNITY
-    
+
 # Version 2.1 (2012-05-30)
     * All check_commands in templates directory have been given an okc- prefix
     * Deprecated host templates have been removed
