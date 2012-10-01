@@ -1,0 +1,332 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
+
+ <Product Language='1033' Codepage='1252'
+          Name='OK NSPlugin Add-ons'
+          Version='1.11.0804'
+          Id='dbca25c7-61d4-437b-9c32-b28c1376571d'
+          UpgradeCode='e0108d26-395f-442f-a086-86a07e616d79'
+          Manufacturer='Opin Kerfi'>
+
+  <Package Id='*' Keywords='Installer' InstallerVersion='100' Compressed='yes'
+           Description="OK NSPlugin Add-ons Installer"
+           Comments='http://opensource.ok.is/'
+           Manufacturer='Opin Kerfi'
+           Languages='1033' SummaryCodepage='1252' />
+
+  <Media Id='1' Cabinet='Contents.cab' EmbedCab='yes' DiskPrompt="CD-ROM #1" />
+  <Property Id='DiskPrompt'
+            Value="OK NSPlugin Add-ons 1.11 Installation" />
+
+  <Directory Id='TARGETDIR' Name='SourceDir'>
+   <Directory Id='ProgramFilesFolder' Name='PFiles'>
+    <Directory Id='OpinKerfi' Name='Opin Kerfi'>
+     <Directory Id='INSTALLDIR' Name='OK NSPlugin Add-ons 1.11'>
+      <Component Id='COMPdatafilesXcheckXevaXiniX' Guid='baaf2f8d-c574-4af5-98f3-fd5dfcbfe341'>
+       <File Id='FILEdatafilesXcheckXevaXiniX' Name='check_eva.ini' DiskId='1' Source='datafiles\check_eva.ini' KeyPath='yes' />
+      </Component>
+      <Component Id='COMPdatafilesXexchangeXiniX' Guid='ae75e8c9-3f4c-4b80-81aa-4df7359d218a'>
+       <File Id='FILEdatafilesXexchangeXiniX' Name='exchange.ini' DiskId='1' Source='datafiles\exchange.ini' KeyPath='yes' />
+      </Component>
+      <Component Id='COMPdatafilesXlocalXiniX' Guid='d8aee2d4-a0ac-4db8-9633-a52306f2cdcc'>
+       <File Id='FILEdatafilesXlocalXiniX' Name='local.ini' DiskId='1' Source='datafiles\local.ini' KeyPath='yes' />
+      </Component>
+      <Component Id='COMPdatafilesXmsiXpostinstXbatX' Guid='f24d9f84-f4dd-4571-a022-b3c6c12d6188'>
+       <File Id='FILEdatafilesXmsiXpostinstXbatX' Name='msi-postinst.bat' DiskId='1' Source='datafiles\msi-postinst.bat' KeyPath='yes' />
+      </Component>
+      <Component Id='COMPdatafilesXnscXiniX' Guid='d958a601-2528-435b-aa7b-d7324ccae17b'>
+       <File Id='FILEdatafilesXnscXiniX' Name='nsc.ini' DiskId='1' Source='datafiles\nsc.ini' KeyPath='yes' />
+      </Component>
+      <Directory Id='DIRdatafilesXscriptsX' Name='scripts'>
+       <Directory Id='DIRdatafilesXscriptsXcheckXadX' Name='check_ad'>
+        <Component Id='COMPdatafilesXscriptsXcheckXadXcheckXadXexeX' Guid='1c88e2ed-fa34-4541-949a-7bf54c74791f'>
+         <File Id='FILEdatafilesXscriptsXcheckXadXcheckXadXexeX' Name='check_ad.exe' DiskId='1' Source='datafiles\scripts\check_ad\check_ad.exe' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXcheckXadXcheckXadXhtmlX' Guid='274e7dbf-5928-4c6c-a1e1-197fda81f4fc'>
+         <File Id='FILEdatafilesXscriptsXcheckXadXcheckXadXhtmlX' Name='check_ad.html' DiskId='1' Source='datafiles\scripts\check_ad\check_ad.html' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXcheckXadXcheckXadXplX' Guid='59ef3a80-e0d3-4589-bf16-f0b41a9b2b68'>
+         <File Id='FILEdatafilesXscriptsXcheckXadXcheckXadXplX' Name='check_ad.pl' DiskId='1' Source='datafiles\scripts\check_ad\check_ad.pl' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXcheckXadXreadmeXtxtX' Guid='c8a3cf11-eb84-4ff2-b749-457f21ab300d'>
+         <File Id='FILEdatafilesXscriptsXcheckXadXreadmeXtxtX' Name='readme.txt' DiskId='1' Source='datafiles\scripts\check_ad\readme.txt' KeyPath='yes' />
+        </Component>
+       </Directory>
+       <Directory Id='DIRdatafilesXscriptsXcheckXevaX' Name='check_eva'>
+        <Component Id='COMPdatafilesXscriptsXcheckXevaXbz2XpydX' Guid='8cd6c447-f39c-477d-a7cf-a48ac7439603'>
+         <File Id='FILEdatafilesXscriptsXcheckXevaXbz2XpydX' Name='bz2.pyd' DiskId='1' Source='datafiles\scripts\check_eva\bz2.pyd' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXcheckXevaXcheckXevaXexeX' Guid='6477773e-a042-46a9-84fd-6b4a903d140a'>
+         <File Id='FILEdatafilesXscriptsXcheckXevaXcheckXevaXexeX' Name='check_eva.exe' DiskId='1' Source='datafiles\scripts\check_eva\check_eva.exe' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXcheckXevaXcheckXevaXpyX' Guid='e9cf7b1c-2e8a-4653-9495-c7be466acdf9'>
+         <File Id='FILEdatafilesXscriptsXcheckXevaXcheckXevaXpyX' Name='check_eva.py' DiskId='1' Source='datafiles\scripts\check_eva\check_eva.py' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXcheckXevaXlibraryXzipX' Guid='267d4471-6e86-4284-a22a-467bea10de3b'>
+         <File Id='FILEdatafilesXscriptsXcheckXevaXlibraryXzipX' Name='library.zip' DiskId='1' Source='datafiles\scripts\check_eva\library.zip' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXcheckXevaXMSVCR71XdllX' Guid='296a1500-dc74-41ad-a116-0feed596a888'>
+         <File Id='FILEdatafilesXscriptsXcheckXevaXMSVCR71XdllX' Name='MSVCR71.dll' DiskId='1' Source='datafiles\scripts\check_eva\MSVCR71.dll' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXcheckXevaXpyexpatXpydX' Guid='2507063d-aac2-485e-b0c6-327e986e9513'>
+         <File Id='FILEdatafilesXscriptsXcheckXevaXpyexpatXpydX' Name='pyexpat.pyd' DiskId='1' Source='datafiles\scripts\check_eva\pyexpat.pyd' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXcheckXevaXpython25XdllX' Guid='d3e9b6a0-fca8-4908-bbba-4410daf2877d'>
+         <File Id='FILEdatafilesXscriptsXcheckXevaXpython25XdllX' Name='python25.dll' DiskId='1' Source='datafiles\scripts\check_eva\python25.dll' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXcheckXevaXselectXpydX' Guid='68613472-678c-4357-b531-23dc85a17b2a'>
+         <File Id='FILEdatafilesXscriptsXcheckXevaXselectXpydX' Name='select.pyd' DiskId='1' Source='datafiles\scripts\check_eva\select.pyd' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXcheckXevaXsetupXpyX' Guid='c3ca1877-850e-46de-9a78-9be6161e0d34'>
+         <File Id='FILEdatafilesXscriptsXcheckXevaXsetupXpyX' Name='setup.py' DiskId='1' Source='datafiles\scripts\check_eva\setup.py' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXcheckXevaXXsocketXpydX' Guid='5675bb0f-5977-49ed-8414-763848aa1f7b'>
+         <File Id='FILEdatafilesXscriptsXcheckXevaXXsocketXpydX' Name='_socket.pyd' DiskId='1' Source='datafiles\scripts\check_eva\_socket.pyd' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXcheckXevaXXsslXpydX' Guid='68f39a46-23e8-44fb-8596-f8881296a515'>
+         <File Id='FILEdatafilesXscriptsXcheckXevaXXsslXpydX' Name='_ssl.pyd' DiskId='1' Source='datafiles\scripts\check_eva\_ssl.pyd' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXcheckXevaXunicodedataXpydX' Guid='18c3aafd-320d-478f-ba56-97473643efa2'>
+         <File Id='FILEdatafilesXscriptsXcheckXevaXunicodedataXpydX' Name='unicodedata.pyd' DiskId='1' Source='datafiles\scripts\check_eva\unicodedata.pyd' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXcheckXevaXw9xpopenXexeX' Guid='9ff248fa-c319-454e-9c61-6b9cca241785'>
+         <File Id='FILEdatafilesXscriptsXcheckXevaXw9xpopenXexeX' Name='w9xpopen.exe' DiskId='1' Source='datafiles\scripts\check_eva\w9xpopen.exe' KeyPath='yes' />
+        </Component>
+       </Directory>
+       <Directory Id='DIRdatafilesXscriptsXcheckXexchangeX' Name='check_exchange'>
+        <Component Id='COMPdatafilesXscriptsXcheckXexchangeXExchange2010XzipX' Guid='5217bd4c-8285-4d68-aeb4-130b26edd269'>
+         <File Id='FILEdatafilesXscriptsXcheckXexchangeXExchange2010XzipX' Name='Exchange2010.zip' DiskId='1' Source='datafiles\scripts\check_exchange\Exchange2010.zip' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXcheckXexchangeXMailboxHealthXps1X' Guid='d3fe1203-bf99-439c-93a0-cdb38ccd42dd'>
+         <File Id='FILEdatafilesXscriptsXcheckXexchangeXMailboxHealthXps1X' Name='MailboxHealth.ps1' DiskId='1' Source='datafiles\scripts\check_exchange\MailboxHealth.ps1' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXcheckXexchangeXPublicFoldersMountedXps1X' Guid='2ddf1428-b35b-4a4e-a3a0-c05084eb6d19'>
+         <File Id='FILEdatafilesXscriptsXcheckXexchangeXPublicFoldersMountedXps1X' Name='PublicFoldersMounted.ps1' DiskId='1' Source='datafiles\scripts\check_exchange\PublicFoldersMounted.ps1' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXcheckXexchangeXReplicationHealthXps1X' Guid='70d61fc0-8ce8-4008-a87e-a018a3829377'>
+         <File Id='FILEdatafilesXscriptsXcheckXexchangeXReplicationHealthXps1X' Name='ReplicationHealth.ps1' DiskId='1' Source='datafiles\scripts\check_exchange\ReplicationHealth.ps1' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXcheckXexchangeXtestXbatX' Guid='14e35b81-bef8-4df3-9311-2f69f08ad898'>
+         <File Id='FILEdatafilesXscriptsXcheckXexchangeXtestXbatX' Name='test.bat' DiskId='1' Source='datafiles\scripts\check_exchange\test.bat' KeyPath='yes' />
+        </Component>
+       </Directory>
+       <Directory Id='DIRdatafilesXscriptsXcheckXhpacucliX' Name='check_hpacucli'>
+        <Component Id='COMPdatafilesXscriptsXcheckXhpacucliXbz2XpydX' Guid='88158dd0-a07b-4c4c-82bc-05d3fc88eac6'>
+         <File Id='FILEdatafilesXscriptsXcheckXhpacucliXbz2XpydX' Name='bz2.pyd' DiskId='1' Source='datafiles\scripts\check_hpacucli\bz2.pyd' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXcheckXhpacucliXcheckXhpacucliXexeX' Guid='111292aa-0362-4273-8df1-cd11945d058c'>
+         <File Id='FILEdatafilesXscriptsXcheckXhpacucliXcheckXhpacucliXexeX' Name='check_hpacucli.exe' DiskId='1' Source='datafiles\scripts\check_hpacucli\check_hpacucli.exe' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXcheckXhpacucliXcheckXhpacucliXpyX' Guid='b4d405c1-4f30-44e7-817a-9f946b03fc5b'>
+         <File Id='FILEdatafilesXscriptsXcheckXhpacucliXcheckXhpacucliXpyX' Name='check_hpacucli.py' DiskId='1' Source='datafiles\scripts\check_hpacucli\check_hpacucli.py' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXcheckXhpacucliXlibraryXzipX' Guid='a1de9bff-daa5-431f-951f-fd1c3777eaf4'>
+         <File Id='FILEdatafilesXscriptsXcheckXhpacucliXlibraryXzipX' Name='library.zip' DiskId='1' Source='datafiles\scripts\check_hpacucli\library.zip' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXcheckXhpacucliXMSVCR71XdllX' Guid='80ab6a81-2777-4ebd-9d75-e8275c86fcfb'>
+         <File Id='FILEdatafilesXscriptsXcheckXhpacucliXMSVCR71XdllX' Name='MSVCR71.dll' DiskId='1' Source='datafiles\scripts\check_hpacucli\MSVCR71.dll' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXcheckXhpacucliXpython25XdllX' Guid='795b6d44-7fdc-4605-9cb7-5d761dc4f296'>
+         <File Id='FILEdatafilesXscriptsXcheckXhpacucliXpython25XdllX' Name='python25.dll' DiskId='1' Source='datafiles\scripts\check_hpacucli\python25.dll' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXcheckXhpacucliXselectXpydX' Guid='262815fb-4d9a-40e2-ba04-6c4a32e96d43'>
+         <File Id='FILEdatafilesXscriptsXcheckXhpacucliXselectXpydX' Name='select.pyd' DiskId='1' Source='datafiles\scripts\check_hpacucli\select.pyd' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXcheckXhpacucliXsetupXpyX' Guid='e01408b0-753d-4b2c-afbb-05c9200f90ca'>
+         <File Id='FILEdatafilesXscriptsXcheckXhpacucliXsetupXpyX' Name='setup.py' DiskId='1' Source='datafiles\scripts\check_hpacucli\setup.py' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXcheckXhpacucliXunicodedataXpydX' Guid='581c25ad-47be-41f9-9cb7-fdfa236c87ea'>
+         <File Id='FILEdatafilesXscriptsXcheckXhpacucliXunicodedataXpydX' Name='unicodedata.pyd' DiskId='1' Source='datafiles\scripts\check_hpacucli\unicodedata.pyd' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXcheckXhpacucliXw9xpopenXexeX' Guid='f7238226-3a4f-4aac-a240-d05bf24e848d'>
+         <File Id='FILEdatafilesXscriptsXcheckXhpacucliXw9xpopenXexeX' Name='w9xpopen.exe' DiskId='1' Source='datafiles\scripts\check_hpacucli\w9xpopen.exe' KeyPath='yes' />
+        </Component>
+       </Directory>
+       <Component Id='COMPdatafilesXscriptsXcheckXnoXrdpXbatX' Guid='4382b6fa-51d5-4ef9-bdad-a20519ad62f0'>
+        <File Id='FILEdatafilesXscriptsXcheckXnoXrdpXbatX' Name='check_no_rdp.bat' DiskId='1' Source='datafiles\scripts\check_no_rdp.bat' KeyPath='yes' />
+       </Component>
+       <Component Id='COMPdatafilesXscriptsXdateXexeX' Guid='f68a27dd-dc9c-4f26-bc7e-3ad695b1a53f'>
+        <File Id='FILEdatafilesXscriptsXdateXexeX' Name='date.exe' DiskId='1' Source='datafiles\scripts\date.exe' KeyPath='yes' />
+       </Component>
+       <Component Id='COMPdatafilesXscriptsXdfXexeX' Guid='8f315646-e627-40af-a64a-d78f8ee99b83'>
+        <File Id='FILEdatafilesXscriptsXdfXexeX' Name='df.exe' DiskId='1' Source='datafiles\scripts\df.exe' KeyPath='yes' />
+       </Component>
+       <Component Id='COMPdatafilesXscriptsXheadXexeX' Guid='5de3320d-c7aa-4734-ab16-eb3ab7dac6ff'>
+        <File Id='FILEdatafilesXscriptsXheadXexeX' Name='head.exe' DiskId='1' Source='datafiles\scripts\head.exe' KeyPath='yes' />
+       </Component>
+       <Component Id='COMPdatafilesXscriptsXinstallXbatX' Guid='4b847759-e78f-4fb4-b9da-182f5ae8b8b9'>
+        <File Id='FILEdatafilesXscriptsXinstallXbatX' Name='install.bat' DiskId='1' Source='datafiles\scripts\install.bat' KeyPath='yes' />
+       </Component>
+       <Directory Id='DIRdatafilesXscriptsXlibX' Name='lib'>
+        <Component Id='COMPdatafilesXscriptsXlibXNagiosPluginsXvbsX' Guid='a0078acc-bde8-4feb-8419-8d545542d237'>
+         <File Id='FILEdatafilesXscriptsXlibXNagiosPluginsXvbsX' Name='NagiosPlugins.vbs' DiskId='1' Source='datafiles\scripts\lib\NagiosPlugins.vbs' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXlibXwrapperXvbsX' Guid='daecfd81-0c9a-489b-9275-9ab440082c46'>
+         <File Id='FILEdatafilesXscriptsXlibXwrapperXvbsX' Name='wrapper.vbs' DiskId='1' Source='datafiles\scripts\lib\wrapper.vbs' KeyPath='yes' />
+        </Component>
+       </Directory>
+       <Component Id='COMPdatafilesXscriptsXtestXluaX' Guid='c41e5734-de6b-4159-a3f4-10f9201c235c'>
+        <File Id='FILEdatafilesXscriptsXtestXluaX' Name='test.lua' DiskId='1' Source='datafiles\scripts\test.lua' KeyPath='yes' />
+       </Component>
+       <Directory Id='DIRdatafilesXscriptsXwmiX' Name='wmi'>
+        <Component Id='COMPdatafilesXscriptsXwmiXCHANGELOGXtxtX' Guid='3374f405-3ccc-4e8d-96c7-14710f4c6161'>
+         <File Id='FILEdatafilesXscriptsXwmiXCHANGELOGXtxtX' Name='CHANGELOG.txt' DiskId='1' Source='datafiles\scripts\wmi\CHANGELOG.txt' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXwmiXcheckX100nsecXtimerXvbsX' Guid='33417555-0b65-4b69-ac37-e7e8fd9e804d'>
+         <File Id='FILEdatafilesXscriptsXwmiXcheckX100nsecXtimerXvbsX' Name='check_100nsec_timer.vbs' DiskId='1' Source='datafiles\scripts\wmi\check_100nsec_timer.vbs' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXwmiXcheckXcounterXbulkXcountXvbsX' Guid='ecbca460-eca3-4870-a324-b35005b33652'>
+         <File Id='FILEdatafilesXscriptsXwmiXcheckXcounterXbulkXcountXvbsX' Name='check_counter_bulk_count.vbs' DiskId='1' Source='datafiles\scripts\wmi\check_counter_bulk_count.vbs' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXwmiXcheckXcounterXcounterXvbsX' Guid='857c4cd5-799d-4805-b303-7cf3c2ce21b1'>
+         <File Id='FILEdatafilesXscriptsXwmiXcheckXcounterXcounterXvbsX' Name='check_counter_counter.vbs' DiskId='1' Source='datafiles\scripts\wmi\check_counter_counter.vbs' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXwmiXcheckXcounterXlargeXrawcountXvbsX' Guid='462901af-22a3-4299-813f-92df936fe8eb'>
+         <File Id='FILEdatafilesXscriptsXwmiXcheckXcounterXlargeXrawcountXvbsX' Name='check_counter_large_rawcount.vbs' DiskId='1' Source='datafiles\scripts\wmi\check_counter_large_rawcount.vbs' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXwmiXcheckXcounterXrawcountXvbsX' Guid='e5b16482-ce84-4343-80a3-9c24b851b40b'>
+         <File Id='FILEdatafilesXscriptsXwmiXcheckXcounterXrawcountXvbsX' Name='check_counter_rawcount.vbs' DiskId='1' Source='datafiles\scripts\wmi\check_counter_rawcount.vbs' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXwmiXcheckXcpuXloadXpercentageXvbsX' Guid='1805443a-eea2-4318-8f00-dbf12d17fbe6'>
+         <File Id='FILEdatafilesXscriptsXwmiXcheckXcpuXloadXpercentageXvbsX' Name='check_cpu_load_percentage.vbs' DiskId='1' Source='datafiles\scripts\wmi\check_cpu_load_percentage.vbs' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXwmiXcheckXdisksXioXvbsX' Guid='ff9a9204-f044-41fb-8994-8da952fc0c0c'>
+         <File Id='FILEdatafilesXscriptsXwmiXcheckXdisksXioXvbsX' Name='check_disks_io.vbs' DiskId='1' Source='datafiles\scripts\wmi\check_disks_io.vbs' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXwmiXcheckXdisksXpercentageXspaceXusedXvbsX' Guid='087d6129-928d-4b73-9575-d73c211e9636'>
+         <File Id='FILEdatafilesXscriptsXwmiXcheckXdisksXpercentageXspaceXusedXvbsX' Name='check_disks_percentage_space_used.vbs' DiskId='1' Source='datafiles\scripts\wmi\check_disks_percentage_space_used.vbs' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXwmiXcheckXmemoryXpercentageXspaceXusedXvbsX' Guid='ddd51ca5-3a8e-41cf-b95a-4c9ff0b54181'>
+         <File Id='FILEdatafilesXscriptsXwmiXcheckXmemoryXpercentageXspaceXusedXvbsX' Name='check_memory_percentage_space_used.vbs' DiskId='1' Source='datafiles\scripts\wmi\check_memory_percentage_space_used.vbs' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXwmiXcheckXnetworkXioXvbsX' Guid='a5dc1eee-e85a-4b67-962c-887b55e493f8'>
+         <File Id='FILEdatafilesXscriptsXwmiXcheckXnetworkXioXvbsX' Name='check_network_io.vbs' DiskId='1' Source='datafiles\scripts\wmi\check_network_io.vbs' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXwmiXcheckXprocXnumXvbsX' Guid='a7935fba-e939-4f91-9825-6cbc08146c2c'>
+         <File Id='FILEdatafilesXscriptsXwmiXcheckXprocXnumXvbsX' Name='check_proc_num.vbs' DiskId='1' Source='datafiles\scripts\wmi\check_proc_num.vbs' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXwmiXcheckXrawXfractionXvbsX' Guid='6da03bf4-eed5-4fd6-925e-277d43295ea1'>
+         <File Id='FILEdatafilesXscriptsXwmiXcheckXrawXfractionXvbsX' Name='check_raw_fraction.vbs' DiskId='1' Source='datafiles\scripts\wmi\check_raw_fraction.vbs' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXwmiXcheckXservicesXstatesXvbsX' Guid='58dc91aa-d48f-4eda-9791-bcabc7339f07'>
+         <File Id='FILEdatafilesXscriptsXwmiXcheckXservicesXstatesXvbsX' Name='check_services_states.vbs' DiskId='1' Source='datafiles\scripts\wmi\check_services_states.vbs' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXwmiXgetXcomputerXinfoXvbsX' Guid='d57c035c-f8ad-4f75-93be-82ad3b5484a6'>
+         <File Id='FILEdatafilesXscriptsXwmiXgetXcomputerXinfoXvbsX' Name='get_computer_info.vbs' DiskId='1' Source='datafiles\scripts\wmi\get_computer_info.vbs' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXwmiXgetXcounterXtypeXvbsX' Guid='b9041357-25b9-49d3-92b3-34ff5f9cd4c7'>
+         <File Id='FILEdatafilesXscriptsXwmiXgetXcounterXtypeXvbsX' Name='get_counter_type.vbs' DiskId='1' Source='datafiles\scripts\wmi\get_counter_type.vbs' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXwmiXgetXdiskioXvbsX' Guid='5797ee15-6a07-4c55-a3ab-dfe690cac666'>
+         <File Id='FILEdatafilesXscriptsXwmiXgetXdiskioXvbsX' Name='get_diskio.vbs' DiskId='1' Source='datafiles\scripts\wmi\get_diskio.vbs' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXwmiXgetXnetioXvbsX' Guid='57a3b213-27be-472c-9f41-510914a5d010'>
+         <File Id='FILEdatafilesXscriptsXwmiXgetXnetioXvbsX' Name='get_netio.vbs' DiskId='1' Source='datafiles\scripts\wmi\get_netio.vbs' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXwmiXgetXperfdataXvbsX' Guid='d0efc1c7-96dc-4f9a-b50d-ee29f9fa515a'>
+         <File Id='FILEdatafilesXscriptsXwmiXgetXperfdataXvbsX' Name='get_perfdata.vbs' DiskId='1' Source='datafiles\scripts\wmi\get_perfdata.vbs' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXwmiXINSTALLXtxtX' Guid='778b7a19-7f20-49f2-92a1-d218a6793b31'>
+         <File Id='FILEdatafilesXscriptsXwmiXINSTALLXtxtX' Name='INSTALL.txt' DiskId='1' Source='datafiles\scripts\wmi\INSTALL.txt' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXwmiXREADMEXtxtX' Guid='2f5b9ec1-8ba1-42e5-8b2a-107bce557109'>
+         <File Id='FILEdatafilesXscriptsXwmiXREADMEXtxtX' Name='README.txt' DiskId='1' Source='datafiles\scripts\wmi\README.txt' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXwmiXverifyXwmiXstatusXvbsX' Guid='e535361f-7021-4a7f-9fec-0373e39b265d'>
+         <File Id='FILEdatafilesXscriptsXwmiXverifyXwmiXstatusXvbsX' Name='verify_wmi_status.vbs' DiskId='1' Source='datafiles\scripts\wmi\verify_wmi_status.vbs' KeyPath='yes' />
+        </Component>
+        <Component Id='COMPdatafilesXscriptsXwmiXWMIXagentlessXpluginsXpdfX' Guid='e0285d95-e8a5-48fb-91e3-313b788ad154'>
+         <File Id='FILEdatafilesXscriptsXwmiXWMIXagentlessXpluginsXpdfX' Name='WMI agentless plugins.pdf' DiskId='1' Source='datafiles\scripts\wmi\WMI agentless plugins.pdf' KeyPath='yes' />
+        </Component>
+       </Directory>
+      </Directory>
+      <Component Id='COMPdatafilesXwmiXiniX' Guid='7aeac535-bd80-4ff5-ab1e-1137b9f1c53d'>
+       <File Id='FILEdatafilesXwmiXiniX' Name='wmi.ini' DiskId='1' Source='datafiles\wmi.ini' KeyPath='yes' />
+      </Component>
+     </Directory>
+    </Directory>
+   </Directory>
+  </Directory>
+
+  <Feature Id='Complete' Level='1'>
+   <ComponentRef Id='COMPdatafilesXcheckXevaXiniX' />
+   <ComponentRef Id='COMPdatafilesXexchangeXiniX' />
+   <ComponentRef Id='COMPdatafilesXlocalXiniX' />
+   <ComponentRef Id='COMPdatafilesXmsiXpostinstXbatX' />
+   <ComponentRef Id='COMPdatafilesXnscXiniX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXadXcheckXadXexeX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXadXcheckXadXhtmlX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXadXcheckXadXplX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXadXreadmeXtxtX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXevaXbz2XpydX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXevaXcheckXevaXexeX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXevaXcheckXevaXpyX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXevaXlibraryXzipX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXevaXMSVCR71XdllX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXevaXpyexpatXpydX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXevaXpython25XdllX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXevaXselectXpydX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXevaXsetupXpyX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXevaXXsocketXpydX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXevaXXsslXpydX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXevaXunicodedataXpydX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXevaXw9xpopenXexeX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXexchangeXExchange2010XzipX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXexchangeXMailboxHealthXps1X' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXexchangeXPublicFoldersMountedXps1X' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXexchangeXReplicationHealthXps1X' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXexchangeXtestXbatX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXhpacucliXbz2XpydX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXhpacucliXcheckXhpacucliXexeX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXhpacucliXcheckXhpacucliXpyX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXhpacucliXlibraryXzipX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXhpacucliXMSVCR71XdllX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXhpacucliXpython25XdllX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXhpacucliXselectXpydX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXhpacucliXsetupXpyX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXhpacucliXunicodedataXpydX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXhpacucliXw9xpopenXexeX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXcheckXnoXrdpXbatX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXdateXexeX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXdfXexeX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXheadXexeX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXinstallXbatX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXlibXNagiosPluginsXvbsX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXlibXwrapperXvbsX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXtestXluaX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXwmiXCHANGELOGXtxtX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXwmiXcheckX100nsecXtimerXvbsX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXwmiXcheckXcounterXbulkXcountXvbsX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXwmiXcheckXcounterXcounterXvbsX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXwmiXcheckXcounterXlargeXrawcountXvbsX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXwmiXcheckXcounterXrawcountXvbsX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXwmiXcheckXcpuXloadXpercentageXvbsX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXwmiXcheckXdisksXioXvbsX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXwmiXcheckXdisksXpercentageXspaceXusedXvbsX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXwmiXcheckXmemoryXpercentageXspaceXusedXvbsX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXwmiXcheckXnetworkXioXvbsX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXwmiXcheckXprocXnumXvbsX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXwmiXcheckXrawXfractionXvbsX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXwmiXcheckXservicesXstatesXvbsX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXwmiXgetXcomputerXinfoXvbsX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXwmiXgetXcounterXtypeXvbsX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXwmiXgetXdiskioXvbsX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXwmiXgetXnetioXvbsX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXwmiXgetXperfdataXvbsX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXwmiXINSTALLXtxtX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXwmiXREADMEXtxtX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXwmiXverifyXwmiXstatusXvbsX' />
+   <ComponentRef Id='COMPdatafilesXscriptsXwmiXWMIXagentlessXpluginsXpdfX' />
+   <ComponentRef Id='COMPdatafilesXwmiXiniX' />
+  </Feature>
+
+  <CustomAction Id='ACTRunBat' FileKey='FILEdatafilesXmsiXpostinstXbatX'
+                ExeCommand='' Return='asyncNoWait' />
+
+  <InstallExecuteSequence>
+   <Custom Action='ACTRunBat' After='InstallFinalize'>NOT Installed</Custom>
+  </InstallExecuteSequence>
+
+ </Product>
+
+</Wix>

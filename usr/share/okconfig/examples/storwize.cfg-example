@@ -1,0 +1,81 @@
+define service {
+	use			okc-ibm-storwize-lsarray
+	host_name		HOSTNAME
+	contact_groups		GROUP
+
+	service_description	Storwize Arrays
+	__MODE			lsarray
+	__USERNAME		nagios	
+}
+define service {
+	use			okc-ibm-storwize-lsdrive
+	host_name		HOSTNAME
+	contact_groups		GROUP
+
+	service_description	Storwize Drives
+	__MODE			lsdrive
+	__USERNAME		nagios	
+}
+define service {
+	use			okc-ibm-storwize-lsvdisk
+	host_name		HOSTNAME
+	contact_groups		GROUP
+
+	service_description	Storwize Disks
+	__MODE			lsvdisk
+	__USERNAME		nagios	
+}
+define service {
+	use			okc-ibm-storwize-lsenclosure
+	host_name		HOSTNAME
+	contact_groups		GROUP
+
+	service_description	Storwize Enclosures
+	__MODE			lsenclosure
+	__USERNAME		nagios	
+}
+define service {
+	use			okc-ibm-storwize-lsenclosurebattery
+	host_name		HOSTNAME
+	contact_groups		GROUP
+
+	service_description	Storwize Batteries
+	__MODE			lsenclosurebattery
+	__USERNAME		nagios	
+}
+define service {
+	use			okc-ibm-storwize-lsenclosurecanister
+	host_name		HOSTNAME
+	contact_groups		GROUP
+
+	service_description	Storwize Canisters
+	__MODE			lsenclosurecanister
+	__USERNAME		nagios	
+}
+define service {
+	use			okc-ibm-storwize-lsenclosurepsu
+	host_name		HOSTNAME
+	contact_groups		GROUP
+
+	service_description	Storwize Power-supplies
+	__MODE			lsenclosurepsu
+	__USERNAME		nagios	
+}
+define service {
+	use			okc-ibm-storwize-lsenclosureslot
+	host_name		HOSTNAME
+	contact_groups		GROUP
+
+	service_description	Storwize Slots
+	__MODE			lsenclosureslot
+	__USERNAME		nagios	
+}
+define service {
+	use			okc-ibm-storwize-lsrcrelationship
+	host_name		HOSTNAME
+	contact_groups		GROUP
+
+	service_description	Storwize Replication
+	__MODE			lsrcrelationship
+	__USERNAME		nagios	
+}
