@@ -202,7 +202,7 @@ def addtemplate(host_name, template_name, group_name=None,force=False):
 	"""
 	try:
 		host = pynag.Model.Host.objects.get_by_shortname(host_name)
-	except ValueError:
+	except (ValueError, KeyError):
 		raise OKConfigError("Host '%s' was not found" % host_name)		
 	hostfile = host.get_filename()
 	
@@ -273,7 +273,7 @@ def addcontact(contact_name, alias=None, force=False, group_name="default", emai
 		contact = pynag.Model.Contact.objects.get_by_shortname(contact_name)
 		if not force:
 			raise OKConfigError("contact %s already exists in file %s" % (contact_name, contact.get_filename()))
-	except KeyError:
+	except (KeyError, ValueError):
 		contact = pynag.Model.Contact()
 	contact['contact_name'] = contact_name
 	if alias is not None: contact['alias'] = alias
@@ -363,7 +363,7 @@ def findhost(host_name):
 		my_host = pynag.Model.Host.objects.get_by_shortname(host_name)
 		filename = my_host['meta']['filename']
 		return filename
-	except ValueError:
+	except (ValueError, KeyError):
 		return None
 
 def removehost(host_name, recursive=True):
