@@ -317,7 +317,8 @@ Run %prog addhost --help for full list of command line arguments.
     try: templates = opts.template.split(',')
     except AttributeError: templates = ()
     for host in args:
-        f = okconfig.addhost(host_name=host,address=opts.address,group_name=opts.group,use=opts.use,force=opts.force,templates=templates,host_template=opts.ht)		
+        f = okconfig.addhost(host_name=host,address=opts.address,group_name=opts.group,
+            use=opts.use,force=opts.force,templates=templates,host_template=opts.ht,alias=opts.alias)
         for i in f: print "Saved", i	
 
 def upgrade():

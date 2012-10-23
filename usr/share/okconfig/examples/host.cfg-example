@@ -1,15 +1,15 @@
 
 
 define host {
-	use		PARENTHOST
+    use                         PARENTHOST
 
 
+    host_name                   HOSTNAME
+    address                     IPADDR
+    alias                       ALIAS
 
-	host_name	HOSTNAME
-	address		IPADDR
-
-        contact_groups  GROUP
-        hostgroups      GROUP
+    contact_groups              GROUP
+    hostgroups                  GROUP
 };
 
 
@@ -18,12 +18,12 @@ define host {
 # This is a template service for HOSTNAME
 # Services that belong to this host should use this as a template
 define service {
-	name				HOSTNAME
-	use				GROUP-default_service
-	host_name			HOSTNAME
-	contact_groups			GROUP
-	service_groups			GROUP
-	register			0
+    name                        HOSTNAME
+    use                         GROUP-default_service
+    host_name                   HOSTNAME
+    contact_groups              GROUP
+    service_groups              GROUP
+    register                    0
 }
 
 
@@ -31,13 +31,14 @@ define service {
 # We are still using Ping as a service in addition to check-host-alive, all hosts
 # deserve a ping
 define service {
-        use                             okc-check_ping
-        host_name                       HOSTNAME
-        service_description             Ping
-	#__CRITICAL_PACKETLOSS		40%
-	#__CRITICAL_ROUND_TRIP		500.0
-	#__WARNING_PACKETLOSS		20%
-	#__WARNING_ROUND_TRIP		100.0
+    use                         okc-check_ping
+    host_name                   HOSTNAME
+    service_description         Ping
+
+    #__CRITICAL_PACKETLOSS      40%
+    #__CRITICAL_ROUND_TRIP      500.0
+    #__WARNING_PACKETLOSS       20%
+    #__WARNING_ROUND_TRIP       100.0
 }
 
 
