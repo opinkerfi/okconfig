@@ -90,7 +90,13 @@ rm -fr $RPM_BUILD_ROOT
 %dir %{_sysconfdir}/nagios/okconfig/examples
 
 %post
-okconfig init
+# If upgrading, then run okconfig upgrade
+if [ $1 == 2 ]; then
+	okconfig upgrade
+else
+	okconfig init
+fi
+
 
 %changelog
 * Fri Aug 17 2012 Pall Sigurdsson <palli@opensource.is> 1.0.8-1
