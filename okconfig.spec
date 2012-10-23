@@ -95,6 +95,7 @@ if [ $1 == 2 ]; then
 	okconfig upgrade
 else
 	okconfig init
+	okconfig addgroup default
 fi
 
 
