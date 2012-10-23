@@ -34,6 +34,8 @@ Common okconfig commands:
   addtemplate   add a new template to existing host
   addgroup      add a new host/contact/service group
   addcontact    add a new contact
+  listtemplates List all available templates
+  listhosts     List all hosts
   init          Initilize nagios to use okconfig
   install       Install an agent on a remote server
   upgrade       runs migration routines in case of okconfig upgrades
@@ -41,7 +43,7 @@ Common okconfig commands:
 
 For help on specific command type:
  %prog <command> --help
- 
+
 Examples:
  %prog addgroup linuxservers --alias "Example Linux Servers"
  %prog addhost <host_name> --template linux --address 127.0.0.1 --group linuxservers
@@ -49,7 +51,7 @@ Examples:
 """
 parser = OptionParser(usage=usage)
 parser.add_option("--debug", dest="debug", action="store_true",
-	default=False,help="Print extra debugging information")
+    default=False,help="Print extra debugging information")
 def parse_arguments():
     ''' Parse command line arguments and run command specified commands '''
     if len(sys.argv) < 2:
@@ -70,6 +72,10 @@ def parse_arguments():
         addservice()
     elif sys.argv[1] == "removehost":
         removehost()
+    elif sys.argv[1] == "listtemplates":
+        listtemplates()
+    elif sys.argv[1] == "listhosts":
+        listhosts()
     elif sys.argv[1] == "init":
         init()
     elif sys.argv[1] == "install":
@@ -139,14 +145,14 @@ Run %prog install --help for full list of command line arguments.
 
 
 def verify():
-	''' Verify that current install of okconfig is functional. '''
-	result = okconfig.verify()
-	print "Okconfig verification"
-	print "---------------------"
-	for k,v in result.items():
-		if v is True: v = "success"
-		else: v = "fail"
-		print "* %-70s...%s" % (k,v)
+    ''' Verify that current install of okconfig is functional. '''
+    result = okconfig.verify()
+    print "Okconfig verification"
+    print "---------------------"
+    for k,v in result.items():
+        if v is True: v = "success"
+        else: v = "fail"
+        print "* %-70s...%s" % (k,v)
 
 def init():
     ''' Initilize nagios configuration to use okconfig '''
@@ -158,7 +164,7 @@ def init():
     if not os.path.exists(maincfg):
         raise okconfig.OKConfigError('Error: Nagios configuration file not found under %s' % (maincfg))
     print "Using Nagios configuration file %s" % (maincfg)
-    
+
     import pynag.Parsers
     c = pynag.Parsers.config(cfg_file=maincfg)
     c._edit_static_file(attribute="cfg_dir", new_value=dest_dir, filename=maincfg)
@@ -170,10 +176,24 @@ def init():
         print "Creating %s" % ( dest_dir )
         os.makedirs(dest_dir)
     print 'All Done. Run "%s verify" to verify everything is working' % sys.argv[0]
-    
-    
-    
-    
+
+
+def listhosts():
+    """ List all available and active hosts in the system  """
+    import pynag.Model
+    hosts = pynag.Model.Host.objects.filter(register=1)
+    header = "%-40s%s" % ('host name', 'groups')
+    print header
+    print "-"*len(header)
+    for i in hosts:
+        print "%-40s%s" % (i.host_name, i.hostgroups)
+    footer = "--- %s hosts found" % (len(hosts))
+    print footer,
+    print "-"*(len(header)-len(footer))
+def listtemplates():
+    """ List all available oktemplates """
+    for i in okconfig.get_templates():
+        print i
 
 def addgroup():
     ''' Add new group to current nagios configuration files '''
@@ -191,11 +211,11 @@ Run %prog addgroup --help for full list of command line arguments.
     parser.add_option("--alias", dest="alias", default=None,
                       help="Friendly name for this group")
     (opts,args) = parser.parse_args(sys.argv[2:])
-    
+
     if opts.group: args.append(opts.group)
 
     if len(args) == 0: parser.error("Please specify at least one group on the command line.")    
-    
+
     for group in args:
         f = okconfig.addgroup(group_name=group,alias=opts.alias,force=opts.force)
         for i in f: print "Saved", i
@@ -222,7 +242,7 @@ Run %prog addcontact --help for full list of command line arguments.
                       help="Put contact in the this contactgroup")
 
     (opts,args) = parser.parse_args(sys.argv[2:])
-    
+
     if opts.contact: args.append(opts.contact)
 
     if len(args) == 0: parser.error("Please specify a contact on the command line. See --help.")
@@ -249,7 +269,7 @@ Run %prog addtemplate --help for full list of command line arguments.
     parser.add_option("--force", dest="force", action="store_true",
                       default=False,help="Overwrite files if needed")
     (opts,args) = parser.parse_args(sys.argv[2:])
-    
+
     if not opts.host:
         if len(args) > 0: opts.host = args[0]
     if not opts.template:
@@ -287,13 +307,13 @@ Run %prog addhost --help for full list of command line arguments.
                       help="Alias to use")
     parser.add_option("--host_template", dest="ht", default="host",
                       help="Name of host template to use")
-    
+
     (opts,args) = parser.parse_args(sys.argv[2:])
-    
+
     if opts.host: args.append(opts.host)
-    
+
     if len(args) == 0: parser.error("Please specify at least one host on the command line.")
-	
+
     try: templates = opts.template.split(',')
     except AttributeError: templates = ()
     for host in args:
@@ -316,7 +336,7 @@ Run %prog addservice --help for full list of command line arguments.
 '''
     parser.add_option("--filename", dest="file", default=None,
                       help="Save the new service to specified filename")
-    
+
     (opts,args) = parser.parse_args(sys.argv[2:])
     service_attributes = {}
     for arg in args:
@@ -346,18 +366,18 @@ Run %prog removehost --help for full list of command line arguments.
                       default=False,help="Also remove all services that belong to this host")
 
     (opts,args) = parser.parse_args(sys.argv[2:])
-    
+
     if opts.host: args.append(opts.host)
 
     if len(args) == 0: parser.error("Please specify a host_name on the command line. See --help.")       
     for i in args:
         okconfig.removehost(host_name=i, recursive=opts.recursive)
         print "Host %s removed." % (i)
-    
+
 
 if __name__ == '__main__':
     try:
         parse_arguments()
     except Exception, e:
-        	print "Error: ", e
+            print "Error: ", e
 
