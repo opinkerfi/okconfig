@@ -225,9 +225,10 @@ Run %prog addcontact --help for full list of command line arguments.
     
     if opts.contact: args.append(opts.contact)
 
-    if len(args) == 0: parser.error("Please specify a contact on the command line. See --help.")       
-    f = okconfig.addcontact(contact_name=opts.contact, alias=opts.alias, force=opts.force, group_name=opts.group, email=opts.email)
-    for i in f: print "Saved", i
+    if len(args) == 0: parser.error("Please specify a contact on the command line. See --help.")
+    for contact in args:
+        f = okconfig.addcontact(contact_name=contact, alias=opts.alias, force=opts.force, group_name=opts.group, email=opts.email)
+        for i in f: print "Saved", i
 
 
 def addtemplate():
