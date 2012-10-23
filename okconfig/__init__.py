@@ -279,7 +279,7 @@ def addcontact(contact_name, alias=None, force=False, group_name="default", emai
 	if alias is not None: contact['alias'] = alias
 	if use is not None: contact['use'] = use
 	if email is not None: contact['email'] = email
-	if group_name is not None: contact['contact_groups'] = group_name
+	if group_name is not None: contact['contactgroups'] = group_name
 	result = contact.save()
 	filename = contact.get_filename()
 	if result is False:
