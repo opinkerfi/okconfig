@@ -5,7 +5,7 @@
 
 Summary: Python Nagios Template management and configuration power tools
 Name: okconfig
-Version: 1.0.9
+Version: 1.0.10
 Release: 1%{?dist}
 Source0: http://opensource.is/files/%{name}-%{version}.tar.gz
 License: GPLv2
@@ -100,6 +100,10 @@ fi
 
 
 %changelog
+* Fri Oct 26 2012 Pall Sigurdsson <palli@opensource.is> 1.0.10-1
+- Merge branch 'master' of github.com:opinkerfi/okconfig (palli@opensource.is)
+- removed nsclient directory (palli@opensource.is)
+
 * Fri Oct 26 2012 Pall Sigurdsson <palli@opensource.is> 1.0.9-1
 - SNMP Connectivity removed from proliant example. Closes #5
   (palli@opensource.is)
