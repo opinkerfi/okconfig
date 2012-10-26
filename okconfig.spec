@@ -5,7 +5,7 @@
 
 Summary: Python Nagios Template management and configuration power tools
 Name: okconfig
-Version: 1.0.8
+Version: 1.0.9
 Release: 1%{?dist}
 Source0: http://opensource.is/files/%{name}-%{version}.tar.gz
 License: GPLv2
@@ -100,6 +100,54 @@ fi
 
 
 %changelog
+* Fri Oct 26 2012 Pall Sigurdsson <palli@opensource.is> 1.0.9-1
+- SNMP Connectivity removed from proliant example. Closes #5
+  (palli@opensource.is)
+- okconfig group default is now always created on install (Closes #9)
+  (palli@opensource.is)
+- --alias now supported with host templates (palli@opensource.is)
+- windows update logo added (palli@opensource.is)
+- Error handling improved on okconfig commands (palli@opensource.is)
+- Apache example bugfixes (palli@opensource.is)
+- add 'okconfig upgrade' to %%post section of rpm spec (palli@opensource.is)
+- subcommands listtemplates and listhosts added (palli@opensource.is)
+- addcontact: contact name can now be specified as argument from command-line
+  (palli@opensource.is)
+- addcontact contact_groups changed to contactgroups (palli@opensource.is)
+- storwize templates added (palli@opensource.is)
+- notes logo change (palli@opensource.is)
+- wmi test added (palli@opensource.is)
+- Brocade templates reworked (palli@opensource.is)
+- icon updates (palli@opensource.is)
+- passive host template updated (palli@opensource.is)
+- APC templates reworked. Templates for all equipment supported by
+  check_apcext.pl (palli@opensource.is)
+- mge logo added (palli@opensource.is)
+- windows logo added (palli@opensource.is)
+- aix logo updated (palli@opensource.is)
+- fix command_line for okc-check_https_certificate for rhel6 compatibility
+  (palli@opensource.is)
+- Added missing _SNMP_COMMUNITY macro (palli@opensource.is)
+- Added monitoring templates for ACRC cooling units from apc
+  (palli@opensource.is)
+- fixed typo in brocade example (palli@opensource.is)
+- check_cpu script now included in script (palli@opensource.is)
+- experimental suse support for install_agent (palli@opensource.is)
+- subprocess typo fixed (palli@opensource.is)
+- except ValueError changed to except KeyError (palli@opensource.is)
+- help_function.runCommand now uses stdin=subprocess.PIPE (palli@opensource.is)
+- Fix okconfig install breaking on failures (palli@opensource.is)
+- Various bugfixes (palli@opensource.is)
+- host example now uses new okc-check_ping (palli@opensource.is)
+- okc-check_ping added (palli@opensource.is)
+- traceroute function added. (palli@opensource.is)
+- subprocess module added to imports (palli@opensource.is)
+- Added preliminary http support (tommi@tommi.org)
+- path updated for check_gearman (palli@opensource.is)
+- Gearman tests added to nagios template (palli@opensource.is)
+- Merge branch 'master' of github.com:opinkerfi/okconfig (palli@opensource.is)
+- fedora16 support deprecated for fedora17 (palli@opensource.is)
+
 * Fri Aug 17 2012 Pall Sigurdsson <palli@opensource.is> 1.0.8-1
 - MMCSS added to default excluded services (palli@opensource.is)
 - "okconfig upgrade" now also detects deprecated host and service notification
