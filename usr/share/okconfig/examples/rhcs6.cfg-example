@@ -56,14 +56,19 @@ define service {
 	host_name		HOSTNAME
 	contact_groups		GROUP
 
-	__RHCS_SERVICE		podcast.ruv.is
-	service_description	RHCS Service podcast.ruv.is
+	__RHCS_SERVICE		
+	service_description	RHCS Service
 	register		0
 }
 
-
-
-
+define service {
+	use			okc-rhcs-check_rhcs_service_frozen
+	host_name		HOSTNAME
+	contact_groups		GROUP
+	__RHCS_SERVICE		
+	service_description	RHCS Service Suspended
+	register		0
+}
 
 define service {
         use                     okc-rhcs-check_cman_group
