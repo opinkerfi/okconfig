@@ -133,7 +133,7 @@ cat << EOF > $PLUGINDIR/check_procs.sh
 LINE=\`$PLUGINDIR/check_procs \$*\`
 RC=\$?
 COUNT=\`echo \$LINE | awk '{print \$3}'\`
-echo \$LINE | procs=\$COUNT
+echo \$LINE \| procs=\$COUNT
 exit \$RC
 EOF
 
