@@ -128,13 +128,13 @@ echo "allowed_hosts=$NAGIOS_SERVER"> $NRPE_D/allowed_hosts.cfg
 install_check_procs() {
 
 # Throw in a check_procs script
-cat << 'EOF' > $PLUGINDIR/check_procs.sh
+cat << EOF > $PLUGINDIR/check_procs.sh
 #!/bin/bash
-LINE=`$PLUGINDIR/check_procs $*`
-RC=$?
-COUNT=`echo $LINE | awk '{print $3}'`
-echo $LINE | procs=$COUNT
-exit $RC
+LINE=`$PLUGINDIR/check_procs \$*`
+RC=\$?
+COUNT=`echo \$LINE | awk '{print \$3}'`
+echo \$LINE | procs=\$COUNT
+exit \$RC
 EOF
 
 chmod a+x $PLUGINDIR/check_procs.sh
