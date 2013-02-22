@@ -45,5 +45,6 @@ try:
             elif keyword == "destination_directory": destination_directory = value
             elif keyword == "install_nrpe_script": install_nrpe_script = value
             elif keyword == "nsclient_installfiles": nsclient_installfiles = value
+            elif keyword == "examples_directory_local": examples_directory_local = value
 except ImportError:
     raise
