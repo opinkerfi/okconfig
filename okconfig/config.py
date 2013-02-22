@@ -29,7 +29,7 @@ destination_directory   = "/etc/nagios/okconfig/"
 install_nrpe_script     = "/tmp/install_nrpe.sh"
 nsclient_installfiles   = "/usr/share/okconfig/client/windows/"
 examples_directory_local= destination_directory + "/examples"
-git_commit_changes     = "1"
+git_commit_changes      = "1"
 try:
     if os.path.isfile(config_file):
         for line in open(config_file).readlines():
@@ -39,12 +39,13 @@ try:
             if len(line) != 2: continue
             keyword = str(line[0]).strip()
             value = str(line[1]).strip()
-            if keyword == "nagios_config": nagios_config = value
+            if keyword   == "nagios_config": nagios_config = value
             elif keyword == "template_directory": template_directory = value
             elif keyword == "examples_directory": examples_directory = value
             elif keyword == "destination_directory": destination_directory = value
             elif keyword == "install_nrpe_script": install_nrpe_script = value
             elif keyword == "nsclient_installfiles": nsclient_installfiles = value
             elif keyword == "examples_directory_local": examples_directory_local = value
+            elif keyword == "git_commit_changes": git_commit_changes = value
 except ImportError:
     raise

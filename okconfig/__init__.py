@@ -184,6 +184,7 @@ def addhost(host_name, address=None, group_name=None, templates=None, use=None, 
         if i not in all_templates:
             raise OKConfigError("Template %s not found" % i)
     result = _apply_template(host_template, destination_file, **arguments)
+    _git_commit(filelist=result, message='okconfig host %s added with address %s' % (host_name,address))
     for i in templates:
         result = result + addtemplate(host_name=host_name, template_name=i, group_name=group_name,force=force)
     return result
@@ -226,7 +227,9 @@ def addtemplate(host_name, template_name, group_name=None,force=False):
         if os.path.exists(newfile):
             raise OKConfigError("Destination file '%s' already exists." % newfile)
 
-    return _apply_template(template_name,newfile, HOSTNAME=host_name, GROUP=group_name)
+    result = _apply_template(template_name,newfile, HOSTNAME=host_name, GROUP=group_name)
+    _git_commit(filelist=result, message='okconfig template %s added to host %s' % (template_name, host_name))
+    return result
 
 def addgroup(group_name, alias=None, force=False):
     """Adds a new hostgroup/contactgroup/servicegroup combo to Nagios.
@@ -253,7 +256,9 @@ def addgroup(group_name, alias=None, force=False):
         if groups != False:
             raise OKConfigError("We already have groups with name = %s" % group_name)
 
-    return _apply_template(template_name="group",destination_file=destination_file, GROUP=group_name, ALIAS=alias)
+    result = _apply_template(template_name="group",destination_file=destination_file, GROUP=group_name, ALIAS=alias)
+    _git_commit(filelist=result, message="okconfig group %s added" % group_name)
+    return result
 def addcontact(contact_name, alias=None, force=False, group_name="default", email=None, use='generic-contact'):
     """Adds a new contact to Nagios.
 
@@ -555,7 +560,17 @@ def _apply_template(template_name,destination_file, **kwargs):
     open(destination_file,'w').write( file )
     return [destination_file]
 
-
+def _git_commit(filelist, message):
+    """ If config.git_commit_changes is enabled, then commit "filelist" to the repository using message """
+    print "committing", message
+    if config.git_commit_changes != '1':
+        return
+    if 'git' not in globals():
+        from pynag.Utils import GitRepo
+        git = GitRepo(directory=os.path.dirname(config.nagios_config), auto_init=False, author_name="okconfig")
+    else:
+        global git
+    git.commit(message=message, filelist=filelist)
 class OKConfigError(Exception):
     pass
 
