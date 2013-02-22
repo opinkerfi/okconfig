@@ -29,6 +29,7 @@ destination_directory   = "/etc/nagios/okconfig/"
 install_nrpe_script     = "/tmp/install_nrpe.sh"
 nsclient_installfiles   = "/usr/share/okconfig/client/windows/"
 examples_directory_local= destination_directory + "/examples"
+git_commit_changes     = "1"
 try:
     if os.path.isfile(config_file):
         for line in open(config_file).readlines():
