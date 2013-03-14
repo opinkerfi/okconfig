@@ -276,8 +276,10 @@ Run %prog addtemplate --help for full list of command line arguments.
         if len(args) > 1: opts.template = args[1]
     if not opts.template or not opts.host:
         parser.error("Please specify both host and template. See --help")
-    f = okconfig.addtemplate(host_name=opts.host,template_name=opts.template,force=opts.force)
-    for i in f: print "Saved", i
+    templates = opts.template.split(',')
+    for template_name in templates:
+        f = okconfig.addtemplate(host_name=opts.host,template_name=template_name,force=opts.force)
+        for i in f: print "Saved", i
 
 def addhost():
     ''' Add new host to nagios configuration files '''
