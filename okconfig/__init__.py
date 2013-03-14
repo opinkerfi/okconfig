@@ -562,14 +562,13 @@ def _apply_template(template_name,destination_file, **kwargs):
 
 def _git_commit(filelist, message):
     """ If config.git_commit_changes is enabled, then commit "filelist" to the repository using message """
-    print "committing", message
     if config.git_commit_changes != '1':
         return
     if 'git' not in globals():
         from pynag.Utils import GitRepo
         git = GitRepo(directory=os.path.dirname(config.nagios_config), auto_init=False, author_name="okconfig")
     else:
-        global git
+        git = globals()['git']
     git.commit(message=message, filelist=filelist)
 class OKConfigError(Exception):
     pass
