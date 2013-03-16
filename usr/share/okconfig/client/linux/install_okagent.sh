@@ -9,10 +9,25 @@ if [ -z $NAGIOS_SERVER ] ; then
 	echo "IP Address of Nagios server not specified. Using $NAGIOS_SERVER"
 fi
 
-grep -q "release 6" /etc/redhat-release 2>/dev/null && DISTRO=rhel6
-grep -q "release 5" /etc/redhat-release 2>/dev/null && DISTRO=rhel5
-grep -q "openSUSE 11" /etc/SuSE-release 2>/dev/null && DISTRO=opensuse
-test -f /etc/debian_version && DISTRO=debian
+# Use /etc/os-release, see http://0pointer.de/blog/projects/os-release
+if [ -f "/etc/os-release" ]; then
+	DISTRO=$(get_os_release)
+else
+	grep -q "release 6" /etc/redhat-release 2>/dev/null && DISTRO=rhel6
+	grep -q "release 5" /etc/redhat-release 2>/dev/null && DISTRO=rhel5
+	grep -q "Fedora release 17" /etc/redhat-release 2>/dev/null && DISTRO=rhel5
+	grep -q "openSUSE 11" /etc/SuSE-release 2>/dev/null && DISTRO=opensuse
+	test -f /etc/debian_version && DISTRO=debian
+fi
+
+
+get_os_release() {
+        # Run in a sub-shell so we do not overwrite any environment variables
+        (
+                . /etc/os-release
+                echo ${ID}${VERSION_ID}
+        )
+}
 
 
 install_debian() {
@@ -389,6 +404,14 @@ if [ "$DISTRO" == "opensuse" ]; then
 	NRPE_D=/etc/nrpe.d/
 	install_opensuse;
 
+elif [[ "$DISTRO" =~ fedora1[678] ]]; then
+	PLUGINDIR=/usr/lib64/nagios/plugins/
+	NRPE_USER=nrpe
+	if [ $HOSTTYPE == "i386" ]; then
+		PLUGINDIR=`echo $PLUGINDIR | sed 's/lib64/lib/'`
+	fi	
+	NRPE_D=/etc/nrpe.d/
+	install_rhel;
 elif [ "$DISTRO" == "rhel6" ]; then
 	PLUGINDIR=/usr/lib64/nagios/plugins/
 	NRPE_USER=nrpe
