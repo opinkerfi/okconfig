@@ -1,0 +1,15 @@
+
+define service {
+	host_name		HOSTNAME
+	contact_groups		GROUP
+	service_description	IPA Replication
+	check_command		okc-check_ipa_replication
+	use			generic-service
+
+	__LDAP_URI		/
+	__BINDDN
+	__BINDPW
+
+}
+
+
