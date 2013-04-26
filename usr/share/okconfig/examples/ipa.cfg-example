@@ -6,7 +6,7 @@ define service {
 	check_command		okc-check_ipa_replication
 	use			generic-service
 
-	__LDAP_URI		/
+	__LDAP_URI		ldaps://HOSTNAME
 	__BINDDN
 	__BINDPW
 
