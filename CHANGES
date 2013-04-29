@@ -1,3 +1,11 @@
+Changes in 1.1.0 (unreleased)
+    - Template http and https now support ports and virtualhosts
+    - Template emc now enforces username and passwords
+    - New template ipa
+    - Added support for installing clients on fedora 16-18
+    - okconfig tools can now commit to git automatically (for adagios) 
+
+
 1.0
 
 
