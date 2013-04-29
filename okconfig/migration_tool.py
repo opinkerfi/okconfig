@@ -18,6 +18,9 @@
 """
 TEMPLATE_VERSION HISTORY
 
+# Version 2.3 (2013-04-29)
+    * okc-emc-check_portstate now enforces username and password
+    * okc-check_http now has support for virtualhosts and ports
 # Version 2.2 (2012-09-26)
     * Brocade templates reworked. _SNMP_COMMUNITY macro renamed to __SNMP_COMMUNITY
 
@@ -176,6 +179,47 @@ def upgrade_to_version_2_2():
         print "..", service.get_description(), "renamed _SNMP_COMMUNITY %s to __SNMP_COMMUNITY" % (service['_SNMP_COMMUNITY'])
     print "ok"
 
+def upgrade_to_version_2_3():
+    """ Upgrade to version 2.3
+     okc-emc_check_port_state now has a username and password field implied
+    """
+    print "Upgrading to config version 2.3 ...",
+    my_services = Model.Service.objects.filter(check_command="okc-emc-check_portstate", __USERNAME=None, register=1)
+    for i in my_services:
+        if i.get('__USERNAME') is None:
+            i['__USERNAME'] = 'nagios'
+        if i.get('__PASSWORD') is None:
+            i['__PASSWORD'] = 'not set'
+        i.save()
+        print "Updated: ", i.get_shortname()
+
+    # Add missing macros to okc-check_http
+    my_services = Model.Service.objects.filter(check_command="okc-check_http", __VIRTUAL_HOST=None, register=1)
+    for i in my_services:
+        if i.get('__VIRTUAL_HOST') is None:
+            i['__VIRTUAL_HOST'] = i.get('host_name')
+        if i.get('__PORT') is None:
+            i['__PORT'] = "80"
+        i.save()
+        print "Updated: ", i.get_shortname()
+
+    my_services = Model.Service.objects.filter(check_command="okc-check_https", __VIRTUAL_HOST=None, register=1)
+    for i in my_services:
+        if i.get('__VIRTUAL_HOST') is None:
+            i['__VIRTUAL_HOST'] = i.get('host_name')
+        if i.get('__PORT') is None:
+            i['__PORT'] = "443"
+        i.save()
+        print "Updated: ", i.get_shortname()
+
+    my_services = Model.Service.objects.filter(check_command="okc-check_https_certificate", __PORT=None, register=1)
+    for i in my_services:
+        if i.get('__PORT') is None:
+            i['__PORT'] = "443"
+        i.save()
+        print "Updated: ", i.get_shortname()
+
+
 
 def rename_oktemplate_services():
     """ To change config version to 2.0 This is a one-off action. Not part of any upgrade """
@@ -202,6 +246,8 @@ def upgrade_okconfig():
         upgrade_to_version_2_1()
     if template_version >= 2.2:
         upgrade_to_version_2_2()
+    if template_version >= 2.3:
+        upgrade_to_version_2_3()
 
 if __name__ == '__main__':
     upgrade_okconfig()
