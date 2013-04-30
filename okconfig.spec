@@ -5,7 +5,7 @@
 
 Summary: Python Nagios Template management and configuration power tools
 Name: okconfig
-Version: 1.0.10
+Version: 1.0.11
 Release: 1%{?dist}
 Source0: http://opensource.is/files/%{name}-%{version}.tar.gz
 License: GPLv2
@@ -100,6 +100,28 @@ fi
 
 
 %changelog
+* Tue Apr 30 2013 Pall Sigurdsson <palli@opensource.is> 1.0.11-1
+- CHANGES updated (palli@opensource.is)
+- http template, support for port and virtual_host macros (palli@opensource.is)
+- Fix missing ipa check command (tommi@tommi.org)
+- Added default ldaps connection to HOSTNAME (tommi@tommi.org)
+- Added IPA support to okconfig (tommi@tommi.org)
+- Merge branch 'master' of github.com:opinkerfi/okconfig (tommi@tommi.org)
+- Added support for os-release and fedora 16-18 (tommi@tommi.org)
+- support for comma seperated list of templates in addtemplate
+  (palli@opensource.is)
+- Fix warning about git global not being declared (palli@opensource.is)
+- git commit on changes support (palli@opensource.is)
+- Merge branch 'master' of github.com:opinkerfi/okconfig (palli@opensource.is)
+- new configuration option: git_commit_changes (palli@opensource.is)
+- Fix #28 okconfig.cfg->add examples_directory_local (gerdradecke@gmx.de)
+- Missing quote for pipe in check_procs.sh (tommi@tommi.org)
+- Missing quoting of backticks for check_procs.sh (tommi@tommi.org)
+- Removed strong quoting for check_procs.sh (tommi@tommi.org)
+- Closes 27 - Strong quoting cpu and proc checks (tommi@tommi.org)
+- Added support for checking suspended RHCS services (tommi@tommi.org)
+- Fix missing auth parameters in EMC check portstate (palli@lsh.is)
+
 * Fri Oct 26 2012 Pall Sigurdsson <palli@opensource.is> 1.0.10-1
 - Merge branch 'master' of github.com:opinkerfi/okconfig (palli@opensource.is)
 - removed nsclient directory (palli@opensource.is)
