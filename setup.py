@@ -3,7 +3,7 @@ from distutils.core import setup
 import os
 
 NAME = "okconfig"
-VERSION = '1.1.0'
+VERSION = '1.1.1'
 SHORT_DESC = "%s - Powertools to generate Nagios configuration files" % NAME
 LONG_DESC = """
 %s contains tools and templates for enterprise quality nagios configuration.
