@@ -18,6 +18,16 @@
 """
 TEMPLATE_VERSION HISTORY
 
+# Version 2.4 (2013-05-13)
+    * Removed the following hardcoded groups from templates:
+    * hostgroup cisco-hostgroup
+    * servicegroup proliant-services
+    * contactgroup proliant-contacts
+    * servicegroup eva-services
+    * contactgroup eva-contacts
+    * servicegroup windows-services
+    * servicegroup linux-services
+    * servicegroup mssql-services
 # Version 2.3 (2013-04-29)
     * okc-emc-check_portstate now enforces username and password
     * okc-check_http now has support for virtualhosts and ports
@@ -218,8 +228,58 @@ def upgrade_to_version_2_3():
             i['__PORT'] = "443"
         i.save()
         print "Updated: ", i.get_shortname()
+    print "ok"
 
-
+def upgrade_to_version_2_4():
+    """ Upgrade to version 2.4
+    We will adapt to the following removals:
+    * hostgroup cisco-hostgroup
+    * servicegroup proliant-services
+    * contactgroup proliant-contacts
+    * servicegroup eva-services
+    * contactgroup eva-contacts
+    * servicegroup windows-services
+    * servicegroup linux-services
+    * servicegroup mssql-services
+    """
+    print "Upgrading to config version 2.4 ...",
+    dest_file = okconfig.config.destination_directory + "/backwards-compatibility.cfg"
+    hostgroups = ['cisco-hostgroup']
+    servicegroups = ['proliant-services', 'eva-services', 'windows-services', 'linux-services', 'mssql-services']
+    contactgroups = ['proliant-contacts', 'eva-contacts']
+    for i in hostgroups:
+        hg = Model.Hostgroup.objects.filter(hostgroup_name=i)
+        hg_hosts = Model.Host.objects.filter(hostgroups__has_field=i)
+        if hg_hosts and not hg:
+            h = Model.Hostgroup()
+            h['hostgroup_name'] = i
+            h['alias'] = i
+            h.set_filename(dest_file)
+            h.save()
+            print "Created hostgroup", i
+    for i in servicegroups:
+        sg = Model.Servicegroup.objects.filter(servicegroup_name=i)
+        sg_services = Model.Service.objects.filter(servicegroups__has_field=i)
+        if sg_services and not sg:
+            s = Model.Servicegroup()
+            s['servicegroup_name'] = i
+            s['alias'] = i
+            s.set_filename(dest_file)
+            s.save()
+            print "Created servicegroup", i
+    for i in contactgroups:
+        cg = Model.Contactgroup.objects.filter(contactgroup_name=i)
+        cg_contacts = Model.Contact.objects.filter(contactgroups__has_field=i)
+        cg_hosts = Model.Host.objects.filter(contact_groups__has_field=i)
+        cg_services = Model.Host.objects.filter(contact_groups__has_field=i)
+        if not cg and (cg_contacts or cg_hosts or cg_services):
+            c = Model.Contactgroup()
+            c['contactgroup_name'] = i
+            c['alias'] = i
+            c.set_filename(dest_file)
+            c.save()
+            print "Created contactgroup", i
+    print "ok"
 
 def rename_oktemplate_services():
     """ To change config version to 2.0 This is a one-off action. Not part of any upgrade """
@@ -248,6 +308,8 @@ def upgrade_okconfig():
         upgrade_to_version_2_2()
     if template_version >= 2.3:
         upgrade_to_version_2_3()
+    if template_version >= 2.4:
+        upgrade_to_version_2_4()
 
 if __name__ == '__main__':
     upgrade_okconfig()
