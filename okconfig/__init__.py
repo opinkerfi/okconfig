@@ -47,6 +47,7 @@ import socket
 
 import pynag
 import pynag.Model
+import pynag.Utils
 import paramiko
 pynag.Model.pynag_directory = destination_directory
 from os import getenv
@@ -445,10 +446,11 @@ def install_nsclient(remote_host, domain, username, password):
 
     # Try to authenticate with remote host and run a test command
     authcommand = 'winexe --reinstall -U "%s/%s%%%s" "//%s" "cmd /c echo test"' % (domain,username,password,remote_host)
-    result = helper_functions.runCommand(authcommand)
+    result = pynag.Utils.runCommand(authcommand)
     if result[0] != 0:
-        raise OKConfigError('Cannot authenticate')
-    result = helper_functions.runCommand("%s/install_nsclient.sh '%s' --domain '%s' --user '%s' --password '%s'" % (config.nsclient_installfiles,remote_host,domain,username,password))
+        return result
+        raise OKConfigError('Could not log into host %s as %s/%s. Error: %s %s' %(remote_host,domain,username,result[1], result[2]))
+    result = pynag.Utils.runCommand("%s/install_nsclient.sh '%s' --domain '%s' --user '%s' --password '%s'" % (config.nsclient_installfiles,remote_host,domain,username,password))
     return result
 
 def check_agent(host_name):
