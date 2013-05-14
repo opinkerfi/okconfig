@@ -249,7 +249,7 @@ def upgrade_to_version_2_4():
     contactgroups = ['proliant-contacts', 'eva-contacts']
     for i in hostgroups:
         hg = Model.Hostgroup.objects.filter(hostgroup_name=i)
-        hg_hosts = Model.Host.objects.filter(hostgroups__has_field=i)
+        hg_hosts = Model.Host.objects.filter(host_groups__has_field=i)
         if hg_hosts and not hg:
             h = Model.Hostgroup()
             h['hostgroup_name'] = i
@@ -259,7 +259,7 @@ def upgrade_to_version_2_4():
             print "Created hostgroup", i
     for i in servicegroups:
         sg = Model.Servicegroup.objects.filter(servicegroup_name=i)
-        sg_services = Model.Service.objects.filter(servicegroups__has_field=i)
+        sg_services = Model.Service.objects.filter(service_groups__has_field=i)
         if sg_services and not sg:
             s = Model.Servicegroup()
             s['servicegroup_name'] = i
