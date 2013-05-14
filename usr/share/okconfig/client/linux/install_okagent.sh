@@ -34,6 +34,7 @@ install_debian() {
 
 # Install available packages
 echo "Debian compatible distro... Installing debs"
+export DEBIAN_FRONTEND=noninteractive
 apt-get install -y nagios-nrpe-server nagios-plugins
 mkdir -p $NRPE_D
 
