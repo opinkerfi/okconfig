@@ -41,12 +41,15 @@ to enterprise quality monitoring.</p>
 <pre><code>okconfig addhost --host example.com --template http
 </code></pre>
 
-<p>Also check ssl connection and ssl certificate:
-    okconfig addtemplate --host example.com --template https</p>
+<p>Also check ssl connection and ssl certificate:</p>
 
-<p>Create a new host and give them standard linux checks:</p>
+<pre><code>okconfig addtemplate --host example.com --template https
+</code></pre>
 
-<pre><code>okconfig install --host linuxhost.example.com --address 127.1.1.1 --template linux
+<p>Create a new host and give them standard linux checks. Then install nrpe on it:</p>
+
+<pre><code>okconfig addhost --host linuxhost.example.com --address 127.1.1.1 --template linux
+okconfig install --host linuxhost.example.com --ssh --user root --password my_password
 </code></pre>
 
 <p>Add mssql service checks to an existing host:</p>
@@ -108,6 +111,14 @@ okconfig init
 # Test
 okconfig verify
 </code></pre>
+
+<h1>Contact us</h1>
+
+<ul>
+<li>Github: For bug repors or feature requests: <a href="https://github.com/opinkerfi/okconfig">https://github.com/opinkerfi/okconfig</a>
+</li>
+<li>Via irc: Developers are known to hang on #adagios and #pynag on freenode</li>
+</ul>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/opinkerfi">opinkerfi</a></p>
