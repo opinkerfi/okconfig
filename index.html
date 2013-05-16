@@ -1,1 +1,120 @@
-My GitHub Page
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Okconfig by opinkerfi</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Okconfig</h1>
+        <p>Ready made monitoring packs for Nagios</p>
+
+        <p class="view"><a href="https://github.com/opinkerfi/okconfig">View the Project on GitHub <small>opinkerfi/okconfig</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/opinkerfi/okconfig/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/opinkerfi/okconfig/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/opinkerfi/okconfig">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>About</h1>
+
+<p>okconfig a robust template mechanism for Nagios configuration files. Providing
+standardized set of configuration templates and select quality plugins 
+to enterprise quality monitoring.</p>
+
+<h1>Getting Started</h1>
+
+<p>Standard http checks on example.com:</p>
+
+<pre><code>okconfig addhost --host example.com --template http
+</code></pre>
+
+<p>Also check ssl connection and ssl certificate:
+    okconfig addtemplate --host example.com --template https</p>
+
+<p>Create a new host and give them standard linux checks:</p>
+
+<pre><code>okconfig install --host linuxhost.example.com --address 127.1.1.1 --template linux
+</code></pre>
+
+<p>Add mssql service checks to an existing host:</p>
+
+<pre><code>okconfig addtemplate --host sqlserver.example.com --template mssql
+</code></pre>
+
+<h1>Supported Platforms for nagios server</h1>
+
+<p>The developers work hard to make sure templates, packages and plugins and
+service checks work and don't break when okconfig is upgraded.</p>
+
+<p>With over 60 plugins and 380 service templates there are limits to how many
+platforms we can support. Currently we support running the nagios server on:</p>
+
+<ul>
+<li>RHEL 6.x</li>
+<li>Centos 6.x</li>
+</ul><p>If anyone is willing to provide decent quality packages for debian or
+other distros we are happy to build and host them.</p>
+
+<h1>Installing on rhel/centos</h1>
+
+<pre><code>rpm -Uvh http://download.fedoraproject.org/pub/epel/6/$HOSTTYPE/epel-release-6-8.noarch.rpm
+rpm -Uhv http://opensource.is/repo/ok-release-10-1.el6.noarch.rpm
+yum-config-manager --enable ok-testing
+
+yum install okconfig
+okconfig verify
+</code></pre>
+
+<h1>Requirements</h1>
+
+<p>At the very least okconfig needs the following:</p>
+
+<ul>
+<li>python-2.6</li>
+<li>pynag-0.4.9</li>
+<li>python-paramiko (for deploying remote agents via ssh)</li>
+<li>winexe (for deploying remote agents to windows servers)</li>
+</ul><h1>Installing from source</h1>
+
+<p>If you want to play with the source or try it out on an unsupported platform. These 
+instructions should get you started:</p>
+
+<pre><code>cd /opt
+git clone https://github.com/opinkerfi/okconfig.git
+echo 'PYTHONPATH=$PYTHONPATH:/opt/okconfig' &gt; /etc/profile.d/okconfig.sh
+cp /opt/okconfig/etc/okconfig.conf /etc/okconfig.conf
+source /etc/profile
+
+ln -s /opt/okconfig/usr/share/okconfig /usr/share/
+ln -s /opt/okconfig/usr/bin/okconfig /usr/local/bin/
+
+# Remember to edit /etc/okconfig.conf and verify all paths apply to your system
+# Configure Nagios.cfg
+okconfig init
+
+# Test
+okconfig verify
+</code></pre>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/opinkerfi">opinkerfi</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
