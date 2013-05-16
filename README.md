@@ -15,11 +15,14 @@ Standard http checks on example.com:
     okconfig addhost --host example.com --template http
 
 Also check ssl connection and ssl certificate:
+
     okconfig addtemplate --host example.com --template https
 
-Create a new host and give them standard linux checks:
+Create a new host and give them standard linux checks. Then install nrpe on it:
 
-    okconfig install --host linuxhost.example.com --address 127.1.1.1 --template linux
+    okconfig addhost --host linuxhost.example.com --address 127.1.1.1 --template linux
+    okconfig install --host linuxhost.example.com --ssh --user root --password my_password
+
 
 Add mssql service checks to an existing host:
 
@@ -81,3 +84,10 @@ instructions should get you started:
     
     # Test
     okconfig verify
+
+
+Contact us
+==========
+
+* Github: For bug repors or feature requests: https://github.com/opinkerfi/okconfig
+* Via irc: Developers are known to hang on #adagios and #pynag on freenode
