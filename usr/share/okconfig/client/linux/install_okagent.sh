@@ -9,6 +9,14 @@ if [ -z $NAGIOS_SERVER ] ; then
 	echo "IP Address of Nagios server not specified. Using $NAGIOS_SERVER"
 fi
 
+get_os_release() {
+        # Run in a sub-shell so we do not overwrite any environment variables
+        (
+                . /etc/os-release
+                echo ${ID}${VERSION_ID}
+        )
+}
+
 # Use /etc/os-release, see http://0pointer.de/blog/projects/os-release
 if [ -f "/etc/os-release" ]; then
 	DISTRO=$(get_os_release)
@@ -19,16 +27,6 @@ else
 	grep -q "openSUSE 11" /etc/SuSE-release 2>/dev/null && DISTRO=opensuse
 	test -f /etc/debian_version && DISTRO=debian
 fi
-
-
-get_os_release() {
-        # Run in a sub-shell so we do not overwrite any environment variables
-        (
-                . /etc/os-release
-                echo ${ID}${VERSION_ID}
-        )
-}
-
 
 install_debian() {
 
@@ -430,6 +428,11 @@ elif [ "$DISTRO" == "rhel5" ]; then
 	NRPE_D=/etc/nrpe.d
 	install_rhel;
 elif [ "$DISTRO" == "debian" ]; then
+	PLUGINDIR=/usr/lib/nagios/plugins/
+	NRPE_D=/etc/nrpe.d
+	NRPE_USER=nagios
+	install_debian
+elif [[ "$DISTRO" =~ "ubuntu" ]]; then
 	PLUGINDIR=/usr/lib/nagios/plugins/
 	NRPE_D=/etc/nrpe.d
 	NRPE_USER=nagios
