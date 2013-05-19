@@ -93,6 +93,13 @@ if [ 0 -ne $? ]; then
 fi
 	
 	
+echo "Installing epel repository"
+yum install -y epel-release
+if [ 0 -ne $? ]; then
+	echo "Failed to install EPEL yum repositories" >2
+	exit 1
+fi
+
 echo "Running: yum install -y nagios-okconfig-nrpe"
 yum install -y nagios-okconfig-nrpe
 if [ 0 -ne $? ]; then
