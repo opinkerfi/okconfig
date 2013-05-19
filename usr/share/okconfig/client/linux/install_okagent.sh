@@ -405,7 +405,7 @@ chmod a+rx $PLUGINDIR/check_procs.sh
 if [ "$DISTRO" == "opensuse" ]; then
 	PLUGINDIR=/usr/lib64/nagios/plugins/
 	NRPE_USER=nagios
-	if [ $HOSTTYPE == "i386" ]; then
+	if [ $HOSTTYPE == "i686" ]; then
 		PLUGINDIR=`echo $PLUGINDIR | sed 's/lib64/lib/'`
 	fi	
 	NRPE_D=/etc/nrpe.d/
@@ -414,7 +414,7 @@ if [ "$DISTRO" == "opensuse" ]; then
 elif [[ "$DISTRO" =~ fedora1[678] ]]; then
 	PLUGINDIR=/usr/lib64/nagios/plugins/
 	NRPE_USER=nrpe
-	if [ $HOSTTYPE == "i386" ]; then
+	if [ $HOSTTYPE == "i686" ]; then
 		PLUGINDIR=`echo $PLUGINDIR | sed 's/lib64/lib/'`
 	fi	
 	NRPE_D=/etc/nrpe.d/
@@ -422,7 +422,7 @@ elif [[ "$DISTRO" =~ fedora1[678] ]]; then
 elif [ "$DISTRO" == "rhel6" ]; then
 	PLUGINDIR=/usr/lib64/nagios/plugins/
 	NRPE_USER=nrpe
-	if [ $HOSTTYPE == "i386" ]; then
+	if [ $HOSTTYPE == "i686" ]; then
 		PLUGINDIR=`echo $PLUGINDIR | sed 's/lib64/lib/'`
 	fi	
 	NRPE_D=/etc/nrpe.d/
@@ -430,7 +430,7 @@ elif [ "$DISTRO" == "rhel6" ]; then
 elif [ "$DISTRO" == "rhel5" ]; then
 	PLUGINDIR=/usr/lib64/nagios/plugins/
 	NRPE_USER=nrpe
-	if [ $HOSTTYPE == "i386" ]; then
+	if [ $HOSTTYPE == "i686" ]; then
 		PLUGINDIR=`echo $PLUGINDIR | sed 's/lib64/lib/'`
 	fi	
 	NRPE_D=/etc/nrpe.d
