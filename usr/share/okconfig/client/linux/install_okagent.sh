@@ -123,6 +123,7 @@ clean_nrpe() {
 
 mkdir -p $NRPE_D
 echo "Cleaning up stock /etc/nagios/nrpe.cfg"
+cp -fb /etc/nagios/nrpe.cfg /etc/nagios/nrpe.cfg~
 cat << EOF > /etc/nagios/nrpe.cfg
 log_facility=daemon
 pid_file=/var/run/$NRPE_USER/nrpe.pid
