@@ -418,21 +418,13 @@ elif [[ "$DISTRO" =~ fedora1[78] ]]; then
 	fi	
 	NRPE_D=/etc/nrpe.d/
 	install_rhel;
-elif [ "$DISTRO" == "rhel6" ]; then
+elif [[ "$DISTRO" =~ rhel[56] ]]; then
 	PLUGINDIR=/usr/lib64/nagios/plugins/
 	NRPE_USER=nrpe
 	if [ $HOSTTYPE == "i686" ]; then
 		PLUGINDIR=`echo $PLUGINDIR | sed 's/lib64/lib/'`
 	fi	
 	NRPE_D=/etc/nrpe.d/
-	install_rhel;
-elif [ "$DISTRO" == "rhel5" ]; then
-	PLUGINDIR=/usr/lib64/nagios/plugins/
-	NRPE_USER=nrpe
-	if [ $HOSTTYPE == "i686" ]; then
-		PLUGINDIR=`echo $PLUGINDIR | sed 's/lib64/lib/'`
-	fi	
-	NRPE_D=/etc/nrpe.d
 	install_rhel;
 elif [ "$DISTRO" == "debian" ]; then
 	PLUGINDIR=/usr/lib/nagios/plugins/
