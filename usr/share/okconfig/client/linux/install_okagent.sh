@@ -23,7 +23,6 @@ if [ -f "/etc/os-release" ]; then
 else
 	grep -q "release 6" /etc/redhat-release 2>/dev/null && DISTRO=rhel6
 	grep -q "release 5" /etc/redhat-release 2>/dev/null && DISTRO=rhel5
-	grep -q "Fedora release 17" /etc/redhat-release 2>/dev/null && DISTRO=rhel5
 	grep -q "openSUSE 11" /etc/SuSE-release 2>/dev/null && DISTRO=opensuse
 	test -f /etc/debian_version && DISTRO=debian
 fi
@@ -411,7 +410,7 @@ if [ "$DISTRO" == "opensuse" ]; then
 	NRPE_D=/etc/nrpe.d/
 	install_opensuse;
 
-elif [[ "$DISTRO" =~ fedora1[678] ]]; then
+elif [[ "$DISTRO" =~ fedora1[78] ]]; then
 	PLUGINDIR=/usr/lib64/nagios/plugins/
 	NRPE_USER=nrpe
 	if [ $HOSTTYPE == "i686" ]; then
