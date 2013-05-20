@@ -17,6 +17,14 @@ get_os_release() {
         )
 }
 
+fatal_error() {
+	local message
+	message="$1"
+
+	echo "${message}" 1>&2
+	exit 1
+}
+
 # Use /etc/os-release, see http://0pointer.de/blog/projects/os-release
 if [ -f "/etc/os-release" ]; then
 	DISTRO=$(get_os_release)
@@ -68,9 +76,10 @@ install_opensuse() {
 	echo "install complete"
 	exit 0
 }
+
 install_rhel() {
 
-cat << EOF > /etc/yum.repos.d/ok.repo
+	cat << EOF > /etc/yum.repos.d/ok.repo || fatal_error "Failed to install ok-release yum repository"
 [ok]
 name=Opin Kerfi Public Repo - \$basearch
 baseurl=http://opensource.is/repo/$DISTRO/\$basearch
@@ -86,36 +95,19 @@ enabled=0
 gpgcheck=0
 EOF
 
-if [ 0 -ne $? ]; then
-	echo "Failed to install ok-release yum repository" >2
-	exit 1
-fi
-	
-	
-echo "Installing epel repository"
-yum install -y epel-release
-if [ 0 -ne $? ]; then
-	echo "Failed to install EPEL yum repositories" >2
-	exit 1
-fi
+	echo "Installing epel repository"
+	yum install -y epel-release || fatal_error "Failed to install EPEL yum repositories"
 
-echo "Running: yum install -y nagios-okconfig-nrpe"
-yum install -y nagios-okconfig-nrpe
-if [ 0 -ne $? ]; then
-	echo "Failed to yum install nagios-okconfig-nrpe package" >2
-	exit 1
-fi
+	echo "Running: yum install -y nagios-okconfig-nrpe"
+	yum install -y nagios-okconfig-nrpe || fatal_error "Failed to yum install nagios-okconfig-nrpe package"
 
-clean_nrpe ;
+	clean_nrpe ;
 
+	service nrpe start
+	chkconfig nrpe on
 
-
-
-service nrpe start
-chkconfig nrpe on
-
-echo "Install Complete"
-exit  0
+	echo "Install Complete"
+	exit  0
 }
 
 clean_nrpe() {
