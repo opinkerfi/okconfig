@@ -1,0 +1,2 @@
+pynag>=0.4.6
+paramiko
