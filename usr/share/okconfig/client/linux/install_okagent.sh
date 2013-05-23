@@ -17,13 +17,20 @@ get_os_release() {
         )
 }
 
+fatal_error() {
+	local message
+	message="$1"
+
+	echo "${message}" 1>&2
+	exit 1
+}
+
 # Use /etc/os-release, see http://0pointer.de/blog/projects/os-release
 if [ -f "/etc/os-release" ]; then
 	DISTRO=$(get_os_release)
 else
 	grep -q "release 6" /etc/redhat-release 2>/dev/null && DISTRO=rhel6
 	grep -q "release 5" /etc/redhat-release 2>/dev/null && DISTRO=rhel5
-	grep -q "Fedora release 17" /etc/redhat-release 2>/dev/null && DISTRO=rhel5
 	grep -q "openSUSE 11" /etc/SuSE-release 2>/dev/null && DISTRO=opensuse
 	test -f /etc/debian_version && DISTRO=debian
 fi
@@ -69,9 +76,10 @@ install_opensuse() {
 	echo "install complete"
 	exit 0
 }
+
 install_rhel() {
 
-cat << EOF > /etc/yum.repos.d/ok.repo
+	cat << EOF > /etc/yum.repos.d/ok.repo || fatal_error "Failed to install ok-release yum repository"
 [ok]
 name=Opin Kerfi Public Repo - \$basearch
 baseurl=http://opensource.is/repo/$DISTRO/\$basearch
@@ -87,36 +95,19 @@ enabled=0
 gpgcheck=0
 EOF
 
-if [ 0 -ne $? ]; then
-	echo "Failed to install ok-release yum repository" >2
-	exit 1
-fi
-	
-	
-echo "Installing epel repository"
-yum install -y epel-release
-if [ 0 -ne $? ]; then
-	echo "Failed to install EPEL yum repositories" >2
-	exit 1
-fi
+	echo "Installing epel repository"
+	yum install -y epel-release || fatal_error "Failed to install EPEL yum repositories"
 
-echo "Running: yum install -y nagios-okconfig-nrpe"
-yum install -y nagios-okconfig-nrpe
-if [ 0 -ne $? ]; then
-	echo "Failed to yum install nagios-okconfig-nrpe package" >2
-	exit 1
-fi
+	echo "Running: yum install -y nagios-okconfig-nrpe"
+	yum install -y nagios-okconfig-nrpe || fatal_error "Failed to yum install nagios-okconfig-nrpe package"
 
-clean_nrpe ;
+	clean_nrpe ;
 
+	service nrpe start
+	chkconfig nrpe on
 
-
-
-service nrpe start
-chkconfig nrpe on
-
-echo "Install Complete"
-exit  0
+	echo "Install Complete"
+	exit  0
 }
 
 clean_nrpe() {
@@ -411,7 +402,7 @@ if [ "$DISTRO" == "opensuse" ]; then
 	NRPE_D=/etc/nrpe.d/
 	install_opensuse;
 
-elif [[ "$DISTRO" =~ fedora1[678] ]]; then
+elif [[ "$DISTRO" =~ fedora1[78] ]]; then
 	PLUGINDIR=/usr/lib64/nagios/plugins/
 	NRPE_USER=nrpe
 	if [ $HOSTTYPE == "i686" ]; then
@@ -419,21 +410,13 @@ elif [[ "$DISTRO" =~ fedora1[678] ]]; then
 	fi	
 	NRPE_D=/etc/nrpe.d/
 	install_rhel;
-elif [ "$DISTRO" == "rhel6" ]; then
+elif [[ "$DISTRO" =~ rhel[56] ]]; then
 	PLUGINDIR=/usr/lib64/nagios/plugins/
 	NRPE_USER=nrpe
 	if [ $HOSTTYPE == "i686" ]; then
 		PLUGINDIR=`echo $PLUGINDIR | sed 's/lib64/lib/'`
 	fi	
 	NRPE_D=/etc/nrpe.d/
-	install_rhel;
-elif [ "$DISTRO" == "rhel5" ]; then
-	PLUGINDIR=/usr/lib64/nagios/plugins/
-	NRPE_USER=nrpe
-	if [ $HOSTTYPE == "i686" ]; then
-		PLUGINDIR=`echo $PLUGINDIR | sed 's/lib64/lib/'`
-	fi	
-	NRPE_D=/etc/nrpe.d
 	install_rhel;
 elif [ "$DISTRO" == "debian" ]; then
 	PLUGINDIR=/usr/lib/nagios/plugins/

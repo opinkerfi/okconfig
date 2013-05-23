@@ -75,7 +75,7 @@ rm -fr $RPM_BUILD_ROOT
 %dir %{python_sitelib}/okconfig
 %{python_sitelib}/okconfig/*.py*
 %{_bindir}/okconfig
-%doc AUTHORS README LICENSE CHANGES
+%doc AUTHORS README.md LICENSE CHANGES
 %{_datadir}/%{name}
 %config(noreplace) %{_sysconfdir}/profile.d/nagios.csh
 %config(noreplace) %{_sysconfdir}/profile.d/nagios.sh

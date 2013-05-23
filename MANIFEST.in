@@ -3,7 +3,7 @@ recursive-include docs *
 recursive-include usr *
 include AUTHORS
 include LICENSE
-include README
+include README.md
 include CHANGES
 include okconfig.spec
 include usr/share/okconfig/testfile
