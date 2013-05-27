@@ -1,10 +1,10 @@
 
 define service {
+	use			okc-check_http
 	host_name		HOSTNAME
 	contact_groups		GROUP
 	service_description	HTTP HOSTNAME
-	check_command		okc-check_http
-	use			generic-service
+	#check_command		okc-check_http
 
 	__URI			/
 	__SEARCH_STRING
