@@ -418,7 +418,7 @@ elif [[ "$DISTRO" =~ rhel[56] ]]; then
 	fi	
 	NRPE_D=/etc/nrpe.d/
 	install_rhel;
-elif [ "$DISTRO" == "debian" ]; then
+elif [[ "$DISTRO" =~ "debian" ]]; then
 	PLUGINDIR=/usr/lib/nagios/plugins/
 	NRPE_D=/etc/nrpe.d
 	NRPE_USER=nagios
