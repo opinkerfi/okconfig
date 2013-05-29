@@ -119,8 +119,8 @@ cat << EOF > /etc/nagios/nrpe.cfg
 log_facility=daemon
 pid_file=/var/run/$NRPE_USER/nrpe.pid
 server_port=5666
-nrpe_user=nagios
-nrpe_group=nagios
+nrpe_user=${NRPE_USER}
+nrpe_group=${NRPE_USER}
 
 dont_blame_nrpe=1
 debug=0
