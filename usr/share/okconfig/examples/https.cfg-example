@@ -4,7 +4,7 @@ define service {
 	contact_groups		GROUP
 	service_description	HTTPS HOSTNAME
 	check_command		okc-check_https
-	use			generic-service
+	use			okc-check_https
 
 	__URI			/
 	__SEARCH_STRING
@@ -21,7 +21,7 @@ define service {
 	contact_groups		GROUP
 	service_description	HTTPS SSL Certificate HOSTNAME
 	check_command		okc-check_https_certificate
-	use			generic-service
+	use			okc-check_https_certificate
 
 	__CERTIFICATE_AGE_WARNING	21
 	__CERTIFICATE_AGE_CRITICAL	2
