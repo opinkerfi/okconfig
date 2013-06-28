@@ -18,6 +18,8 @@
 """
 TEMPLATE_VERSION HISTORY
 
+# Version 2.5 (2013-06-28)
+    * okc-check_http has new service macro: __ON_REDIRECT
 # Version 2.4 (2013-05-13)
     * Removed the following hardcoded groups from templates:
     * hostgroup cisco-hostgroup
@@ -281,6 +283,23 @@ def upgrade_to_version_2_4():
             print "Created contactgroup", i
     print "ok"
 
+def upgrade_to_version_2_5():
+    """ Upgrade to version 2.5
+
+    We will adapt to the following changes:
+    * okc-check_http* has a new service variable __ON_REDIRECT
+
+    """
+    print "Upgrading to config version 2.5 ...",
+    services = Model.Service.objects.filter(check_command__startswith='okc-check_http', __ON_REDIRECT__exists=False)
+    for i in services:
+        i['__ON_REDIRET'] = "follow"
+        i.save()
+    print "ok"
+
+
+
+
 def rename_oktemplate_services():
     """ To change config version to 2.0 This is a one-off action. Not part of any upgrade """
     all_obj = Model.Service.objects.filter(name__contains='',filename__startswith=okconfig.template_directory)
@@ -310,6 +329,8 @@ def upgrade_okconfig():
         upgrade_to_version_2_3()
     if template_version >= 2.4:
         upgrade_to_version_2_4()
+    if template_version >= 2.5:
+        upgrade_to_version_2_5()
 
 if __name__ == '__main__':
     upgrade_okconfig()
