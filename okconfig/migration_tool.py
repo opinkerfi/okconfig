@@ -293,7 +293,7 @@ def upgrade_to_version_2_5():
     print "Upgrading to config version 2.5 ...",
     services = Model.Service.objects.filter(check_command__startswith='okc-check_http', __ON_REDIRECT__exists=False)
     for i in services:
-        i['__ON_REDIRET'] = "follow"
+        i['__ON_REDIRECT'] = "follow"
         i.save()
     print "ok"
 
