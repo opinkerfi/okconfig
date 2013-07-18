@@ -97,11 +97,11 @@ EOF
 
 	if [[ "$DISTRO" =~ rhel ]]; then
 		echo "Installing epel repository"
-		yum install -y epel-release || fatal_error "Failed to install EPEL yum repositories"
+		rpm -q epel-release || yum install -y epel-release || fatal_error "Failed to install EPEL yum repositories"
 	fi
 
 	echo "Running: yum install -y nagios-okconfig-nrpe"
-	yum install -y nagios-okconfig-nrpe || fatal_error "Failed to yum install nagios-okconfig-nrpe package"
+	rpm -q nagios-okconfig-nrpe || yum install -y nagios-okconfig-nrpe || fatal_error "Failed to yum install nagios-okconfig-nrpe package"
 
 	clean_nrpe ;
 
