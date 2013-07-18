@@ -95,7 +95,7 @@ enabled=0
 gpgcheck=0
 EOF
 
-	if [[ "$DISTRO" =~ fedora ]]; then
+	if [[ "$DISTRO" =~ rhel ]]; then
 		echo "Installing epel repository"
 		yum install -y epel-release || fatal_error "Failed to install EPEL yum repositories"
 	fi
