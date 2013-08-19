@@ -84,7 +84,7 @@ for i in $HOSTLIST ; do
 		exit 1
 	else
 		echo "Install of $i sucessful" 
-		rm -f ${TMPDIR}/*
+		rm -f ${TMPDIR}/*.log ${TMPDIR}/authinfo
 		rmdir ${TMPDIR}
 	fi
 done
