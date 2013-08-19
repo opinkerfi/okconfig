@@ -54,8 +54,8 @@ for i in $HOSTLIST ; do
 	echo "Starting install of $i ... " 
 	echo "Preparing client for copy ..."
 
-	winexe --reinstall -d -1 -A ${TMPDIR}/authinfo "//$i" "cmd /c md c:\temp 2>NUL" >> $TMPDIR/winexe.log
-	winexe --reinstall -d -1 -A ${TMPDIR}/authinfo "//$i" "cmd /c rd c:\temp\nsclient /Q /S" >> $TMPDIR/winexe.log
+	winexe --reinstall -d -1 -A ${TMPDIR}/authinfo "//$i" "cmd /c md c:\temp 2>NUL" >> $TMPDIR/install.log
+	winexe --reinstall -d -1 -A ${TMPDIR}/authinfo "//$i" "cmd /c rd c:\temp\nsclient /Q /S" >> $TMPDIR/install.log
 
 	echo "Copying files to remote server..."
 	cd $INSTALL_LOCATION
@@ -68,19 +68,18 @@ for i in $HOSTLIST ; do
 	RESULT=$?
 	
 	if [ $RESULT -gt 0 ]; then
-		echo Error: Failed to copy files to $i >&2
+		echo Error: Failed to copy files to $i, check ${TMPDIR}/install.log >&2
 		exit 1
 	else
 		echo "Files have been copied to $i"
 	fi
 	
 	echo "Executing install script..."
-	winexe --reinstall -d -1 -A ${TMPDIR}/authinfo "//$i" "cmd /c $BATCHFILE" >> $TMPDIR/winexe.log
+	winexe --reinstall -d -1 -A ${TMPDIR}/authinfo "//$i" "cmd /c $BATCHFILE" >> $TMPDIR/install.log
 	RESULT=$?
 	
 	if [ $RESULT -gt 0 ]; then
-		echo install of $i failed >&2
-		cat $TMPDIR/winexe.log
+		echo install of $i failed, check ${TMPDIR}/install.log >&2
 		exit 1
 	else
 		echo "Install of $i sucessful" 
