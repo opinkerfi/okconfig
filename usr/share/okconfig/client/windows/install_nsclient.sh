@@ -78,10 +78,6 @@ for i in $HOSTLIST ; do
 	echo "Copying files to remote server..."
 	cd $INSTALL_LOCATION
 	
-	if [ ! -d nsclient ]; then
-		echo "Error: Directory $INSTALL_LOCATION/nsclient not found" >&2
-		exit 1
-	fi
 	smbclient -d 0 //$i/c$ -A ${TMPDIR}/authinfo -c  "cd /temp ; recurse ; prompt ; mput nsclient"
 	RESULT=$?
 	
