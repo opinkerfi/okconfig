@@ -43,6 +43,7 @@ if [ -z "$DOMAIN_PASSWORD" ]; then
   stty echo
 fi
 
+trap "rm -f ${TMPDIR}/authinfo" EXIT
 cat <<EO > ${TMPDIR}/authinfo
 username=${DOMAIN_USER}
 password=${DOMAIN_PASSWORD}
@@ -83,6 +84,8 @@ for i in $HOSTLIST ; do
 		exit 1
 	else
 		echo "Install of $i sucessful" 
+		rm -f ${TMPDIR}/*
+		rmdir ${TMPDIR}
 	fi
 done
 exit 0
