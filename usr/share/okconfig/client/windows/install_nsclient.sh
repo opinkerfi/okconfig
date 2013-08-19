@@ -1,7 +1,7 @@
 #!/bin/sh
 
 BATCHFILE='c:\temp\nsclient\install.bat'
-TMPDIR=$(mktemp -d --suffix=.okconfig)
+TMPDIR=$(mktemp -d /tmp/okconfig.XXXXXXXXXX)
 INSTALL_LOCATION=/usr/share/okconfig/client/windows/
 TEST=0
 
