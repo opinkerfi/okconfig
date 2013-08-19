@@ -7,6 +7,7 @@ HOSTLIST=""
 BATCHFILE='c:\temp\nsclient\install.bat'
 TMPDIR=$(mktemp -d --suffix=.okconfig)
 INSTALL_LOCATION=/usr/share/okconfig/client/windows/
+TEST=0
 
 while [ $# -gt 0 ]; do
 	arg=$1 ; shift
@@ -17,6 +18,9 @@ while [ $# -gt 0 ]; do
 		DOMAIN_USER="$1" ; shift;;
 	"--password")
 		DOMAIN_PASSWORD="$1" ; shift;;
+	"--test")
+		TEST=1
+		;;
 	*)
 		HOSTLIST="$HOSTLIST $arg"  ;;
 
@@ -51,6 +55,19 @@ domain=${DOMAIN}
 EO
 
 for i in $HOSTLIST ; do
+	echo "Executing connection test with ${i}..."
+	winexe --reinstall -d -1 -A ${TMPDIR}/authinfo "//$i" "cmd /c echo test" &>> $TMPDIR/install.log 
+	RESULT=$?
+	if [ $RESULT -gt 0 ]; then
+		echo "Error: connection test failed, check ${TMPDIR}/install.log" >&2
+		exit 1
+	fi
+	# Stop run, we can connect
+	if [ $TEST -gt 0 ]; then
+		echo "Success connecting"
+		exit 0
+	fi
+
 	echo "Starting install of $i ... " 
 	echo "Preparing client for copy ..."
 
