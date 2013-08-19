@@ -95,11 +95,12 @@ for i in $HOSTLIST ; do
 	if [ $RESULT -gt 0 ]; then
 		echo install of $i failed, check ${TMPDIR}/install.log >&2
 		exit 1
-	else
-		echo "Install of $i sucessful" 
-		rm -f ${TMPDIR}/*.log ${TMPDIR}/authinfo
-		rmdir ${TMPDIR}
 	fi
 done
+
+echo "Install of $i sucessful" 
+rm -f ${TMPDIR}/*.log ${TMPDIR}/authinfo
+rmdir ${TMPDIR}
+
 exit 0
 
