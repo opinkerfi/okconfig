@@ -68,126 +68,126 @@ define service {
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange Maximum Memory
-        check_command 	exc-mem-max
+        check_command 	okc-exc-mem-max
 }
 define service {
 	use		okc-exchange-mem-cur
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange Current Memory
-        check_command 	exc-mem-cur
+        check_command 	okc-exc-mem-cur
 }
 define service {
 	use		okc-exchange-mem-all
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange Memory Allocated
-        check_command 	exc-mem-all
+        check_command 	okc-exc-mem-all
 }
 define service {
 	use		okc-exchange-mem-cur-all
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange Memory Current Allocated
-        check_command 	exc-mem-cur-all
+        check_command 	okc-exc-mem-cur-all
 }
 define service {
 	use		okc-exchange-msg-sent
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange Messages Sent
-        check_command    exc-msg-sent
+        check_command    okc-exc-msg-sent
 }
 define service {
 	use		okc-exchange-msg-delivered
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange Messages Delivered
-        check_command    exc-msg-deliv
+        check_command    okc-exc-msg-deliv
 }
 define service {
 	use		okc-exchange-msg-sub
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange Messages Submitted
-        check_command    exc-msg-sub
+        check_command    okc-exc-msg-sub
 }
 define service {
 	use		okc-exchange-msg-rsc-tot
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange Messages Received Total
-        check_command    exc-msg-rsc-tot
+        check_command    okc-exc-msg-rsc-tot
 }
 define service {
 	use		okc-exchange-service
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange Messages Sent Total
-        check_command    exc-msg-sent-tot
+        check_command    okc-exc-msg-sent-tot
 }
 define service {
 	use		okc-exchange-service
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange Messages Submitted Total
-        check_command    exc-msg-sub-tot
+        check_command    okc-exc-msg-sub-tot
 }
 define service {
 	use		okc-exchange-service
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange Bytes Sent Total  
-        check_command    exc-byte-sent-tot
+        check_command    okc-exc-byte-sent-tot
 }
 define service {
 	use		okc-exchange-service
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange Bytes Received Total
-        check_command    exc-byte-recv-tot
+        check_command    okc-exc-byte-recv-tot
 }
 define service {
 	use		okc-exchange-service
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL0
-        check_command    exc-scl0
+        check_command    okc-exc-scl0
 }
 define service {
 	use		okc-exchange-service
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL1       
-        check_command    exc-scl1
+        check_command    okc-exc-scl1
 }
 define service {
 	use		okc-exchange-service
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL2
-        check_command    exc-scl2
+        check_command    okc-exc-scl2
 }
 define service {
 	use		okc-exchange-service
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL3
-        check_command    exc-scl3
+        check_command    okc-exc-scl3
 }
 define service {
 	use		okc-exchange-service
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL4
-        check_command    exc-scl4
+        check_command    okc-exc-scl4
 }
 define service {
 	use		okc-exchange-service
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL5
-        check_command    exc-scl5
+        check_command    okc-exc-scl5
 }
 
 define service {
@@ -195,21 +195,21 @@ define service {
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL6
-        check_command    exc-scl6
+        check_command    okc-exc-scl6
 }
 define service {
 	use		okc-exchange-service
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL7
-        check_command    exc-scl7
+        check_command    okc-exc-scl7
 }
 define service {
 	use		okc-exchange-service
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL8
-        check_command    exc-scl8
+        check_command    okc-exc-scl8
 }
 
 define service {
@@ -217,7 +217,7 @@ define service {
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange Content Filter Agent Messages with SCL9
-        check_command    exc-scl8
+        check_command    okc-exc-scl8
 }
 
 
@@ -226,56 +226,56 @@ define service {
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange Messages Scanned
-        check_command    exc-msg-scan
+        check_command    okc-exc-msg-scan
 }
 define service {
 	use		okc-exchange-service
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange Messages Bypassed
-        check_command    exc-msg-bypass
+        check_command    okc-exc-msg-bypass
 }
 define service {
 	use		okc-exchange-service
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange Messages Deleted
-        check_command    exc-msg-del
+        check_command    okc-exc-msg-del
 }
 define service {
 	use		okc-exchange-service
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange Messages Rejected
-        check_command    exc-msg-rej
+        check_command    okc-exc-msg-rej
 }
 define service {
 	use		okc-exchange-service
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange Messages Quarantined
-        check_command    exc-msg-quar
+        check_command    okc-exc-msg-quar
 }
 define service {
 	use		okc-exchange-service
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange Messages Unknown
-        check_command    exc-msg-unkn
+        check_command    okc-exc-msg-unkn
 }
 define service {
 	use		okc-exchange-service
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange User Count
-        check_command    exc-msg-user
+        check_command    okc-exc-msg-user
 }
 define service {
 	use		okc-exchange-service
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange Active Users
-        check_command    exc-msg-active-user
+        check_command    okc-exc-msg-active-user
 }
 
 define service {
@@ -283,7 +283,7 @@ define service {
 	host_name	HOSTNAME
 	contact_groups	GROUP
 	service_description	Microsoft Exchange Unique OWA Users
-        check_command    exc-msg-unique-usr
+        check_command    okc-exc-msg-unique-usr
 } 
 
 
