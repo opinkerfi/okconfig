@@ -5,7 +5,7 @@ DOMAIN_USER=""
 DOMAIN_PASSWORD=""
 HOSTLIST=""
 BATCHFILE='c:\temp\nsclient\install.bat'
-TMPFILE=`mktemp`
+TMPDIR=$(mktemp -d --suffix=.okconfig)
 INSTALL_LOCATION=/usr/share/okconfig/client/windows/
 
 while [ $# -gt 0 ]; do
@@ -43,12 +43,18 @@ if [ -z "$DOMAIN_PASSWORD" ]; then
   stty echo
 fi
 
+cat <<EO > ${TMPDIR}/authinfo
+username=${DOMAIN_USER}
+password=${DOMAIN_PASSWORD}
+domain=${DOMAIN}
+EO
+
 for i in $HOSTLIST ; do
 	echo "Starting install of $i ... " 
 	echo "Preparing client for copy ..."
 
-	winexe --reinstall -d -1 -U "$DOMAIN/$DOMAIN_USER%$DOMAIN_PASSWORD" "//$i" "cmd /c md c:\temp 2>NUL" >> $TMPFILE
-	winexe --reinstall -d -1 -U "$DOMAIN/$DOMAIN_USER%$DOMAIN_PASSWORD" "//$i" "cmd /c rd c:\temp\nsclient /Q /S" >> $TMPFILE
+	winexe --reinstall -d -1 -A ${TMPDIR}/authinfo "//$i" "cmd /c md c:\temp 2>NUL" >> $TMPDIR/winexe.log
+	winexe --reinstall -d -1 -A ${TMPDIR}/authinfo "//$i" "cmd /c rd c:\temp\nsclient /Q /S" >> $TMPDIR/winexe.log
 
 	echo "Copying files to remote server..."
 	cd $INSTALL_LOCATION
@@ -57,7 +63,7 @@ for i in $HOSTLIST ; do
 		echo "Error: Directory $INSTALL_LOCATION/nsclient not found" >&2
 		exit 1
 	fi
-	smbclient -d 0 //$i/c$ "$DOMAIN_PASSWORD" -W "$DOMAIN" -U "$DOMAIN_USER" -c  "cd /temp ; recurse ; prompt ; mput nsclient"
+	smbclient -d 0 //$i/c$ -A ${TMPDIR}/authinfo -c  "cd /temp ; recurse ; prompt ; mput nsclient"
 	RESULT=$?
 	
 	if [ $RESULT -gt 0 ]; then
@@ -68,12 +74,12 @@ for i in $HOSTLIST ; do
 	fi
 	
 	echo "Executing install script..."
-	winexe --reinstall -d -1 -U "$DOMAIN/$DOMAIN_USER%$DOMAIN_PASSWORD" "//$i" "cmd /c $BATCHFILE" >> $TMPFILE
+	winexe --reinstall -d -1 -A ${TMPDIR}/authinfo "//$i" "cmd /c $BATCHFILE" >> $TMPDIR/winexe.log
 	RESULT=$?
 	
 	if [ $RESULT -gt 0 ]; then
 		echo install of $i failed >&2
-		cat $TMPFILE 
+		cat $TMPDIR/winexe.log
 		exit 1
 	else
 		echo "Install of $i sucessful" 
