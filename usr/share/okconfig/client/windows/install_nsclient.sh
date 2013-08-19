@@ -57,7 +57,7 @@ fi
 
 for i in $HOSTLIST ; do
 	echo "Executing connection test with ${i}..."
-	winexe --reinstall -d -1 -A ${TMPDIR}/authinfo "//$i" "cmd /c echo test" &>> $TMPDIR/install.log 
+	winexe --reinstall -d -1 -A ${TMPDIR}/authinfo "//$i" "cmd /c echo test" 2>&1 >> $TMPDIR/install.log 
 	RESULT=$?
 	if [ $RESULT -gt 0 ]; then
 		echo "Error: connection test failed, check ${TMPDIR}/install.log" >&2
