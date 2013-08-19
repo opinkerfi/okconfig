@@ -52,6 +52,7 @@ EO
 
 if [ ! -d "${INSTALL_LOCATION}/nsclient" ]; then
 	echo "Error: Directory $INSTALL_LOCATION/nsclient not found" >&2
+	echo "More info at https://github.com/opinkerfi/okconfig/wiki/Deploying-nsclient-on-windows-servers" >&2
 	exit 1
 fi
 
