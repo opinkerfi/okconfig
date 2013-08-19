@@ -58,7 +58,7 @@ fi
 
 for i in $HOSTLIST ; do
 	echo "Executing connection test with ${i}..."
-	winexe --reinstall -d -1 -A ${TMPDIR}/authinfo "//$i" "cmd /c echo test" 2>&1 >> $TMPDIR/install.log 
+	winexe --reinstall -d 1 -A ${TMPDIR}/authinfo "//$i" "cmd /c echo test" 2>&1 >> $TMPDIR/install.log 
 	RESULT=$?
 	if [ $RESULT -gt 0 ]; then
 		echo "Error: connection test failed, check ${TMPDIR}/install.log" >&2
@@ -73,13 +73,13 @@ for i in $HOSTLIST ; do
 	echo "Starting install of $i ... " 
 	echo "Preparing client for copy ..."
 
-	winexe --reinstall -d -1 -A ${TMPDIR}/authinfo "//$i" "cmd /c md c:\temp 2>NUL" >> $TMPDIR/install.log
-	winexe --reinstall -d -1 -A ${TMPDIR}/authinfo "//$i" "cmd /c rd c:\temp\nsclient /Q /S" >> $TMPDIR/install.log
+	winexe --reinstall -d 0 -A ${TMPDIR}/authinfo "//$i" "cmd /c md c:\temp 2>NUL" 2>&1 >> $TMPDIR/install.log
+	winexe --reinstall -d 0 -A ${TMPDIR}/authinfo "//$i" "cmd /c rd c:\temp\nsclient /Q /S" 2>&1 >> $TMPDIR/install.log
 
 	echo "Copying files to remote server..."
 	cd $INSTALL_LOCATION
 	
-	smbclient -d 0 //$i/c$ -A ${TMPDIR}/authinfo -c  "cd /temp ; recurse ; prompt ; mput nsclient"
+	smbclient -d 0 //$i/c$ -A ${TMPDIR}/authinfo -c  "cd /temp ; recurse ; prompt ; mput nsclient" 2>&1 >> $TMPDIR/install.log
 	RESULT=$?
 	
 	if [ $RESULT -gt 0 ]; then
@@ -90,7 +90,7 @@ for i in $HOSTLIST ; do
 	fi
 	
 	echo "Executing install script..."
-	winexe --reinstall -d -1 -A ${TMPDIR}/authinfo "//$i" "cmd /c $BATCHFILE" >> $TMPDIR/install.log
+	winexe --reinstall -d 0 -A ${TMPDIR}/authinfo "//$i" "cmd /c $BATCHFILE" 2>&1 >> $TMPDIR/install.log
 	RESULT=$?
 	
 	if [ $RESULT -gt 0 ]; then
