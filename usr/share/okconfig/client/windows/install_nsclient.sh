@@ -50,6 +50,11 @@ password=${DOMAIN_PASSWORD}
 domain=${DOMAIN}
 EO
 
+if [ ! -d "${INSTALL_LOCATION}/nsclient" ]; then
+	echo "Error: Directory $INSTALL_LOCATION/nsclient not found" >&2
+	exit 1
+fi
+
 for i in $HOSTLIST ; do
 	echo "Executing connection test with ${i}..."
 	winexe --reinstall -d -1 -A ${TMPDIR}/authinfo "//$i" "cmd /c echo test" &>> $TMPDIR/install.log 
