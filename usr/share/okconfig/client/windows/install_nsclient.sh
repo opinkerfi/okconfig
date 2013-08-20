@@ -41,6 +41,7 @@ if [ -z "$DOMAIN_PASSWORD" ]; then
   echo -n "Domain password: "
   read DOMAIN_PASSWORD
   stty echo
+  echo
 fi
 
 trap "rm -f ${TMPDIR}/authinfo" EXIT
@@ -50,56 +51,61 @@ password=${DOMAIN_PASSWORD}
 domain=${DOMAIN}
 EO
 
-if [ ! -d "${INSTALL_LOCATION}/nsclient" ]; then
-	echo "Error: Directory $INSTALL_LOCATION/nsclient not found" >&2
-	echo "More info at https://github.com/opinkerfi/okconfig/wiki/Deploying-nsclient-on-windows-servers" >&2
+function fatal_error() {
+	msg=$1
+	echo -e "Error, ${msg}\n" >&2
 	exit 1
+}
+
+printf "[%-20s]($(hostname)) " "Check Prerequisites"
+if [ ! -d "${INSTALL_LOCATION}/nsclient" ]; then
+	fatal_error "Directory $INSTALL_LOCATION/nsclient not found\nMore info at https://github.com/opinkerfi/okconfig/wiki/Deploying-nsclient-on-windows-servers"
 fi
 
+echo OK
+
 for i in $HOSTLIST ; do
-	echo "Executing connection test with ${i}..."
+
+	printf "[%-20s](${i}) " "Connection test"
 	winexe --reinstall -d 1 -A ${TMPDIR}/authinfo "//$i" "cmd /c echo test" 2>&1 >> $TMPDIR/install.log 
-	RESULT=$?
 	if [ $RESULT -gt 0 ]; then
-		echo "Error: connection test failed, check ${TMPDIR}/install.log" >&2
+		fatal_error "Error: connection test failed, check ${TMPDIR}/install.log"
 		exit 1
 	fi
+	echo OK
+
 	# Stop run, we can connect
 	if [ $TEST -gt 0 ]; then
-		echo "Success connecting"
 		exit 0
 	fi
 
-	echo "Starting install of $i ... " 
-	echo "Preparing client for copy ..."
+	printf "[%-20s](${i}) " "Upload NSClient++ Setup"
 
 	winexe --reinstall -d 0 -A ${TMPDIR}/authinfo "//$i" "cmd /c md c:\temp 2>NUL" 2>&1 >> $TMPDIR/install.log
 	winexe --reinstall -d 0 -A ${TMPDIR}/authinfo "//$i" "cmd /c rd c:\temp\nsclient /Q /S" 2>&1 >> $TMPDIR/install.log
 
-	echo "Copying files to remote server..."
 	cd $INSTALL_LOCATION
 	
 	smbclient -d 0 //$i/c$ -A ${TMPDIR}/authinfo -c  "cd /temp ; recurse ; prompt ; mput nsclient" 2>&1 >> $TMPDIR/install.log
 	RESULT=$?
 	
 	if [ $RESULT -gt 0 ]; then
-		echo Error: Failed to copy files to $i, check ${TMPDIR}/install.log >&2
+		fatal_error "Error: Failed to copy files to $i, check ${TMPDIR}/install.log"
 		exit 1
-	else
-		echo "Files have been copied to $i"
 	fi
+	echo OK
 	
-	echo "Executing install script..."
+	echo "[%-20s](${i}) " "Installing NSClient++"
 	winexe --reinstall -d 0 -A ${TMPDIR}/authinfo "//$i" "cmd /c $BATCHFILE" 2>&1 >> $TMPDIR/install.log
 	RESULT=$?
 	
 	if [ $RESULT -gt 0 ]; then
-		echo install of $i failed, check ${TMPDIR}/install.log >&2
+		fatal_error "install of $i failed, check ${TMPDIR}/install.log"
 		exit 1
 	fi
+	echo OK
 done
 
-echo "Install of $i sucessful" 
 rm -f ${TMPDIR}/*.log ${TMPDIR}/authinfo
 rmdir ${TMPDIR}
 
