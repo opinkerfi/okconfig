@@ -53,7 +53,7 @@ password=${DOMAIN_PASSWORD}
 domain=${DOMAIN}
 EO
 else
-	DOMAIN=$(grep -i ^domain ${USER_AUTHFILE} |awk -F" = " '{print $2}')
+	DOMAIN=$(grep -i ^domain ${USER_AUTHFILE} |awk -F"=" '{print $2}'|sed 's/ //g')
 	AUTHFILE="${USER_AUTHFILE}"
 fi
 
