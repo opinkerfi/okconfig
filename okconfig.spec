@@ -81,9 +81,10 @@ rm -fr $RPM_BUILD_ROOT
 %config(noreplace) %{_sysconfdir}/profile.d/nagios.sh
 %config(noreplace) %{_sysconfdir}/okconfig.conf
 %config(noreplace) %{_sysconfdir}/bash_completion.d/okconfig
+%config(noreplace) %{_sysconfdir}/logrotate.d/okconfig
 #%{_mandir}/man1/okconfig.1.gz
 %defattr(0775, nagios, nagios)
-%dir %{_localstatedir}/log/okconfig
+%attr(0770, nagios, nagios) %dir %{_localstatedir}/log/okconfig
 %dir %{_sysconfdir}/nagios/okconfig
 %dir %{_sysconfdir}/nagios/okconfig/groups
 %dir %{_sysconfdir}/nagios/okconfig/hosts
