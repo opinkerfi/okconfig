@@ -1,0 +1,5 @@
+/var/log/okconfig/*.log {
+    nocompress
+    missingok
+}
+

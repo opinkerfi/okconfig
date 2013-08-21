@@ -34,6 +34,8 @@ if __name__ == "__main__":
 	datarootdir	= "/usr/share/%s" % NAME
 	template_files = get_filelist('usr/share/okconfig')
 	data_files = map(lambda x: ("/" + os.path.dirname(x),[x]), template_files)
+        data_files.append( ( logpath, [] ) )
+        data_files.append( ( rotpath, [ "etc/logrotate.d/okconfig" ] ) )
 	#data_files.append(( manpath, ['docs/okconfig.1.gz'] ))
 	setup(
 		name='%s' % NAME,

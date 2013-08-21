@@ -1,12 +1,10 @@
 #!/bin/sh
 
-DOMAIN=""
-DOMAIN_USER=""
-DOMAIN_PASSWORD=""
-HOSTLIST=""
 BATCHFILE='c:\temp\nsclient\install.bat'
-TMPFILE=`mktemp`
+AUTHFILE=$(mktemp /tmp/okconfig.XXXXXXXXXX)
 INSTALL_LOCATION=/usr/share/okconfig/client/windows/
+LOGFILE=/var/log/okconfig/install_nsclient.log
+TEST=0
 
 while [ $# -gt 0 ]; do
 	arg=$1 ; shift
@@ -17,67 +15,130 @@ while [ $# -gt 0 ]; do
 		DOMAIN_USER="$1" ; shift;;
 	"--password")
 		DOMAIN_PASSWORD="$1" ; shift;;
+	"--test")
+		TEST=1
+		;;
+	"--authentication-file" | "-A")
+		USER_AUTHFILE="$1" ; shift ;;
 	*)
 		HOSTLIST="$HOSTLIST $arg"  ;;
 
 	esac
 done
 
+if [ -z "${USER_AUTHFILE}" ]; then
+	if [ -z "$DOMAIN" ]; then
+		echo -n "Domain Name (DOMAIN): "
+		read DOMAIN
+	fi
 
-if [ -z "$DOMAIN" ]; then
-	echo -n "Domain Name (DOMAIN): "
-	read DOMAIN
+
+	if [ -z "$DOMAIN_USER" ]; then
+		echo -n "Domain user (user): "
+		read DOMAIN_USER
+	fi
+
+
+	if [ -z "$DOMAIN_PASSWORD" ]; then
+		stty -echo
+		echo -n "Domain password: "
+		read DOMAIN_PASSWORD
+		stty echo
+		echo
+	fi
+	trap "rm -f ${AUTHFILE}" EXIT
+	cat <<EO > ${AUTHFILE}
+username=${DOMAIN_USER}
+password=${DOMAIN_PASSWORD}
+domain=${DOMAIN}
+EO
+else
+	DOMAIN=$(grep -i ^domain ${USER_AUTHFILE} |awk -F" = " '{print $2}')
+	AUTHFILE="${USER_AUTHFILE}"
 fi
 
+function fatal_error() {
+	stage=$1
+        host=$2
+	msg=$3
+	printf "[%-24s] %s FATAL %s\n" "${stage}" "${host}" "${msg}" >&2
+	echo -e "$(date -R): FATAL ${msg}\n" >> ${LOGFILE}
+	exit 1
+}
 
-if [ -z "$DOMAIN_USER" ]; then
-  echo -n "Domain user (user): "
-  read DOMAIN_USER
+function error() {
+	stage=$1
+        host=$2
+	msg=$3
+	printf "[%-24s] %s ERROR %s\n" "${stage}" "${host}" "${msg}" >&2
+	echo -e "$(date -R): ERROR ${msg}\n" >> ${LOGFILE}
+}
+
+function host_stage() {
+        stage=$1
+	host=$2
+	printf "[%-24s] %s Starting..\n" "${stage}" "${host}"
+	printf "$(date -R): [%-24s] %s Starting\n" "${stage}" "${host}" >> ${LOGFILE}
+}
+
+function OK() {
+        stage=$1
+        host=$2
+	printf "[%-24s] %s %s\n" "${stage}" "${host}" "OK"
+	printf "$(date -R): [%-24s] %s %s\n" "${stage}" "${host}" "OK" >> ${LOGFILE}
+}
+
+host_stage "Check Prerequisites" "$(hostname)"
+if [ ! -d "${INSTALL_LOCATION}/nsclient" ]; then
+	fatal_error "Check Prerequisites" "$(hostname)" "Directory $INSTALL_LOCATION/nsclient not found\nMore info at https://github.com/opinkerfi/okconfig/wiki/Deploying-nsclient-on-windows-servers"
 fi
 
+OK "Check Prerequisites" "$(hostname)"
 
-if [ -z "$DOMAIN_PASSWORD" ]; then
-  stty -echo
-  echo -n "Domain password: "
-  read DOMAIN_PASSWORD
-  stty echo
-fi
+function install_host() {
+	local host
+	host=$1
+	host_stage "Connection test" "${host}"
+	winexe --reinstall -d 1 -A ${AUTHFILE} "//${host}" "cmd /c echo test" 2>&1 | awk "{ print \"$(date -R): ${host}\", \$0}" >> ${LOGFILE}
+        RESULT=${PIPESTATUS[0]}
+	if [ $RESULT -gt 0 ]; then
+		error "Connection test" "${host}" "Connection test failed, check ${LOGFILE}"
+		continue
+	fi
+	OK "Connection test" "${host}"
 
-for i in $HOSTLIST ; do
-	echo "Starting install of $i ... " 
-	echo "Preparing client for copy ..."
+	# Stop run, we can connect
+	if [ $TEST -gt 0 ]; then
+		exit 0
+	fi
 
-	winexe --reinstall -d -1 -U "$DOMAIN/$DOMAIN_USER%$DOMAIN_PASSWORD" "//$i" "cmd /c md c:\temp 2>NUL" >> $TMPFILE
-	winexe --reinstall -d -1 -U "$DOMAIN/$DOMAIN_USER%$DOMAIN_PASSWORD" "//$i" "cmd /c rd c:\temp\nsclient /Q /S" >> $TMPFILE
+	host_stage "Upload NSClient++ Setup" "${host}"
 
-	echo "Copying files to remote server..."
 	cd $INSTALL_LOCATION
 	
-	if [ ! -d nsclient ]; then
-		echo "Error: Directory $INSTALL_LOCATION/nsclient not found" >&2
-		exit 1
-	fi
-	smbclient -d 0 //$i/c$ "$DOMAIN_PASSWORD" -W "$DOMAIN" -U "$DOMAIN_USER" -c  "cd /temp ; recurse ; prompt ; mput nsclient"
-	RESULT=$?
+	smbclient -d 0 //${host}/c$ -A ${AUTHFILE} -W ${DOMAIN} -c  "mkdir /temp ; mkdir /temp ; cd /temp ; recurse ; prompt ; mput nsclient" 2>&1 | awk "{ print \"$(date -R): ${host}\", \$0}" >> ${LOGFILE}
+	RESULT=${PIPESTATUS[0]}
 	
 	if [ $RESULT -gt 0 ]; then
-		echo Error: Failed to copy files to $i >&2
-		exit 1
-	else
-		echo "Files have been copied to $i"
+		error "Upload NSClient++ Setup" "${host}" "Failed to copy files to ${host}, check ${LOGFILE}"
+		continue
 	fi
+	OK "Upload NSClient++ Setup" "${host}"
 	
-	echo "Executing install script..."
-	winexe --reinstall -d -1 -U "$DOMAIN/$DOMAIN_USER%$DOMAIN_PASSWORD" "//$i" "cmd /c $BATCHFILE" >> $TMPFILE
-	RESULT=$?
+	host_stage "Installing NSClient++" "${host}"
+	winexe --reinstall -d 0 -A ${AUTHFILE} "//${host}" "cmd /c $BATCHFILE" 2>&1 | awk "{ print \"$(date -R): ${host}\", \$0}" >> ${LOGFILE}
+	RESULT=${PIPESTATUS[0]}
 	
 	if [ $RESULT -gt 0 ]; then
-		echo install of $i failed >&2
-		cat $TMPFILE 
-		exit 1
-	else
-		echo "Install of $i sucessful" 
+		error "Installing NSClient++" "${host}" "install of ${host} failed, check ${LOGFILE}"
+		continue
 	fi
+	OK "Installing NSClient++" "${host}"
+}
+
+for i in $HOSTLIST ; do
+	install_host "${i}"
 done
+
 exit 0
 
