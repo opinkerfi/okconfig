@@ -50,10 +50,8 @@ import pynag.Model
 import pynag.Utils
 import paramiko
 pynag.Model.pynag_directory = destination_directory
-from os import getenv
 
 import os
-import subprocess
 import helper_functions
 required_gateways = []
 
@@ -437,6 +435,7 @@ def install_nsclient(remote_host, domain, username, password):
      remote_host -- Hostname/IPAddress of remote host
      username -- Name of a user with administrative privileges on the remote host
      password -- Password to use
+     domain -- Windows Domain
 
     Returns:
      True if operation was successful. Otherwise False
@@ -449,7 +448,6 @@ def install_nsclient(remote_host, domain, username, password):
     result = pynag.Utils.runCommand(authcommand)
     if result[0] != 0:
         return result
-        raise OKConfigError('Could not log into host %s as %s/%s. Error: %s %s' %(remote_host,domain,username,result[1], result[2]))
     result = pynag.Utils.runCommand("%s/install_nsclient.sh '%s' --domain '%s' --user '%s' --password '%s'" % (config.nsclient_installfiles,remote_host,domain,username,password))
     return result
 
@@ -556,10 +554,10 @@ def _apply_template(template_name,destination_file, **kwargs):
     dirname = os.path.dirname(destination_file)
     if not os.path.exists(dirname): os.makedirs(dirname)
 
-    file = open(sourcefile).read()
+    fd = open(sourcefile).read()
     for old_string,new_string in kwargs.items():
-        file = file.replace(old_string,new_string)
-    open(destination_file,'w').write( file )
+        fd = fd.replace(old_string,new_string)
+    open(destination_file,'w').write( fd )
     return [destination_file]
 
 def _git_commit(filelist, message):
