@@ -110,6 +110,7 @@ class clientInstall:
         self.unparseable_lines = []
         self.stage_state = {}
         self.script = script
+        self.current_stage = None
 
         self.host_name = host_name
         self.domain = domain
@@ -160,9 +161,10 @@ class clientInstall:
             m = re.match("^\[(.*?)\s*\] (\S+?) (.*)$", line)
             if m:
                 self.stage_state[m.group(1)] = m.group(3)
+                self.current_stage = m.group(1)
             else:
                 self.unparseable_lines.append(line)
-        return self.stage_state
+        return self.current_stage, self.stage_state
 
 default_service_template = '''
 # This is a template service for HOSTNAME
