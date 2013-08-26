@@ -5,6 +5,7 @@ AUTHFILE=$(mktemp /tmp/okconfig.XXXXXXXXXX)
 INSTALL_LOCATION=/usr/share/okconfig/client/windows/
 LOGFILE=/var/log/okconfig/install_nsclient.log
 TEST=0
+STAGEINFO=0
 
 while [ $# -gt 0 ]; do
 	arg=$1 ; shift
@@ -18,6 +19,9 @@ while [ $# -gt 0 ]; do
 	"--test")
 		TEST=1
 		;;
+    "--stages")
+        STAGEINFO=1
+        ;;
 	"--authentication-file" | "-A")
 		USER_AUTHFILE="$1" ; shift ;;
 	*)
@@ -25,6 +29,16 @@ while [ $# -gt 0 ]; do
 
 	esac
 done
+
+if [ $STAGEINFO -gt 0 ]; then
+    cat <<EO
+Check Prerequisites;Checks whether the nsclient install directory exists
+Connection test;Test connection to the target machine
+Upload NSClient++ Setup;Stages the install on the remote host for installation
+Installing NSClient++;Performing the actual install
+EO
+    exit 0
+fi
 
 if [ -z "${USER_AUTHFILE}" ]; then
 	if [ -z "$DOMAIN" ]; then
@@ -68,7 +82,7 @@ function fatal_error() {
 
 function error() {
 	stage=$1
-        host=$2
+    host=$2
 	msg=$3
 	printf "[%-24s] %s ERROR %s\n" "${stage}" "${host}" "${msg}" >&2
 	echo -e "$(date -R): ERROR ${msg}\n" >> ${LOGFILE}

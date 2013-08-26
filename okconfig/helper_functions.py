@@ -96,8 +96,10 @@ def runCommand(command):
 
 class clientInstall:
     import okconfig.config
-    def __init__(self, host_name, domain, username, password,
-                 script=okconfig.config.nsclient_installfiles + "/install_nsclient.sh"):
+    def __init__(self,
+                 script=okconfig.config.nsclient_installfiles + "/install_nsclient.sh",
+                 script_args=None,
+                 merge_env=None):
         """
         Initializes the object for nsclient installs
 
@@ -110,24 +112,25 @@ class clientInstall:
         self.unparseable_lines = []
         self.stage_state = {}
         self.script = script
+        self.script_args = script_args
         self.current_stage = None
-
-        self.host_name = host_name
-        self.domain = domain
-        self.username = username
-        self.password = password
+        self.merge_env = merge_env
 
     def execute(self):
         """
         Executes the install_nsclient command which installs the nsclient agent for windows machines
         """
+
+        user_env = os.environ
+        if self.merge_env:
+            user_env.update(self.merge_env)
+
+        if not self.script_args:
+            self.script_args = []
+
         try:
-            self.process = Popen([self.script, self.host_name],
-                                 env=dict(os.environ.items() + [
-                                     ('DOMAIN', self.domain),
-                                     ('DOMAIN_USER', self.username),
-                                     ('DOMAIN_PASSWORD', self.password)
-                                 ]),
+            self.process = Popen([self.script] + self.script_args,
+                                 env=user_env,
                                  stdout=PIPE,
                                  stderr=STDOUT,
                                  bufsize=1,
@@ -165,6 +168,7 @@ class clientInstall:
             else:
                 self.unparseable_lines.append(line)
         return self.current_stage, self.stage_state
+
 
 default_service_template = '''
 # This is a template service for HOSTNAME
