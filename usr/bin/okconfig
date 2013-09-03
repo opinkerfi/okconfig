@@ -129,6 +129,9 @@ Run %prog install --help for full list of command line arguments.
     if method == "winexe":
         if not opts.password or not opts.username:
             parser.error("winexe installation requires both username and password.")
+        if not opts.domain:
+            # local password database
+            opts.domain = '.'
 
     for host in args:
         try:
@@ -141,6 +144,8 @@ Run %prog install --help for full list of command line arguments.
             print "Install script on %s successful" % ( host )
         else:
             print "Install script on %s failed with exit_status %s" % (host, exit_status)
+            print "Output:"
+            print stdout
             print "Errors:"
             print stderr
         if opts.verbose:
