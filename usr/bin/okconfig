@@ -135,7 +135,7 @@ Run %prog install --help for full list of command line arguments.
 
     for host in args:
         try:
-            exit_status,stdout,stderr = okconfig.install_okagent(remote_host=host, domain=opts.domain, username=opts.user, password=opts.password)
+            exit_status,stdout,stderr = okconfig.install_okagent(remote_host=host, domain=opts.domain, username=opts.user, password=opts.password, install_method=method)
         except okconfig.OKConfigError, e:
             exit_status=128
             stdout = "Exception occured while running install_okagent"
