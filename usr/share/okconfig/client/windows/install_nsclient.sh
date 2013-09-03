@@ -82,8 +82,9 @@ function fatal_error() {
 
 function error() {
 	stage=$1
-    host=$2
+	host=$2
 	msg=$3
+	error_count=$(( ${error_count} + 1 ))
 	printf "[%-24s] %s ERROR %s\n" "${stage}" "${host}" "${msg}" >&2
 	echo -e "$(date -R): ERROR ${msg}\n" >> ${LOGFILE}
 }
@@ -102,6 +103,7 @@ function OK() {
 	printf "$(date -R): [%-24s] %s %s\n" "${stage}" "${host}" "OK" >> ${LOGFILE}
 }
 
+error_count=0
 host_stage "Check Prerequisites" "$(hostname)"
 if [ ! -d "${INSTALL_LOCATION}/nsclient" ]; then
 	fatal_error "Check Prerequisites" "$(hostname)" "Directory $INSTALL_LOCATION/nsclient not found\nMore info at https://github.com/opinkerfi/okconfig/wiki/Deploying-nsclient-on-windows-servers"
@@ -154,5 +156,9 @@ for i in $HOSTLIST ; do
 	install_host "${i}"
 done
 
-exit 0
+if [ $error_count -gt 0 ]; then
+	exit 1
+else
+	exit 0
+fi
 
