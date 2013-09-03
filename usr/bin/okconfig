@@ -121,10 +121,15 @@ Run %prog install --help for full list of command line arguments.
     elif opts.winexe:
         method = "winexe"
     else:
-        method = None    
+        method = None
 
     if not opts.password is None and opts.password.lower() == 'ask':
         opts.password = getpass.getpass("Password: ")
+
+    if method == "winexe":
+        if not opts.password or not opts.username:
+            parser.error("winexe installation requires both username and password.")
+
     for host in args:
         try:
             exit_status,stdout,stderr = okconfig.install_okagent(remote_host=host, domain=opts.domain, username=opts.user, password=opts.password)
