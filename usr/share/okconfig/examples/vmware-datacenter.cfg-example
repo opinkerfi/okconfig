@@ -1,261 +1,225 @@
 define service {
-	name			vmware-cpu
-	use			vmware-datacenter
+	name		HOSTNAME-vmware
+	register		0
+	__USERNAME		nagios
+	__PASSWORD		changeme
+}
+
+define service {
+	use			HOSTNAME-vmware,vmware-cpu
+	host_name		HOSTNAME
 	service_description	VMware cpu 
 	__COMMAND		cpu
 	__SUBCOMMAND		
-	register		0
 }
 define service {
-	name			vmware-cpu-usage
-	use			vmware-datacenter
+	use			HOSTNAME-vmware,vmware-cpu-usage
+	host_name		HOSTNAME
 	service_description	VMware cpu usage
 	__COMMAND		cpu
 	__SUBCOMMAND		usage
-	register		0
 }
 define service {
-	name			vmware-cpu-usagemhz
-	use			vmware-datacenter
+	use			HOSTNAME-vmware,vmware-cpu-usagemhz
+	host_name		HOSTNAME
 	service_description	VMware cpu usagemhz
 	__COMMAND		cpu
 	__SUBCOMMAND		usagemhz
-	register		0
 }
 define service {
-	name			vmware-mem
-	use			vmware-datacenter
+	use			HOSTNAME-vmware,vmware-mem
+	host_name		HOSTNAME
 	service_description	VMware mem 
 	__COMMAND		mem
 	__SUBCOMMAND		
-	register		0
 }
 define service {
-	name			vmware-mem-usage
-	use			vmware-datacenter
+	use			HOSTNAME-vmware,vmware-mem-usage
+	host_name		HOSTNAME
 	service_description	VMware mem usage
 	__COMMAND		mem
 	__SUBCOMMAND		usage
-	register		0
 }
 define service {
-	name			vmware-mem-usagemb
-	use			vmware-datacenter
+	use			HOSTNAME-vmware,vmware-mem-usagemb
+	host_name		HOSTNAME
 	service_description	VMware mem usagemb
 	__COMMAND		mem
 	__SUBCOMMAND		usagemb
-	register		0
 }
 define service {
-	name			vmware-mem-swap
-	use			vmware-datacenter
+	use			HOSTNAME-vmware,vmware-mem-swap
+	host_name		HOSTNAME
 	service_description	VMware mem swap
 	__COMMAND		mem
 	__SUBCOMMAND		swap
-	register		0
 }
 define service {
-	name			vmware-mem-overhead
-	use			vmware-datacenter
+	use			HOSTNAME-vmware,vmware-mem-overhead
+	host_name		HOSTNAME
 	service_description	VMware mem overhead
 	__COMMAND		mem
 	__SUBCOMMAND		overhead
-	register		0
 }
 define service {
-	name			vmware-mem-overall
-	use			vmware-datacenter
+	use			HOSTNAME-vmware,vmware-mem-overall
+	host_name		HOSTNAME
 	service_description	VMware mem overall
 	__COMMAND		mem
 	__SUBCOMMAND		overall
-	register		0
 }
 define service {
-	name			vmware-mem-memctl
-	use			vmware-datacenter
+	use			HOSTNAME-vmware,vmware-mem-memctl
+	host_name		HOSTNAME
 	service_description	VMware mem memctl
 	__COMMAND		mem
 	__SUBCOMMAND		memctl
-	register		0
 }
 define service {
-	name			vmware-net
-	use			vmware-datacenter
+	use			HOSTNAME-vmware,vmware-net
+	host_name		HOSTNAME
 	service_description	VMware net 
 	__COMMAND		net
 	__SUBCOMMAND		
-	register		0
 }
 define service {
-	name			vmware-net-usage
-	use			vmware-datacenter
+	use			HOSTNAME-vmware,vmware-net-usage
+	host_name		HOSTNAME
 	service_description	VMware net usage
 	__COMMAND		net
 	__SUBCOMMAND		usage
-	register		0
 }
 define service {
-	name			vmware-net-receive
-	use			vmware-datacenter
+	use			HOSTNAME-vmware,vmware-net-receive
+	host_name		HOSTNAME
 	service_description	VMware net receive
 	__COMMAND		net
 	__SUBCOMMAND		receive
-	register		0
 }
 define service {
-	name			vmware-net-send
-	use			vmware-datacenter
+	use			HOSTNAME-vmware,vmware-net-send
+	host_name		HOSTNAME
 	service_description	VMware net send
 	__COMMAND		net
 	__SUBCOMMAND		send
-	register		0
 }
 define service {
-	name			vmware-io
-	use			vmware-datacenter
+	use			HOSTNAME-vmware,vmware-io
+	host_name		HOSTNAME
 	service_description	VMware io 
 	__COMMAND		io
 	__SUBCOMMAND		
-	register		0
 }
 define service {
-	name			vmware-io-aborted
-	use			vmware-datacenter
+	use			HOSTNAME-vmware,vmware-io-aborted
+	host_name		HOSTNAME
 	service_description	VMware io aborted
 	__COMMAND		io
 	__SUBCOMMAND		aborted
-	register		0
 }
 define service {
-	name			vmware-io-resets
-	use			vmware-datacenter
+	use			HOSTNAME-vmware,vmware-io-resets
+	host_name		HOSTNAME
 	service_description	VMware io resets
 	__COMMAND		io
 	__SUBCOMMAND		resets
-	register		0
 }
 define service {
-	name			vmware-io-read
-	use			vmware-datacenter
+	use			HOSTNAME-vmware,vmware-io-read
+	host_name		HOSTNAME
 	service_description	VMware io read
 	__COMMAND		io
 	__SUBCOMMAND		read
-	register		0
 }
 define service {
-	name			vmware-io-write
-	use			vmware-datacenter
+	use			HOSTNAME-vmware,vmware-io-write
+	host_name		HOSTNAME
 	service_description	VMware io write
 	__COMMAND		io
 	__SUBCOMMAND		write
-	register		0
 }
 define service {
-	name			vmware-io-kernel
-	use			vmware-datacenter
+	use			HOSTNAME-vmware,vmware-io-kernel
+	host_name		HOSTNAME
 	service_description	VMware io kernel
 	__COMMAND		io
 	__SUBCOMMAND		kernel
-	register		0
 }
 define service {
-	name			vmware-io-device
-	use			vmware-datacenter
+	use			HOSTNAME-vmware,vmware-io-device
+	host_name		HOSTNAME
 	service_description	VMware io device
 	__COMMAND		io
 	__SUBCOMMAND		device
-	register		0
 }
 define service {
-	name			vmware-io-queue
-	use			vmware-datacenter
+	use			HOSTNAME-vmware,vmware-io-queue
+	host_name		HOSTNAME
 	service_description	VMware io queue
 	__COMMAND		io
 	__SUBCOMMAND		queue
-	register		0
 }
 define service {
-	name			vmware-vmfs
-	use			vmware-datacenter
+	use			HOSTNAME-vmware,vmware-vmfs
+	host_name		HOSTNAME
 	service_description	VMware vmfs 
 	__COMMAND		vmfs
 	__SUBCOMMAND		
-	register		0
 }
 define service {
-	name			vmware-runtime
-	use			vmware-datacenter
+	use			HOSTNAME-vmware,vmware-runtime
+	host_name		HOSTNAME
 	service_description	VMware runtime 
 	__COMMAND		runtime
 	__SUBCOMMAND		
-	register		0
 }
 define service {
-	name			vmware-runtime-list
-	use			vmware-datacenter
+	use			HOSTNAME-vmware,vmware-runtime-list
+	host_name		HOSTNAME
 	service_description	VMware runtime list
 	__COMMAND		runtime
 	__SUBCOMMAND		list
-	register		0
 }
 define service {
-	name			vmware-runtime-listhost
-	use			vmware-datacenter
+	use			HOSTNAME-vmware,vmware-runtime-listhost
+	host_name		HOSTNAME
 	service_description	VMware runtime listhost
 	__COMMAND		runtime
 	__SUBCOMMAND		listhost
-	register		0
 }
 define service {
-	name			vmware-runtime-listcluster
-	use			vmware-datacenter
+	use			HOSTNAME-vmware,vmware-runtime-listcluster
+	host_name		HOSTNAME
 	service_description	VMware runtime listcluster
 	__COMMAND		runtime
 	__SUBCOMMAND		listcluster
-	register		0
 }
 define service {
-	name			vmware-runtime-tools
-	use			vmware-datacenter
+	use			HOSTNAME-vmware,vmware-runtime-tools
+	host_name		HOSTNAME
 	service_description	VMware runtime tools
 	__COMMAND		runtime
 	__SUBCOMMAND		tools
-	register		0
 }
 define service {
-	name			vmware-runtime-status
-	use			vmware-datacenter
+	use			HOSTNAME-vmware,vmware-runtime-status
+	host_name		HOSTNAME
 	service_description	VMware runtime status
 	__COMMAND		runtime
 	__SUBCOMMAND		status
-	register		0
 }
 define service {
-	name			vmware-runtime-issues
-	use			vmware-datacenter
+	use			HOSTNAME-vmware,vmware-runtime-issues
+	host_name		HOSTNAME
 	service_description	VMware runtime issues
 	__COMMAND		runtime
 	__SUBCOMMAND		issues
-	register		0
 }
 define service {
-	name			vmware-recommendations
-	use			vmware-datacenter
+	use			HOSTNAME-vmware,vmware-recommendations
+	host_name		HOSTNAME
 	service_description	VMware recommendations 
 	__COMMAND		recommendations
 	__SUBCOMMAND		
-	register		0
 }
-
-define service {
-         name				vmware_tools_service
-         use                            okc-windows-check_service
-         __SERVICE                      VMTools
-        service_description           VMware Tools Service
-        icon_image                    vmware.png
-	register                0
-}
-
-
-
 
