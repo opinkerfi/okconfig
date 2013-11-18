@@ -113,6 +113,14 @@ define service {
 }
 
 
+define service {
+	use                    okc-linux-check_package_updates
+	host_name              HOSTNAME
+	contact_groups         GROUP
+
+	#service_description	Package Updates
+	register               0
+}
 
 
 # These are not enabled by default
