@@ -361,8 +361,8 @@ Run %prog addservice --help for full list of command line arguments.
     new_service = Model.Service(filename=opts.file)
     for k,v in service_attributes.items():
         new_service[k] = v
-        new_service.save()
-    print "# Saved: \n%s \n# To %s" % (new_service, new_service.get_filename()) 
+    new_service.save()
+    print "# Saved: \n%s \n# To %s" % (new_service, new_service.get_filename())
 
 def removehost():
     ''' Delete a host from current nagios configuration files '''
