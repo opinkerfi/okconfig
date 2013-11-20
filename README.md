@@ -71,7 +71,7 @@ instructions should get you started:
 
     cd /opt
     git clone https://github.com/opinkerfi/okconfig.git
-    echo 'PYTHONPATH=$PYTHONPATH:/opt/okconfig' > /etc/profile.d/okconfig.sh
+    echo 'export PYTHONPATH=$PYTHONPATH:/opt/okconfig' > /etc/profile.d/okconfig.sh
     cp /opt/okconfig/etc/okconfig.conf /etc/okconfig.conf
     source /etc/profile
     
