@@ -71,7 +71,7 @@ else
 	AUTHFILE="${USER_AUTHFILE}"
 fi
 
-function fatal_error() {
+fatal_error() {
 	stage=$1
         host=$2
 	msg=$3
@@ -80,7 +80,7 @@ function fatal_error() {
 	exit 1
 }
 
-function error() {
+error() {
 	stage=$1
 	host=$2
 	msg=$3
@@ -89,14 +89,14 @@ function error() {
 	echo -e "$(date -R): ERROR ${msg}\n" >> ${LOGFILE}
 }
 
-function host_stage() {
+host_stage() {
         stage=$1
 	host=$2
 	printf "[%-24s] %s Starting..\n" "${stage}" "${host}"
 	printf "$(date -R): [%-24s] %s Starting\n" "${stage}" "${host}" >> ${LOGFILE}
 }
 
-function OK() {
+OK() {
         stage=$1
         host=$2
 	printf "[%-24s] %s %s\n" "${stage}" "${host}" "OK"
@@ -111,7 +111,7 @@ fi
 
 OK "Check Prerequisites" "$(hostname)"
 
-function install_host() {
+install_host() {
 	local host
 	host=$1
 	host_stage "Connection test" "${host}"
