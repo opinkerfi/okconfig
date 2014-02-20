@@ -150,14 +150,7 @@ def addhost(host_name, address=None, group_name=None, templates=None, use=None, 
         except:
             raise OKConfigError("Could not resolve hostname '%s'" % host_name)
     if use is None:
-        if 'windows' in templates:
-            use = 'windows-server'
-        elif 'linux' in templates:
-            use = 'linux-server'
-        elif 'ciscoswitch' in templates:
-            use = 'generic-switch'
-        else:
-            use = 'okc-default-host'
+        use = 'okc-default-host'
     okconfig_groups = get_groups()
     if len(okconfig_groups) == 0:
         addgroup(group_name='default',alias='OKconfig default group')
