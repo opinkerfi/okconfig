@@ -49,7 +49,7 @@ if __name__ == "__main__":
         description=SHORT_DESC,
         long_description=LONG_DESC,
         author_email='palli@opensource.is',
-        url='http://opensource.is/okconfig',
+        url='http://okconfig.org',
         license='GPL',
         scripts=['usr/bin/okconfig'],
         packages=['okconfig'],
