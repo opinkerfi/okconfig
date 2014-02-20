@@ -6,7 +6,7 @@
 
 Summary: Python Nagios Template management and configuration power tools
 Name: okconfig
-Version: 1.2.2
+Version: 1.2.3
 Release: %{release}%{?dist}
 Source0: http://opensource.is/files/%{name}-%{version}.tar.gz
 License: GPLv2
