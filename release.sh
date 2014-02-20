@@ -14,6 +14,7 @@ echo new version: $new_version
 echo "### Updating version number"
 sed -i "s/Version: $current_version/Version: $new_version/" okconfig.spec
 sed -i "s/__version__=.*/__version__='${new_version}'/" okconfig/__init__.py
+sed -i "s/VERSION =.*/VERSION ='${new_version}'/" okconfig/__init__.py
 echo "${new_version}-${current_release} /" > rel-eng/packages/okconfig
 
 # Comment out because there is no debian package yet
