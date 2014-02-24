@@ -80,11 +80,14 @@ class ScannedHost:
     def has_ssl(self):
         """Returns true if machine replies on port 443"""
         return check_tcp(host=self.ipaddress, port=443)
+
     def is_agent_responding(self):
         """returns true if host responds to check_nrpe commands"""
-        returncode,stdout,stderr = runCommand("check_nrpe -H '%s'")
-        if returncode == 0: return True
-        if returncode == 1: return False
+        returncode, stdout, stderr = runCommand("check_nrpe -H '%s'" % self.ipaddress)
+        if returncode == 0:
+            return True
+        if returncode == 1:
+            return False
         return None
     def is_agent_okconfig(self):
         """returns true if host responds to check_nrpe commands"""
