@@ -115,7 +115,7 @@ install_host() {
 	local host
 	host=$1
 	host_stage "Connection test" "${host}"
-	winexe --reinstall -d 1 -A ${AUTHFILE} "//${host}" "cmd /c echo test" 2>&1 | awk "{ print \"$(date -R): ${host}\", \$0}" >> ${LOGFILE}
+	cat < /dev/null | winexe --reinstall -d 1 -A ${AUTHFILE} "//${host}" "cmd /c echo test" 2>&1 | awk "{ print \"$(date -R): ${host}\", \$0}" >> ${LOGFILE}
         RESULT=${PIPESTATUS[0]}
 	if [ $RESULT -gt 0 ]; then
 		error "Connection test" "${host}" "Connection test failed, check ${LOGFILE}"
@@ -142,7 +142,7 @@ install_host() {
 	OK "Upload NSClient++ Setup" "${host}"
 	
 	host_stage "Installing NSClient++" "${host}"
-	winexe --reinstall -d 0 -A ${AUTHFILE} "//${host}" "cmd /c $BATCHFILE" 2>&1 | awk "{ print \"$(date -R): ${host}\", \$0}" >> ${LOGFILE}
+	cat < /dev/null | winexe --reinstall -d 0 -A ${AUTHFILE} "//${host}" "cmd /c $BATCHFILE" 2>&1 | awk "{ print \"$(date -R): ${host}\", \$0}" >> ${LOGFILE}
 	RESULT=${PIPESTATUS[0]}
 	
 	if [ $RESULT -gt 0 ]; then
