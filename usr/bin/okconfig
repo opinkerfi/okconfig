@@ -23,6 +23,7 @@ import sys
 import okconfig
 import os
 import getpass
+import okconfig.migration_tool
 
 # Parse some Arguments
 from optparse import OptionParser,OptionGroup, SUPPRESS_HELP
@@ -50,10 +51,17 @@ Examples:
  %prog addtemplate <host_name> --template oracle
 """
 parser = OptionParser(usage=usage)
-parser.add_option("--debug", dest="debug", action="store_true",
-    default=False,help="Print extra debugging information")
+parser.add_option(
+    "--debug",
+    dest="debug",
+    action="store_true",
+    default=False,
+    help="Print extra debugging information"
+)
+
+
 def parse_arguments():
-    ''' Parse command line arguments and run command specified commands '''
+    """ Parse command line arguments and run command specified commands """
     if len(sys.argv) < 2:
         parser.error("No command specified")
     elif sys.argv[1] == 'verify':
@@ -89,7 +97,7 @@ def parse_arguments():
 
 
 def remote_install():
-    ''' Install an ok agent on a remote server '''
+    """ Install an ok agent on a remote server """
     parser.usage = ''' %prog install <remote_server> [options]
 
 Examples:
@@ -109,7 +117,7 @@ Run %prog install --help for full list of command line arguments.
     parser.add_option("--verbose", dest="verbose", action="store_true",
                       default=False,help="Show output of install script")
     parser.add_option("--winexe", dest="winexe", action="store_true",
-                      default=False,help="use winexe to connect")
+                      default=False, help="use winexe to connect")
     parser.add_option("--interactive", dest="interactive",
                       help="Prompt for missing values like password", action="store_true", default=False)
     parser.add_option("--host", dest="host", help="remote host to connect to")
@@ -156,7 +164,7 @@ Run %prog install --help for full list of command line arguments.
             stdout = "Exception occured while running install_okagent"
             stderr = str(e)
         if exit_status == 0:
-            print "Install script on %s successful" % ( host )
+            print "Install script on %s successful" % (host, )
         else:
             print "Install script on %s failed with exit_status %s" % (host, exit_status)
             print "Output:"
@@ -170,7 +178,7 @@ Run %prog install --help for full list of command line arguments.
 
 
 def verify():
-    ''' Verify that current install of okconfig is functional. '''
+    """ Verify that current install of okconfig is functional. """
     result = okconfig.verify()
     print "Okconfig verification"
     print "---------------------"
@@ -180,25 +188,25 @@ def verify():
         print "* %-70s...%s" % (k,v)
 
 def init():
-    ''' Initilize nagios configuration to use okconfig '''
+    """ Initilize nagios configuration to use okconfig """
     print "Initilizating nagios to use okconfig..."
     maincfg = okconfig.config.nagios_config
     template_dir = okconfig.config.template_directory
     dest_dir = okconfig.config.destination_directory
-    print "Using configuration file %s" % (okconfig.config.config_file)
+    print "Using configuration file %s" % (okconfig.config.config_file, )
     if not os.path.exists(maincfg):
-        raise okconfig.OKConfigError('Error: Nagios configuration file not found under %s' % (maincfg))
-    print "Using Nagios configuration file %s" % (maincfg)
+        raise okconfig.OKConfigError('Error: Nagios configuration file not found under %s' % (maincfg, ))
+    print "Using Nagios configuration file %s" % (maincfg, )
 
     import pynag.Parsers
     c = pynag.Parsers.config(cfg_file=maincfg)
     c._edit_static_file(attribute="cfg_dir", new_value=dest_dir, filename=maincfg)
     c._edit_static_file(attribute="cfg_dir", new_value=template_dir, filename=maincfg)
     if not os.path.exists(template_dir):
-        print "Creating %s" % ( template_dir )
+        print "Creating %s" % (template_dir, )
         os.makedirs(template_dir)
     if not os.path.exists(dest_dir):
-        print "Creating %s" % ( dest_dir )
+        print "Creating %s" % (dest_dir,)
         os.makedirs(dest_dir)
     print 'All Done. Run "%s verify" to verify everything is working' % sys.argv[0]
 
@@ -221,7 +229,7 @@ def listtemplates():
         print i
 
 def addgroup():
-    ''' Add new group to current nagios configuration files '''
+    """ Add new group to current nagios configuration files """
     parser.usage = ''' %prog addgroup <group_name> [options]
 
 Examples:
@@ -246,7 +254,7 @@ Run %prog addgroup --help for full list of command line arguments.
         for i in f: print "Saved", i
 
 def addcontact():
-    ''' Add new contact to current nagios configuration files '''
+    """ Add new contact to current nagios configuration files """
     parser.usage = ''' %prog addcontact <contact_name> [options]
 
 Examples:
@@ -277,7 +285,7 @@ Run %prog addcontact --help for full list of command line arguments.
 
 
 def addtemplate():
-    ''' Add new template to a current nagios host '''
+    """ Add new template to a current nagios host """
     parser.usage = ''' %prog addtemplate <host_name> <template_name>
 
 Examples:
@@ -307,7 +315,7 @@ Run %prog addtemplate --help for full list of command line arguments.
         for i in f: print "Saved", i
 
 def addhost():
-    ''' Add new host to nagios configuration files '''
+    """ Add new host to nagios configuration files """
     parser.usage = ''' %prog addhost <host_name> [options]
 
 Examples:
@@ -349,12 +357,11 @@ Run %prog addhost --help for full list of command line arguments.
         for i in f: print "Saved", i	
 
 def upgrade():
-    ''' Upgrade current nagios configuration in case okconfig tools have been updated '''
-    import okconfig.migration_tool
-    result = okconfig.migration_tool.upgrade_okconfig()
+    """ Upgrade current nagios configuration in case okconfig tools have been updated """
+    return okconfig.migration_tool.upgrade_okconfig()
 
 def addservice():
-    ''' Add a single service check to host '''
+    """ Add a single service check to host """
     parser.usage = ''' %prog addservice [attribute1=value1] [attribute2=value2] ...
 
 Examples:
@@ -380,7 +387,7 @@ Run %prog addservice --help for full list of command line arguments.
     print "# Saved: \n%s \n# To %s" % (new_service, new_service.get_filename())
 
 def removehost():
-    ''' Delete a host from current nagios configuration files '''
+    """ Delete a host from current nagios configuration files """
     parser.usage = ''' %prog removehost <host_name> [options]
 
 Examples:
@@ -397,10 +404,11 @@ Run %prog removehost --help for full list of command line arguments.
 
     if opts.host: args.append(opts.host)
 
-    if len(args) == 0: parser.error("Please specify a host_name on the command line. See --help.")       
+    if len(args) == 0:
+        parser.error("Please specify a host_name on the command line. See --help.")
     for i in args:
         okconfig.removehost(host_name=i, recursive=opts.recursive)
-        print "Host %s removed." % (i)
+        print "Host %s removed." % (i,)
 
 
 if __name__ == '__main__':
@@ -408,4 +416,3 @@ if __name__ == '__main__':
         parse_arguments()
     except Exception, e:
             print "Error: ", e
-
