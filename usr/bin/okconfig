@@ -93,8 +93,8 @@ def remote_install():
     parser.usage = ''' %prog install <remote_server> [options]
 
 Examples:
-  # %prog install mylinuxserver --ssh --user root --password lol" 
-  # %prog install mywinserver --winexe --user administrator --password lol --domain lol" 
+  # %prog install linuxserver --ssh --user root --password lol
+  # %prog install winserver --winexe --user admin --password lol --domain lol
 
 Run %prog install --help for full list of command line arguments.
 '''
@@ -146,7 +146,7 @@ Run %prog install --help for full list of command line arguments.
         opts.user = "root"
 
     if len(args) == 0:
-        parser.error("Please specify at least one host on the command line.")
+        parser.error("Please specify at least one host on the command line or use --interactive")
 
     for host in args:
         try:
@@ -239,7 +239,7 @@ Run %prog addgroup --help for full list of command line arguments.
 
     if opts.group: args.append(opts.group)
 
-    if len(args) == 0: parser.error("Please specify at least one group on the command line.")    
+    if len(args) == 0: parser.error("Please specify at least one group on the command line.")
 
     for group in args:
         f = okconfig.addgroup(group_name=group,alias=opts.alias,force=opts.force)
