@@ -25,7 +25,7 @@ import os
 import getpass
 
 # Parse some Arguments
-from optparse import OptionParser,OptionGroup
+from optparse import OptionParser,OptionGroup, SUPPRESS_HELP
 
 usage = """usage: %prog <command> [arguments]
 
@@ -110,11 +110,14 @@ Run %prog install --help for full list of command line arguments.
                       default=False,help="Show output of install script")
     parser.add_option("--winexe", dest="winexe", action="store_true",
                       default=False,help="use winexe to connect")
+    parser.add_option("--interactive", dest="interactive",
+                      help="Prompt for missing values like password", action="store_true", default=False)
     parser.add_option("--host", dest="host", help="remote host to connect to")
-    (opts,args) = parser.parse_args(sys.argv[2:])
-    if opts.host: args.append(opts.host)
+    parser.add_option("--username", dest="user", help=SUPPRESS_HELP)
 
-    if len(args) == 0: parser.error("Please specify at least one host on the command line.")    
+    (opts,args) = parser.parse_args(sys.argv[2:])
+    if opts.host:
+        args.append(opts.host)
 
     if opts.ssh:
         method = "ssh"
@@ -123,15 +126,27 @@ Run %prog install --help for full list of command line arguments.
     else:
         method = None
 
-    if not opts.password is None and opts.password.lower() == 'ask':
-        opts.password = getpass.getpass("Password: ")
+    if method == "winexe" and not opts.user:
+        opts.user = "administrator"
+    if method == "ssh" and not opts.user:
+        opts.user = "root"
+    if opts.interactive:
+        if not opts.host:
+            args.append(raw_input("Remote Host: "))
+        if not opts.user:
+            opts.user = raw_input("Username: ")
+        if not opts.password or opts.password.lower() == 'ask':
+            opts.password = getpass.getpass("Password: ")
+        if method == "winexe" and not opts.domain:
+            opts.domain = raw_input("Domain: ")
 
-    if method == "winexe":
-        if not opts.password or not opts.user:
-            parser.error("winexe installation requires both username and password.")
-        if not opts.domain:
-            # local password database
-            opts.domain = '.'
+    if method == "winexe" and not opts.user:
+        opts.user = "administrator"
+    if method == "ssh" and not opts.user:
+        opts.user = "root"
+
+    if len(args) == 0:
+        parser.error("Please specify at least one host on the command line.")
 
     for host in args:
         try:
