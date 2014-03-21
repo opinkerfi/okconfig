@@ -4,9 +4,9 @@ okconfig - manipulate nagios configuration
 
 =head1 SYNOPSIS
 
-  okconfig --addhost <host> [--address ###.###.###.###] [--group GROUP]
-  okconfig --addtemplate <host> <template>
-  okconfig --addgroup	<groupname> [--alias ALIAS]
+  okconfig addhost <host> [--address ###.###.###.###] [--group GROUP]
+  okconfig addtemplate <host> <template>
+  okconfig addgroup	<groupname> [--alias ALIAS]
 
 =head1 DESCRIPTION
 
@@ -14,7 +14,7 @@ A robust template mechanism for Nagios configuration files. Providing
 standardized set of configuration templates and select quality plugins 
 to enterprise quality monitoring.
 
-=head2 --addhost HOSTNAME
+=head2 addhost HOSTNAME
 
 Adds a host to the nagios configuration, only PING will be checked.
 
@@ -30,14 +30,16 @@ directory.
 
 =head1 EXAMPLES
 
-  okconfig --addhost	--host examplehost.example.com --address 127.0.0.1 --group default
-  okconfig --addtemplate	--host examplehost.example.com --template linux
-  okconfig --addgroup	--group databases --alias "Databases"
+  okconfig addhost	--host examplehost.example.com --address 127.0.0.1 --group default
+  okconfig addtemplate	--host examplehost.example.com --template linux
+  okconfig addgroup	--group databases --alias "Databases"
 
 =head1 ADDITIONAL RESOURCES
 
-See http://opensource.is/trac/wiki/OKConfig for more information.
+Any documentation for okconfig can be found on the okconfig wiki: https://github.com/opinkerfi/okconfig/wiki
 
+=head1 KNOWN ISSUES
+This manpage is extremely outdated, and we are well aware. If you want to improve the 
 =head1 AUTHOR
 
 Pall Sigurdsson <palli@opensource.is>
