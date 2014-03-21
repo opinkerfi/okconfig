@@ -8,7 +8,7 @@ Summary: Python Nagios Template management and configuration power tools
 Name: okconfig
 Version: 1.2.3
 Release: %{release}%{?dist}
-Source0: http://opensource.is/files/%{name}-%{version}.tar.gz
+Source0: https://github.com/opinkerfi/okconfig/archive/%{name}-%{version}-%{release}.tar.gz
 License: GPLv2
 Group: System Environment/Libraries
 Requires: python >= 2.3
@@ -30,7 +30,7 @@ BuildRequires: python-setuptools
 %endif
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
-Url: http://opensource.is/trac
+Url: http://github.com/opinkerfi/okconfig
 BuildArch: noarch 
 Requires: pynag python-paramiko winexe
 Requires: nagios nagios-plugins-nrpe  nagios-plugins-ping nagios-plugins-ssh
