@@ -115,7 +115,7 @@ install_host() {
 	local host
 	host=$1
 	host_stage "Connection test" "${host}"
-	cat < /dev/null | winexe --reinstall -d 1 -A ${AUTHFILE} "//${host}" "cmd /c echo test" 2>&1 | awk "{ print \"$(date -R): ${host}\", \$0}" >> ${LOGFILE}
+	cat < /dev/null | winexe --reinstall -d 0 -A ${AUTHFILE} "//${host}" "cmd /c echo test" 2>&1 | awk "{ print \"$(date -R): ${host}\", \$0}" >> ${LOGFILE}
         RESULT=${PIPESTATUS[0]}
 	if [ $RESULT -gt 0 ]; then
 		error "Connection test" "${host}" "Connection test failed, check ${LOGFILE}"
@@ -132,7 +132,7 @@ install_host() {
 
 	cd $INSTALL_LOCATION
 	
-	smbclient -d 0 //${host}/c$ -A ${AUTHFILE} -W ${DOMAIN} -c  "mkdir /temp ; mkdir /temp ; cd /temp ; recurse ; prompt ; mput nsclient" 2>&1 | awk "{ print \"$(date -R): ${host}\", \$0}" >> ${LOGFILE}
+	smbclient -d 0 //${host}/c$ -A ${AUTHFILE} -W ${DOMAIN} -c  "mkdir \temp ; cd /temp ; recurse ; prompt ; mput nsclient" 2>&1 | awk "{ print \"$(date -R): ${host}\", \$0}" >> ${LOGFILE}
 	RESULT=${PIPESTATUS[0]}
 	
 	if [ $RESULT -gt 0 ]; then
