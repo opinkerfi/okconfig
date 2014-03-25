@@ -132,7 +132,7 @@ install_host() {
 
 	cd $INSTALL_LOCATION
 	
-	smbclient -d 0 //${host}/c$ -A ${AUTHFILE} -W ${DOMAIN} -c  "mkdir \temp ; cd /temp ; recurse ; prompt ; mput nsclient" 2>&1 | awk "{ print \"$(date -R): ${host}\", \$0}" >> ${LOGFILE}
+	smbclient -d 0 //${host}/c$ -A ${AUTHFILE} -W ${DOMAIN} -c  "mkdir \\temp ; cd /temp ; recurse ; prompt ; mput nsclient" 2>&1 | awk "{ print \"$(date -R): ${host}\", \$0}" >> ${LOGFILE}
 	RESULT=${PIPESTATUS[0]}
 	
 	if [ $RESULT -gt 0 ]; then
