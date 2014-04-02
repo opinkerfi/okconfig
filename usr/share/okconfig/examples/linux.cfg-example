@@ -156,3 +156,11 @@ define service {
 	#__NUMBER_OF_PATHS	4
 	#service_description	Multipath
 }
+
+define service {
+	use			okc-linux-get_network_interfaces_stat
+	host_name		HOSTNAME
+	contact_groups		GROUP
+
+	register		0
+}
