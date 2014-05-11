@@ -67,7 +67,7 @@ define service {
 # windows-check_mem
 # Checks windows memory usage
 define service {
-        use                     okc-windows-check_mem
+        use                     okc-windows-check_mem_v2
         host_name               HOSTNAME
 	contact_groups		GROUP
 
