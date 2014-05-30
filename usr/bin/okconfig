@@ -460,6 +460,6 @@ Run %prog removehost --help for full list of command line arguments.
 
 if __name__ == '__main__':
     try:
-        #parse_arguments()
+        parse_arguments()
     except Exception, e:
-            print "Error: ", e
+        print "Error: ", e
