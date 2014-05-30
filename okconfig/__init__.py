@@ -354,7 +354,7 @@ def findhost(host_name):
      host_name -- Name of the host to find
 
     Examples:
-    >>> print findhost("host.example.com")
+    >>> print findhost("host.example.com") # doctest: +SKIP
     "/etc/okconfig/hosts/default/host.example.com-host.cfg"
     """
     try:
@@ -371,7 +371,7 @@ def removehost(host_name, recursive=True):
         host_name -- Name of the host to remove
         recursive -- If true: Also delete all services that belong to this host.
     Examples:
-    >>> removehost('host.example.com', recursive=True)
+    >>> removehost('host.example.com', recursive=True) # doctest: +SKIP
     """
     my_host = pynag.Model.Host.objects.get_by_shortname(host_name)
     my_host.delete(cascade=recursive)
