@@ -23,15 +23,22 @@ class Host(unittest.TestCase):
         environment.update_model()
         self.environment = environment
 
+        self._okconfig_overridden_vars = {}
+        for var in ['nagios_config', 'destination_directory',
+                    'examples_directory', 'examples_directory_local']:
+            self._okconfig_overridden_vars[var] = getattr(okconfig, var)
+
         okconfig.nagios_config = self.environment.get_config().cfg_file
         okconfig.destination_directory = self.environment.objects_dir
         okconfig.examples_directory = "../usr/share/okconfig/examples"
         okconfig.examples_directory_local = environment.tempdir + "/okconfig"
+
         os.mkdir(okconfig.examples_directory_local)
 
     def tearDown(self):
-        #self.environment.terminate()
-        pass
+        self.environment.terminate()
+        for var, value in self._okconfig_overridden_vars.items():
+            setattr(okconfig, var, value)
 
     def test_basic(self):
         """Basic addition of host"""
@@ -90,10 +97,20 @@ class Host(unittest.TestCase):
 
     def test_address(self):
         """Add a host with an address"""
-        okconfig.addhost('addressed.okconfig.org', address="192.168.1.1")
+        okconfig.addhost('www.okconfig.org', address="192.168.1.1")
 
-        host = Model.Host.objects.filter(host_name="addressed.okconfig.org")[0]
-        self.assertEqual(host.address, "192.168.1.1")
+        hosts = Model.Host.objects.filter(host_name="www.okconfig.org")
+        self.assertTrue(len(hosts) == 1)
+        self.assertEqual(hosts[0].address, "192.168.1.1")
+
+    def test_alias(self):
+        """Add a host with an alias"""
+        okconfig.addhost('www.okconfig.org', alias="The alias host")
+
+        hosts = Model.Host.objects.filter(host_name="www.okconfig.org")
+        self.assertTrue(len(hosts) == 1)
+        self.assertEqual(hosts[0].alias, "The alias host")
+
 
 
 if __name__ == "__main__":
