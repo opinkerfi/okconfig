@@ -343,7 +343,7 @@ Run %prog addtemplate --help for full list of command line arguments.
     for template_name in templates:
         f = okconfig.addtemplate(
             host_name=opts.host, template_name=template_name,
-            force=opts.force, opts=template_opts)
+            force=opts.force, template_opts=template_opts)
         for i in f:
             print "Saved", i
 
@@ -459,7 +459,9 @@ Run %prog removehost --help for full list of command line arguments.
 
 
 if __name__ == '__main__':
+    parse_arguments()
     try:
-        parse_arguments()
+        #parse_arguments()
+        pass
     except Exception, e:
         print "Error: ", e

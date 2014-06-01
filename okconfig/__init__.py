@@ -123,7 +123,7 @@ def verify():
 
     return results
 
-def addhost(host_name, address=None, group_name=None, templates=None, use=None, alias=None, host_template='host', force=False):
+def addhost(host_name, address=None, group_name=None, templates=None, use=None, alias=None, host_template='host', force=False, template_opts=None):
     """Adds a new host to Nagios. Returns true if operation is successful.
 
     Args:
@@ -183,12 +183,13 @@ def addhost(host_name, address=None, group_name=None, templates=None, use=None, 
                                  'IPADDR': address,
                                  'HOSTNAME': host_name,
                                  'ALIAS': alias
-                             })
+                             }, template_opts=template_opts)
     _git_commit(filelist=result, message='okconfig host %s added with address %s' % (host_name,address))
     for i in templates:
         result = result + addtemplate(host_name=host_name, template_name=i, group_name=group_name,force=force)
     return result
-def addtemplate(host_name, template_name, group_name=None, force=False):
+
+def addtemplate(host_name, template_name, group_name=None, force=False, template_opts=None):
     """Adds a new template to existing host in Nagios.
 
     Args:
@@ -223,15 +224,18 @@ f
     # Lets do some templating
     filename = hostdir + "/{HOSTNAME}-{TEMPLATE}.cfg"
 
+    opts = { 'HOSTNAME': host_name,
+             'TEMPLATE': template_name,
+             'GROUP': group_name, }
     result = _apply_template(template_name, destination_file=filename,
-                             opts = { 'HOSTNAME': host_name,
-                                      'TEMPLATE': template_name,
-                                      'GROUP': group_name, },
-                             force=force, )
+                             force=force,
+                             opts=opts,
+                             template_opts=template_opts)
+
     _git_commit(filelist=result, message='okconfig template %s added to host %s' % (template_name, host_name))
     return result
 
-def addgroup(group_name, alias=None, force=False):
+def addgroup(group_name, alias=None, force=False, template_opts=None):
     """Adds a new hostgroup/contactgroup/servicegroup combo to Nagios.
 
     Args:
@@ -259,9 +263,10 @@ def addgroup(group_name, alias=None, force=False):
                              opts={
                                  'GROUP': group_name,
                                  'ALIAS': alias
-                             })
+                             }, template_opts=template_opts)
     _git_commit(filelist=result, message="okconfig group %s added" % group_name)
     return result
+
 def addcontact(contact_name, alias=None, force=False, group_name="default", email=None, use='generic-contact'):
     """Adds a new contact to Nagios.
 
@@ -534,14 +539,14 @@ def install_nrpe(remote_host, username, password=None):
 
     return exit_status,stdout,stderr
 
-def _apply_template(template_name, destination_file, force, opts):
-    """ Applies okconfig template to filename, doing replacements from kwargs in the meantime
+def _apply_template(template_name, destination_file, force, opts, template_opts):
+    """ Applies okconfig template to filename, doing replacements from opts in the meantime
 
     Arguments:
         template_name - name of the template to use
         filename - template for filename, eg "{HOSTNAME}-{TEMPLATE}.cfg"
         destination_file - full path to file to be written to
-        kwargs key/value pair of string to search and replacement to make
+        opts key/value pair of string to search and replacement to make
 
     Example:
         _apply_template('host','/etc/nagios/okconfig/hosts/newhost.cfg', HOSTNAME='newhost',ADDRESS='0.0.0.0',GROUP='default')
@@ -570,10 +575,12 @@ def _apply_template(template_name, destination_file, force, opts):
 
     destination_file = destination_file.format(**opts)
 
+    for key in opts:
+        if key not in template_opts
     if 'template_opt_file' in template:
         template_output, filename = _apply_template_opts(template,
                                          template_output,
-                                        dict(opts.items() + kwargs.items()))
+                                         opts)
         destination_file = "/".join(destination_file.split("/")[:-1]) + "/" +\
                            filename
 
@@ -581,7 +588,6 @@ def _apply_template(template_name, destination_file, force, opts):
         if os.path.isfile(destination_file):
             raise OKConfigError("Destination file '%s' already exists." %
                                 destination_file)
-
 
 
     open(destination_file,'w').write( template_output )
