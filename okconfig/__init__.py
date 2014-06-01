@@ -573,10 +573,12 @@ def _apply_template(template_name, destination_file, force, opts, template_opts)
     for old_string,new_string in opts.items():
         template_output = template_output.replace(old_string,new_string)
 
+    if template_opts:
+        template_opts['parms'] = dict(
+            opts.items() + template_opts['parms'].items())
+
     destination_file = destination_file.format(**opts)
 
-    for key in opts:
-        if key not in template_opts
     if 'template_opt_file' in template:
         template_output, filename = _apply_template_opts(template,
                                          template_output,
