@@ -227,6 +227,7 @@ f
     opts = { 'HOSTNAME': host_name,
              'TEMPLATE': template_name,
              'GROUP': group_name, }
+
     result = _apply_template(template_name, destination_file=filename,
                              force=force,
                              opts=opts,
@@ -574,8 +575,7 @@ def _apply_template(template_name, destination_file, force, opts, template_opts)
         template_output = template_output.replace(old_string,new_string)
 
     if template_opts:
-        template_opts['parms'] = dict(
-            opts.items() + template_opts['parms'].items())
+        opts.update(template_opts)
 
     destination_file = destination_file.format(**opts)
 
