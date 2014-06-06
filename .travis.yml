@@ -6,7 +6,6 @@ install:
   - pip install unittest2==0.5.1 --use-mirrors
   - pip install coveralls --use-mirrors
   - python setup.py build
-  - python setup.py install
 before_script:
   - env
   - git config --global user.email "noreply@travis-ci.org"
