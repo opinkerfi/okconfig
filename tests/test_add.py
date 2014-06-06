@@ -151,7 +151,7 @@ class Template(unittest.TestCase):
 
 
     def tearDown(self):
-        #self.environment.terminate()
+        self.environment.terminate()
         for var, value in self._okconfig_overridden_vars.items():
             setattr(okconfig, var, value)
 
@@ -211,6 +211,79 @@ class Template(unittest.TestCase):
         )
         self.assertEqual(1, len(services), "There can be only one")
         self.assertEqual(services[0].contact_groups, "webgroup")
+
+class Group(unittest.TestCase):
+    """Template additions tests"""
+    def setUp(self):
+        environment = FakeNagiosEnvironment()
+        environment.create_minimal_environment()
+        copytree(os.path.realpath("../usr/share/okconfig/templates"),
+                   environment.tempdir + "/conf.d/okconfig-templates")
+        environment.update_model()
+
+        self.environment = environment
+
+        self._okconfig_overridden_vars = {}
+        for var in ['nagios_config', 'destination_directory',
+                    'examples_directory', 'examples_directory_local']:
+            self._okconfig_overridden_vars[var] = getattr(okconfig, var)
+
+        okconfig.nagios_config = self.environment.get_config().cfg_file
+        okconfig.destination_directory = self.environment.objects_dir
+        okconfig.examples_directory = "../usr/share/okconfig/examples"
+        okconfig.examples_directory_local = environment.tempdir + "/okconfig"
+
+        os.mkdir(okconfig.examples_directory_local)
+
+        okconfig.addhost("www.okconfig.org")
+        okconfig.addhost("okconfig.org")
+        okconfig.addhost("aliased.okconfig.org",
+                         address="192.168.1.1",
+                         group_name="testgroup")
+
+
+    def tearDown(self):
+        self.environment.terminate()
+        for var, value in self._okconfig_overridden_vars.items():
+            setattr(okconfig, var, value)
+
+    def test_basic(self):
+        """Add a group"""
+        okconfig.addgroup("testgroup1")
+
+        contacts = Model.Contactgroup.objects.filter(
+            contactgroup_name='testgroup1'
+        )
+
+        self.assertEqual(1, len(contacts), 'There can be only one')
+
+        hostgroups = Model.Hostgroup.objects.filter(
+            hostgroup_name='testgroup1'
+        )
+        self.assertEqual(1, len(hostgroups), 'There can be only one')
+
+    def test_alias(self):
+        """Add a group with an alias"""
+        okconfig.addgroup("testgroup1", alias="the first testgroup")
+
+        contacts = Model.Contactgroup.objects.filter(
+            contactgroup_name='testgroup1',
+            alias='the first testgroup')
+        self.assertEqual(1, len(contacts))
+
+    def test_conflict(self):
+        """Test adding a conflicting group"""
+        okconfig.addgroup("testgroup1")
+
+        self.assertRaises(okconfig.OKConfigError,
+                          okconfig.addgroup,
+                          "testgroup1")
+
+    def test_force(self):
+        """Test force adding a group"""
+        okconfig.addgroup("testgroup1")
+        okconfig.addgroup("testgroup1", force=True)
+
 
 if __name__ == "__main__":
     unittest.main()
