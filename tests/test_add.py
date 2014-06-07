@@ -11,6 +11,7 @@ sys.path.insert(0, okconfig_base)
 
 import unittest
 import okconfig
+import okconfig.config as config
 from pynag.Utils.misc import FakeNagiosEnvironment
 from pynag import Model
 
@@ -31,9 +32,12 @@ class Host(unittest.TestCase):
             self._okconfig_overridden_vars[var] = getattr(okconfig, var)
 
         okconfig.nagios_config = self.environment.get_config().cfg_file
+	config.nagios_config = okconfig.nagios_config
+        config.git_commit_changes = 0
         okconfig.destination_directory = self.environment.objects_dir
         okconfig.examples_directory = "../usr/share/okconfig/examples"
         okconfig.examples_directory_local = environment.tempdir + "/okconfig"
+
 
         os.mkdir(okconfig.examples_directory_local)
 
@@ -137,6 +141,8 @@ class Template(unittest.TestCase):
             self._okconfig_overridden_vars[var] = getattr(okconfig, var)
 
         okconfig.nagios_config = self.environment.get_config().cfg_file
+	config.nagios_config = okconfig.nagios_config
+        config.git_commit_changes = 0
         okconfig.destination_directory = self.environment.objects_dir
         okconfig.examples_directory = "../usr/share/okconfig/examples"
         okconfig.examples_directory_local = environment.tempdir + "/okconfig"
@@ -229,6 +235,8 @@ class Group(unittest.TestCase):
             self._okconfig_overridden_vars[var] = getattr(okconfig, var)
 
         okconfig.nagios_config = self.environment.get_config().cfg_file
+	config.nagios_config = okconfig.nagios_config
+        config.git_commit_changes = 0
         okconfig.destination_directory = self.environment.objects_dir
         okconfig.examples_directory = "../usr/share/okconfig/examples"
         okconfig.examples_directory_local = environment.tempdir + "/okconfig"
