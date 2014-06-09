@@ -9,7 +9,7 @@ from shutil import copytree
 okconfig_base = os.path.dirname(os.path.realpath(__file__ + "/.."))
 sys.path.insert(0, okconfig_base)
 
-import unittest
+import unittest2 as unittest
 import okconfig
 import okconfig.config as config
 from pynag.Utils.misc import FakeNagiosEnvironment

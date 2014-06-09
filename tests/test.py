@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 import os
 import sys
-import unittest
 
 # Make sure we import from working tree
 okconfig_base = os.path.dirname(os.path.realpath(__file__ + "/.."))
 sys.path.insert(0, okconfig_base)
 
-import unittest
+import unittest2 as unittest
 import doctest
 
 from tests import tests_dir
