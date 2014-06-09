@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+# !/usr/bin/env python
 """Test adding objects"""
 
 import os.path
@@ -15,13 +15,15 @@ import okconfig.config as config
 from pynag.Utils.misc import FakeNagiosEnvironment
 from pynag import Model
 
+
 class Host(unittest.TestCase):
     """Tests pertaining to addhost"""
+
     def setUp(self):
         environment = FakeNagiosEnvironment()
         environment.create_minimal_environment()
         copytree(os.path.realpath("../usr/share/okconfig/templates"),
-                   environment.tempdir + "/conf.d/okconfig-templates")
+                 environment.tempdir + "/conf.d/okconfig-templates")
         environment.update_model()
 
         self.environment = environment
@@ -32,12 +34,11 @@ class Host(unittest.TestCase):
             self._okconfig_overridden_vars[var] = getattr(okconfig, var)
 
         okconfig.nagios_config = self.environment.get_config().cfg_file
-	config.nagios_config = okconfig.nagios_config
+        config.nagios_config = okconfig.nagios_config
         config.git_commit_changes = 0
         okconfig.destination_directory = self.environment.objects_dir
         okconfig.examples_directory = "../usr/share/okconfig/examples"
         okconfig.examples_directory_local = environment.tempdir + "/okconfig"
-
 
         os.mkdir(okconfig.examples_directory_local)
 
@@ -124,13 +125,15 @@ class Host(unittest.TestCase):
         self.assertRaises(okconfig.OKConfigError, okconfig.addhost,
                           'www.okconfig.org')
 
+
 class Template(unittest.TestCase):
     """Template additions tests"""
+
     def setUp(self):
         environment = FakeNagiosEnvironment()
         environment.create_minimal_environment()
         copytree(os.path.realpath("../usr/share/okconfig/templates"),
-                   environment.tempdir + "/conf.d/okconfig-templates")
+                 environment.tempdir + "/conf.d/okconfig-templates")
         environment.update_model()
 
         self.environment = environment
@@ -141,7 +144,7 @@ class Template(unittest.TestCase):
             self._okconfig_overridden_vars[var] = getattr(okconfig, var)
 
         okconfig.nagios_config = self.environment.get_config().cfg_file
-	config.nagios_config = okconfig.nagios_config
+        config.nagios_config = okconfig.nagios_config
         config.git_commit_changes = 0
         okconfig.destination_directory = self.environment.objects_dir
         okconfig.examples_directory = "../usr/share/okconfig/examples"
@@ -218,13 +221,15 @@ class Template(unittest.TestCase):
         self.assertEqual(1, len(services), "There can be only one")
         self.assertEqual(services[0].contact_groups, "webgroup")
 
+
 class Group(unittest.TestCase):
     """Template additions tests"""
+
     def setUp(self):
         environment = FakeNagiosEnvironment()
         environment.create_minimal_environment()
         copytree(os.path.realpath("../usr/share/okconfig/templates"),
-                   environment.tempdir + "/conf.d/okconfig-templates")
+                 environment.tempdir + "/conf.d/okconfig-templates")
         environment.update_model()
 
         self.environment = environment
@@ -235,7 +240,7 @@ class Group(unittest.TestCase):
             self._okconfig_overridden_vars[var] = getattr(okconfig, var)
 
         okconfig.nagios_config = self.environment.get_config().cfg_file
-	config.nagios_config = okconfig.nagios_config
+        config.nagios_config = okconfig.nagios_config
         config.git_commit_changes = 0
         okconfig.destination_directory = self.environment.objects_dir
         okconfig.examples_directory = "../usr/share/okconfig/examples"
