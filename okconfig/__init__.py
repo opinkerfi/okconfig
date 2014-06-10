@@ -136,7 +136,8 @@ def addhost(host_name, address=None, group_name=None, templates=None, use=None, 
      force -- Force operation. Overwrite config files needed.
 
     Examples:
-     addhost(host_name="example_host",group="database_servers")
+    >>> addhost(host_name="localhost",group_name="database_servers") # doctest: +SKIP
+    >>> addhost(host_name="okconfig.org", address="192.168.1.1") # doctest: +SKIP
 
     Returns:
      String message with result of addhost

@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/opinkerfi/okconfig.png?branch=master)](https://travis-ci.org/opinkerfi/okconfig)
+[![Coverage Status](https://coveralls.io/repos/opinkerfi/okconfig/badge.png?branch=master)](https://coveralls.io/r/opinkerfi/okconfig?branch=master)
+
 About
 =====
 
