@@ -603,6 +603,7 @@ def _apply_template_opts(template, template_output, opts):
         v = ""
         if k in opts:
             v = opts[k]
+            template_output = template_output.replace("#__" + k, "__" + k)
         else:
             if opt['default']:
                 v = str(opt['default'])
