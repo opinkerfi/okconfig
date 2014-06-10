@@ -418,9 +418,9 @@ def get_templates():
             result[template_name] = {'parents':template_parents,
                                      'filename':filename,
                                      'name':template_friendly_name}
-            if os.path.isfile(filename[:-12] + ".yaml"):
+            if os.path.isfile(filename[:-12] + ".yml"):
                 result[template_name]['template_opt_file'] = \
-                    filename[:-12] + ".yaml"
+                    filename[:-12] + ".yml"
     return result
 
 def get_hosts():
