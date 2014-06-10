@@ -3,7 +3,7 @@
 
 import os.path
 import sys
-from shutil import copytree
+
 
 # Make sure we import from working tree
 okconfig_base = os.path.dirname(os.path.realpath(__file__ + "/.."))
@@ -11,41 +11,17 @@ sys.path.insert(0, okconfig_base)
 
 import unittest2 as unittest
 import okconfig
-import okconfig.config as config
-from pynag.Utils.misc import FakeNagiosEnvironment
 from pynag import Model
-
+import tests
 
 class Host(unittest.TestCase):
     """Tests pertaining to addhost"""
 
     def setUp(self):
-        environment = FakeNagiosEnvironment()
-        environment.create_minimal_environment()
-        copytree(os.path.realpath("../usr/share/okconfig/templates"),
-                 environment.tempdir + "/conf.d/okconfig-templates")
-        environment.update_model()
-
-        self.environment = environment
-
-        self._okconfig_overridden_vars = {}
-        for var in ['nagios_config', 'destination_directory',
-                    'examples_directory', 'examples_directory_local']:
-            self._okconfig_overridden_vars[var] = getattr(okconfig, var)
-
-        okconfig.nagios_config = self.environment.get_config().cfg_file
-        config.nagios_config = okconfig.nagios_config
-        config.git_commit_changes = 0
-        okconfig.destination_directory = self.environment.objects_dir
-        okconfig.examples_directory = "../usr/share/okconfig/examples"
-        okconfig.examples_directory_local = environment.tempdir + "/okconfig"
-
-        os.mkdir(okconfig.examples_directory_local)
+        tests.setUp()
 
     def tearDown(self):
-        self.environment.terminate()
-        for var, value in self._okconfig_overridden_vars.items():
-            setattr(okconfig, var, value)
+        tests.tearDown()
 
     def test_basic(self):
         """Basic addition of host"""
@@ -130,27 +106,7 @@ class Template(unittest.TestCase):
     """Template additions tests"""
 
     def setUp(self):
-        environment = FakeNagiosEnvironment()
-        environment.create_minimal_environment()
-        copytree(os.path.realpath("../usr/share/okconfig/templates"),
-                 environment.tempdir + "/conf.d/okconfig-templates")
-        environment.update_model()
-
-        self.environment = environment
-
-        self._okconfig_overridden_vars = {}
-        for var in ['nagios_config', 'destination_directory',
-                    'examples_directory', 'examples_directory_local']:
-            self._okconfig_overridden_vars[var] = getattr(okconfig, var)
-
-        okconfig.nagios_config = self.environment.get_config().cfg_file
-        config.nagios_config = okconfig.nagios_config
-        config.git_commit_changes = 0
-        okconfig.destination_directory = self.environment.objects_dir
-        okconfig.examples_directory = "../usr/share/okconfig/examples"
-        okconfig.examples_directory_local = environment.tempdir + "/okconfig"
-
-        os.mkdir(okconfig.examples_directory_local)
+        tests.setUp()
 
         okconfig.addhost("www.okconfig.org")
         okconfig.addhost("okconfig.org")
@@ -160,9 +116,7 @@ class Template(unittest.TestCase):
 
 
     def tearDown(self):
-        self.environment.terminate()
-        for var, value in self._okconfig_overridden_vars.items():
-            setattr(okconfig, var, value)
+        tests.tearDown()
 
     def test_basic(self):
         """Add a template to a host"""
@@ -226,27 +180,7 @@ class Group(unittest.TestCase):
     """Template additions tests"""
 
     def setUp(self):
-        environment = FakeNagiosEnvironment()
-        environment.create_minimal_environment()
-        copytree(os.path.realpath("../usr/share/okconfig/templates"),
-                 environment.tempdir + "/conf.d/okconfig-templates")
-        environment.update_model()
-
-        self.environment = environment
-
-        self._okconfig_overridden_vars = {}
-        for var in ['nagios_config', 'destination_directory',
-                    'examples_directory', 'examples_directory_local']:
-            self._okconfig_overridden_vars[var] = getattr(okconfig, var)
-
-        okconfig.nagios_config = self.environment.get_config().cfg_file
-        config.nagios_config = okconfig.nagios_config
-        config.git_commit_changes = 0
-        okconfig.destination_directory = self.environment.objects_dir
-        okconfig.examples_directory = "../usr/share/okconfig/examples"
-        okconfig.examples_directory_local = environment.tempdir + "/okconfig"
-
-        os.mkdir(okconfig.examples_directory_local)
+        tests.setUp()
 
         okconfig.addhost("www.okconfig.org")
         okconfig.addhost("okconfig.org")
@@ -256,9 +190,7 @@ class Group(unittest.TestCase):
 
 
     def tearDown(self):
-        self.environment.terminate()
-        for var, value in self._okconfig_overridden_vars.items():
-            setattr(okconfig, var, value)
+        tests.tearDown()
 
     def test_basic(self):
         """Add a group"""
@@ -297,6 +229,12 @@ class Group(unittest.TestCase):
         okconfig.addgroup("testgroup1")
         okconfig.addgroup("testgroup1", force=True)
 
+class Contact(unittest.TestCase):
+    def setUp(self):
+        tests.setUp()
+
+    def tearDown(self):
+        tests.tearDown()
 
 if __name__ == "__main__":
     unittest.main()

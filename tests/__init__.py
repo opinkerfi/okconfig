@@ -2,3 +2,46 @@ import os
 
 tests_dir = os.path.dirname(os.path.realpath(__file__)) or '.'
 os.chdir(tests_dir)
+
+_okconfig_overridden_vars = {}
+_environment = None
+import okconfig
+import okconfig.config as config
+from shutil import copytree
+
+from pynag.Utils.misc import FakeNagiosEnvironment
+
+
+def setUp(*args, **kwargs):
+    """
+    Sets up the nagios fake environment and overrides okconfig configuration
+    variables to make changes within it.
+    """
+    global _environment
+    _environment = FakeNagiosEnvironment()
+    _environment.create_minimal_environment()
+    copytree(os.path.realpath("../usr/share/okconfig/templates"),
+             _environment.tempdir + "/conf.d/okconfig-templates")
+    _environment.update_model()
+
+    for var in ['nagios_config', 'destination_directory',
+                'examples_directory', 'examples_directory_local']:
+        _okconfig_overridden_vars[var] = getattr(okconfig, var)
+
+    okconfig.nagios_config = _environment.get_config().cfg_file
+    config.nagios_config = okconfig.nagios_config
+    config.git_commit_changes = 0
+    okconfig.destination_directory = _environment.objects_dir
+    okconfig.examples_directory = "../usr/share/okconfig/examples"
+    okconfig.examples_directory_local = _environment.tempdir + "/okconfig"
+
+    os.mkdir(okconfig.examples_directory_local)
+
+
+def tearDown(*args, **kwargs):
+    """
+    Tear down the fake nagios environment and restore okconfig variables
+    """
+    _environment.terminate()
+    for var, value in _okconfig_overridden_vars.items():
+        setattr(okconfig, var, value)
