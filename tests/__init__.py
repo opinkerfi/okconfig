@@ -14,7 +14,7 @@ from pynag.Utils.misc import FakeNagiosEnvironment
 
 
 class OKConfigTest(unittest.TestCase):
-    def setUp(*args, **kwargs):
+    def setUp(self, test=None):
         """
         Sets up the nagios fake environment and overrides okconfig configuration
         variables to make changes within it.
@@ -42,7 +42,7 @@ class OKConfigTest(unittest.TestCase):
         os.mkdir(okconfig.examples_directory_local)
 
 
-    def tearDown(*args, **kwargs):
+    def tearDown(self, test=None):
         """
         Tear down the fake nagios environment and restore okconfig variables
         """
