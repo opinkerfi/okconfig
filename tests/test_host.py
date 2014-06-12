@@ -67,11 +67,11 @@ class Host(tests.OKConfigTest):
 
     def test_multiple_to_group(self):
         """Add 2 hosts to a group"""
-        okconfig.addhost('www.okconfig.org')
-        okconfig.addhost('okconfig.org')
+        okconfig.addhost('www.okconfig.org', group_name="multigroup")
+        okconfig.addhost('okconfig.org', group_name="multigroup")
 
-        hosts = Model.Host.objects.filter(host_name__contains="okconfig.org")
-        self.assertTrue(len(hosts) == 2)
+        hosts = Model.Host.objects.filter(contact_groups="multigroup")
+        self.assertEqual(len(hosts), 2)
 
     def test_address(self):
         """Add a host with an address"""
