@@ -42,6 +42,16 @@ class OKConfigTest(unittest.TestCase):
         os.mkdir(okconfig.examples_directory_local)
 
 
+        okconfig.addhost("linux.okconfig.org",
+                         address="192.168.1.1",
+                         templates=["linux"])
+        okconfig.addhost("windows.okconfig.org",
+                         address="192.168.1.2",
+                         templates=["windows"])
+        okconfig.addhost("webserver.okconfig.org",
+                         address="192.168.1.2",
+                         templates=["http"])
+
     def tearDown(self, test=None):
         """
         Tear down the fake nagios environment and restore okconfig variables
