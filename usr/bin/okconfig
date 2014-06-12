@@ -321,8 +321,6 @@ Run %prog addtemplate --help for full list of command line arguments.
                       help="Name of template to use")
     parser.add_option("--force", dest="force", action="store_true",
                       default=False, help="Overwrite files if needed")
-    parser.add_option("--interactive", dest="interactive", action="store_true",
-                      default=False, help="Interactively set template vars")
     parser.add_option("--opt", dest="options", action="append",
                       default=[], help="Options for template, eg PROC=crond")
     (opts, args) = parser.parse_args(sys.argv[2:])
