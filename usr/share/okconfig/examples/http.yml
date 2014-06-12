@@ -1,0 +1,20 @@
+filename:   "{HOSTNAME}-http-{VIRTUAL_HOST}.cfg"
+parms:
+    VIRTUAL_HOST: 
+        default:    k:HOSTNAME
+        summary:    Virtual host to query for
+    URI:
+        default:    /
+    SEARCH_STRING:
+        default:    
+    RESPONSE_WARNING:
+        default:    2.0
+        summary:    Response time in seconds till warning
+    RESPONSE_CRITICAL:
+        default:    10.0
+        summary:    Response time in seconds till critical
+    PORT:
+        default:    80
+    ON_REDIRECT:
+        default:    follow
+        summary:    Action to on redirects, eg <ok|warning|critcal|follow|sticky|stickyport>
