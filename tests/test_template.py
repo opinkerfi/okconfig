@@ -34,8 +34,8 @@ class Template(tests.OKConfigTest):
 
         services = Model.Service.objects.filter(
             host_name="www.okconfig.org",
-            use="okc-check_http",
-            service_description="HTTP www.okconfig.org")
+            service_description="HTTP www.okconfig.org"
+            )
 
         self.assertEquals(len(services), 1, "There can be only one")
 
@@ -75,15 +75,36 @@ class Template(tests.OKConfigTest):
     def test_group(self):
         """Test adding template with group"""
         okconfig.addtemplate("aliased.okconfig.org",
-                             "http",
+                             "linux",
                              group_name="webgroup")
 
         services = Model.Service.objects.filter(
             host_name="aliased.okconfig.org",
-            service_description="HTTP aliased.okconfig.org",
+            service_description="Disk Usage",
         )
         self.assertEqual(1, len(services), "There can be only one")
         self.assertEqual(services[0].contact_groups, "webgroup")
+
+    def test_template_opts_basic(self):
+        """Test adding template with opts"""
+        okconfig.addtemplate(
+            host_name='linux.okconfig.org',
+            template_name='http',
+            template_opts={'SEARCH_STRING': 'test',
+                           'VIRTUAL_HOST': 'bing.okconfig.org'}
+        )
+
+        services = Model.Service.objects.filter(
+            host_name="linux.okconfig.org",
+            service_description="HTTP bing.okconfig.org"
+        )
+        self.assertEqual(1, len(services), "There can be only one")
+
+        service = services[0]
+        self.assertEqual(service['__SEARCH_STRING'], 'test')
+        self.assertEqual(service['__VIRTUAL_HOST'], 'bing.okconfig.org')
+
+
 
 if __name__ == "__main__":
     unittest.main()
