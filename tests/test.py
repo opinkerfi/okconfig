@@ -9,17 +9,18 @@ sys.path.insert(0, okconfig_base)
 import unittest2 as unittest
 import doctest
 
-from tests import tests_dir, setUp, tearDown
+from tests import tests_dir, OKConfigTest
 
 import okconfig
 
 def load_tests(loader=None, tests=None, pattern=None):
     suite = unittest.TestSuite()
 
+    okconfig_doctester = OKConfigTest()
     # Add doctesting
     suite.addTest(doctest.DocTestSuite('okconfig',
-                                       setUp=setUp,
-                                       tearDown=tearDown))
+                                       setUp=okconfig_doctester.setUp,
+                                       tearDown=okconfig_doctester.tearDown))
 
     # Load unit tests from all files starting with test_*
     for all_test_suite in unittest.defaultTestLoader.discover(
