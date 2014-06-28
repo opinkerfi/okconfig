@@ -44,6 +44,7 @@ examples_directory= config.examples_directory
 examples_directory_local= config.examples_directory_local
 destination_directory = config.destination_directory
 import socket
+import yaml
 
 import pynag
 import pynag.Model
@@ -169,12 +170,11 @@ def addhost(host_name, address=None, group_name=None, templates=None, use=None, 
     if group_name not in get_groups():
         addgroup(group_name)
 
-    if not force:
-        if host_name in get_hosts():
-            filename = pynag.Model.Host.objects.get_by_shortname(
-                host_name)._meta['filename']
-            raise OKConfigError("Host named '%s' already exists in %s" % (
-                host_name, filename))
+    if not force and host_name in get_hosts():
+        filename = pynag.Model.Host.objects.get_by_shortname(
+            host_name)._meta['filename']
+        raise OKConfigError("Host named '%s' already exists in %s" % (
+            host_name, filename))
 
     result = _apply_template(host_template, destination_file,
                              force=force,
@@ -197,7 +197,7 @@ def addtemplate(host_name, template_name, group_name=None, force=False, template
      host_name -- Hostname to add template to (i.e. "host.example.com")
      template_name -- Name of the template to be added (i.e. "mysql")
      force -- Force operation, overwrites configuration if it already exists
-f
+
     Examples:
      addtemplate(host_name="host.example.com", template="mysql")
 
@@ -622,7 +622,6 @@ def _apply_template_opts(template, template_output, opts):
     return template_output, filename
 
 def _parse_template_opts(opt_file):
-    import yaml
 
     fh = open(opt_file, "r")
     template_opts = yaml.load(fh)
