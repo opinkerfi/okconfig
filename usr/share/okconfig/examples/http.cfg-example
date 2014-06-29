@@ -1,19 +1,18 @@
-define service {
+define service {{
 	use			okc-check_http
 	host_name		HOSTNAME
 	contact_groups		GROUP
-	service_description	HTTP ^VIRTUAL_HOST
+	service_description	HTTP {VIRTUAL_HOST}
 	#check_command		okc-check_http
 
-	__VIRTUAL_HOST		^VIRTUAL_HOST
-	#__URI			^URI
-	#__SEARCH_STRING	^SEARCH_STRING
-	#__RESPONSE_WARNING	^RESPONSE_WARNING
-	#__RESPONSE_CRITICAL	^RESPONSE_CRITICAL
-	#__PORT			^PORT
+	__VIRTUAL_HOST		{VIRTUAL_HOST}
+	#__URI			{URI}
+	#__SEARCH_STRING	{SEARCH_STRING}
+	#__RESPONSE_WARNING	{RESPONSE_WARNING}
+	#__RESPONSE_CRITICAL	{RESPONSE_CRITICAL}
+	#__PORT			{PORT}
         #__ON_REDIRECT           follow
 
-}
-
+}}
 
 

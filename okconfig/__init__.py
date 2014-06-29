@@ -613,7 +613,7 @@ def _apply_template_opts(template, template_output, opts):
             if not v and 'mandatory' in opt and opt['mandatory'] == True:
                 raise OKConfigError('Missing template parameter ' + k)
             opts[k] = v
-        template_output = template_output.replace("^" + k, v)
+    template_output = template_output.format(**opts)
 
     if 'filename' not in template_opts:
         raise OKConfigError("Missing filename in template option file")
