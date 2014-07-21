@@ -221,7 +221,7 @@ def init():
 def listhosts():
     """ List all available and active hosts in the system  """
     import pynag.Model
-    hosts = pynag.Model.Host.objects.filter(register=1)
+    hosts = pynag.Model.Host.objects.filter(register='1')
     header = "%-40s%s" % ('host name', 'groups')
     print header
     print "-" * len(header)
