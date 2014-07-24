@@ -375,7 +375,7 @@ def removehost(host_name, recursive=True):
     >>> removehost('host.example.com', recursive=True) # doctest: +SKIP
     """
     my_host = pynag.Model.Host.objects.get_by_shortname(host_name)
-    my_host.delete(cascade=recursive)
+    my_host.delete(recursive=recursive)
     return True
 
 def get_templates():
