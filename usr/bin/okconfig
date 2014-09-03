@@ -37,6 +37,7 @@ Common okconfig commands:
   addcontact    add a new contact
   listtemplates List all available templates
   listhosts     List all hosts
+  listhost      List a single host
   init          Initilize nagios to use okconfig
   install       Install an agent on a remote server
   upgrade       runs migration routines in case of okconfig upgrades
@@ -84,6 +85,8 @@ def parse_arguments():
         listtemplates()
     elif sys.argv[1] == "listhosts":
         listhosts()
+    elif sys.argv[1] == "listhost":
+        listhost()
     elif sys.argv[1] == "init":
         init()
     elif sys.argv[1] == "install":
@@ -230,6 +233,37 @@ def listhosts():
     footer = "--- %s hosts found" % (len(hosts))
     print footer,
     print "-" * (len(header) - len(footer))
+
+def listhost():
+    """ List a single host, useful for verifying if host is present in config """
+    parser.usage = ''' %prog listhost <host_name>
+
+Examples:
+  # %prog listhost myhost.example.com
+
+Run %prog listhost --help for full list of command line arguments.
+'''
+    parser.add_option("--host", dest="host",
+                      help="Name of host to add")
+    (opts, args) = parser.parse_args(sys.argv[2:])
+
+    if not opts.host:
+        if len(args) > 0:
+            opts.host = args[0]
+    else:
+        parser.error("Please specify both host. See --help")
+
+    import pynag.Model
+    host = pynag.Model.Host.objects.get_by_shortname(opts.host)
+    if host:
+        header = "%-40s%s" % ('attribute', 'value')
+        print header
+        print "-" * len(header)
+        for key in host.keys():
+            print "%-40s%s" % (key, host.get_attribute(key))
+        print "-" * len(header)
+    else:
+        print "Host not found."
 
 
 def listtemplates():
