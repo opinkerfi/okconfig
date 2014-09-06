@@ -250,19 +250,21 @@ Run %prog listhost --help for full list of command line arguments.
     if not opts.host:
         if len(args) > 0:
             opts.host = args[0]
-    else:
-        parser.error("Please specify both host. See --help")
+        else:
+            parser.error("Please specify both host. See --help")
 
     import pynag.Model
-    host = pynag.Model.Host.objects.get_by_shortname(opts.host)
-    if host:
+    try:
+        host = pynag.Model.Host.objects.get_by_shortname(opts.host)
         header = "%-40s%s" % ('attribute', 'value')
         print header
         print "-" * len(header)
         for key in host.keys():
+            if key in ['id', 'meta']:
+                continue
             print "%-40s%s" % (key, host.get_attribute(key))
         print "-" * len(header)
-    else:
+    except KeyError:
         print "Host not found."
 
 
