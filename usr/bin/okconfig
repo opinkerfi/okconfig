@@ -31,17 +31,19 @@ from optparse import OptionParser, OptionGroup, SUPPRESS_HELP
 usage = """usage: %prog <command> [arguments]
 
 Common okconfig commands:
-  addhost       add a new host
-  addtemplate   add a new template to existing host
-  addgroup      add a new host/contact/service group
-  addcontact    add a new contact
+  addhost       Add a new host
+  addtemplate   Add a new template to existing host
+  addgroup      Add a new host/contact/service group
+  addcontact    Add a new contact
+  addservice    Add a service check to host
+  removehost    Delete a host
   listtemplates List all available templates
   listhosts     List all hosts
   listhost      List a single host
   init          Initilize nagios to use okconfig
   install       Install an agent on a remote server
-  upgrade       runs migration routines in case of okconfig upgrades
-  verify        verifies current okconfig installation
+  upgrade       Runs migration routines in case of okconfig upgrades
+  verify        Verifies current okconfig installation
 
 For help on specific command type:
  %prog <command> --help
