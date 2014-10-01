@@ -44,6 +44,7 @@ examples_directory= config.examples_directory
 examples_directory_local= config.examples_directory_local
 destination_directory = config.destination_directory
 import socket
+import yaml
 
 import pynag
 import pynag.Model
@@ -123,7 +124,7 @@ def verify():
 
     return results
 
-def addhost(host_name, address=None, group_name=None, templates=None, use=None, alias=None, host_template='host', force=False):
+def addhost(host_name, address=None, group_name=None, templates=None, use=None, alias=None, host_template='host', force=False, template_opts=None):
     """Adds a new host to Nagios. Returns true if operation is successful.
 
     Args:
@@ -155,20 +156,9 @@ def addhost(host_name, address=None, group_name=None, templates=None, use=None, 
     okconfig_groups = get_groups()
     if len(okconfig_groups) == 0:
         addgroup(group_name='default',alias='OKconfig default group')
-    arguments = {'PARENTHOST': use, 'GROUP': group_name, 'IPADDR': address, 'HOSTNAME': host_name, 'ALIAS': alias}
     destination_dir = "%s/hosts/%s/" % (destination_directory, group_name)
-    destination_file = "%s/%s-host.cfg" % (destination_dir, host_name)
-    if not os.path.exists(destination_dir):
-        os.makedirs(destination_dir)
-    if not force:
-        if os.path.isfile(destination_file):
-            raise OKConfigError("Destination file '%s' already exists." % destination_file)
-        if group_name not in get_groups():
-            #raise OKConfigError("Group %s does not exist" % group_name)
-            addgroup(group_name)
-        if host_name in get_hosts():
-            filename = pynag.Model.Host.objects.get_by_shortname(host_name)._meta['filename']
-            raise OKConfigError("Host named '%s' already exists in %s" % (host_name, filename))
+    destination_file = destination_dir + "/{HOSTNAME}-host.cfg"
+
     # Do sanity checking of all templates before we add anything
     all_templates = get_templates().keys()
     if host_template not in all_templates:
@@ -176,12 +166,31 @@ def addhost(host_name, address=None, group_name=None, templates=None, use=None, 
     for i in templates:
         if i not in all_templates:
             raise OKConfigError("Template %s not found" % i)
-    result = _apply_template(host_template, destination_file, **arguments)
+
+    if group_name not in get_groups():
+        addgroup(group_name)
+
+    if not force and host_name in get_hosts():
+        filename = pynag.Model.Host.objects.get_by_shortname(
+            host_name)._meta['filename']
+        raise OKConfigError("Host named '%s' already exists in %s" % (
+            host_name, filename))
+
+    result = _apply_template(host_template, destination_file,
+                             force=force,
+                             opts={
+                                 'PARENTHOST': use,
+                                 'GROUP': group_name,
+                                 'IPADDR': address,
+                                 'HOSTNAME': host_name,
+                                 'ALIAS': alias
+                             }, template_opts=template_opts)
     _git_commit(filelist=result, message='okconfig host %s added with address %s' % (host_name,address))
     for i in templates:
         result = result + addtemplate(host_name=host_name, template_name=i, group_name=group_name,force=force)
     return result
-def addtemplate(host_name, template_name, group_name=None,force=False):
+
+def addtemplate(host_name, template_name, group_name=None, force=False, template_opts=None):
     """Adds a new template to existing host in Nagios.
 
     Args:
@@ -214,17 +223,21 @@ def addtemplate(host_name, template_name, group_name=None,force=False):
     helper_functions.add_defaultservice_to_host(host_name)
 
     # Lets do some templating
-    newfile = "%s/%s-%s.cfg" % (hostdir, host_name,template_name)
-    if not force:
-        # 'Do some basic sanity checking'
-        if os.path.exists(newfile):
-            raise OKConfigError("Destination file '%s' already exists." % newfile)
+    filename = hostdir + "/{HOSTNAME}-{TEMPLATE}.cfg"
 
-    result = _apply_template(template_name,newfile, HOSTNAME=host_name, GROUP=group_name)
+    opts = { 'HOSTNAME': host_name,
+             'TEMPLATE': template_name,
+             'GROUP': group_name, }
+
+    result = _apply_template(template_name, destination_file=filename,
+                             force=force,
+                             opts=opts,
+                             template_opts=template_opts)
+
     _git_commit(filelist=result, message='okconfig template %s added to host %s' % (template_name, host_name))
     return result
 
-def addgroup(group_name, alias=None, force=False):
+def addgroup(group_name, alias=None, force=False, template_opts=None):
     """Adds a new hostgroup/contactgroup/servicegroup combo to Nagios.
 
     Args:
@@ -240,18 +253,22 @@ def addgroup(group_name, alias=None, force=False):
     """
     if alias is None: alias=group_name
     destination_dir = "%s/groups" % destination_directory
-    destination_file = "%s/%s.cfg" % (destination_dir, group_name)
+    destination_file = destination_dir + "/{GROUP}.cfg"
     if not force:
-        # 'Do some sanity checking'
-        if os.path.exists(destination_file):
-            raise OKConfigError("Destination file '%s' already exists" % destination_file)
         groups = helper_functions.group_exists(group_name)
         if groups != False:
             raise OKConfigError("We already have groups with name = %s" % group_name)
 
-    result = _apply_template(template_name="group",destination_file=destination_file, GROUP=group_name, ALIAS=alias)
+    result = _apply_template(template_name="group",
+                             destination_file=destination_file,
+                             force=force,
+                             opts={
+                                 'GROUP': group_name,
+                                 'ALIAS': alias
+                             }, template_opts=template_opts)
     _git_commit(filelist=result, message="okconfig group %s added" % group_name)
     return result
+
 def addcontact(contact_name, alias=None, force=False, group_name="default", email=None, use='generic-contact'):
     """Adds a new contact to Nagios.
 
@@ -382,20 +399,28 @@ def get_templates():
     """ Returns a list of available templates """
     result = {}
     if not os.path.isdir(examples_directory):
-        raise OKConfigError("Examples directory does not exist: %s" % examples_directory)
+        raise OKConfigError("Examples directory does not exist: %s" %
+                            examples_directory)
     filelist = os.listdir(examples_directory)
     if os.path.isdir(examples_directory_local):
         for i in os.listdir(examples_directory_local):
             if i not in filelist:
                 filelist.append(i)
     for file in filelist:
-        if os.path.isfile(examples_directory + "/" + file): filename = examples_directory + "/" + file
-        if os.path.isfile(examples_directory_local + "/" + file): filename = examples_directory_local + "/" + file
+        if os.path.isfile(examples_directory + "/" + file):
+            filename = examples_directory + "/" + file
+        if os.path.isfile(examples_directory_local + "/" + file):
+            filename = examples_directory_local + "/" + file
         if file.endswith('.cfg-example'):
             template_name = file[:-12]
             template_parents = []
             template_friendly_name = ''
-            result[template_name] = {'parents':template_parents, 'filename':filename, 'name':template_friendly_name}
+            result[template_name] = {'parents':template_parents,
+                                     'filename':filename,
+                                     'name':template_friendly_name}
+            if os.path.isfile(filename[:-12] + ".yml"):
+                result[template_name]['template_opt_file'] = \
+                    filename[:-12] + ".yml"
     return result
 
 def get_hosts():
@@ -516,13 +541,14 @@ def install_nrpe(remote_host, username, password=None):
 
     return exit_status,stdout,stderr
 
-def _apply_template(template_name,destination_file, **kwargs):
-    """ Applies okconfig template to filename, doing replacements from kwargs in the meantime
+def _apply_template(template_name, destination_file, force, opts, template_opts):
+    """ Applies okconfig template to filename, doing replacements from opts in the meantime
 
     Arguments:
         template_name - name of the template to use
+        filename - template for filename, eg "{HOSTNAME}-{TEMPLATE}.cfg"
         destination_file - full path to file to be written to
-        kwargs key/value pair of string to search and replacement to make
+        opts key/value pair of string to search and replacement to make
 
     Example:
         _apply_template('host','/etc/nagios/okconfig/hosts/newhost.cfg', HOSTNAME='newhost',ADDRESS='0.0.0.0',GROUP='default')
@@ -530,24 +556,76 @@ def _apply_template(template_name,destination_file, **kwargs):
         List of filenames that have been written to
     """
     all_examples = get_templates()
+
     if not all_examples.has_key(template_name):
         raise OKConfigError('Template %s cannot be found' % template_name)
-    sourcefile = all_examples[template_name]['filename']
+    template = all_examples[template_name]
 
     # Clean // from destination file
     destination_file = destination_file.replace('//','/')
 
-    if not os.path.isfile(sourcefile):
+    if not os.path.isfile(template['filename']):
         raise OKConfigError('Template %s cannot be found' % template_name)
 
     dirname = os.path.dirname(destination_file)
-    if not os.path.exists(dirname): os.makedirs(dirname)
+    if not os.path.exists(dirname):
+        os.makedirs(dirname)
 
-    fd = open(sourcefile).read()
-    for old_string,new_string in kwargs.items():
-        fd = fd.replace(old_string,new_string)
-    open(destination_file,'w').write( fd )
+    template_output = open(template['filename'], "r").read()
+    for old_string,new_string in opts.items():
+        template_output = template_output.replace(old_string,new_string)
+
+    if template_opts:
+        opts.update(template_opts)
+
+    destination_file = destination_file.format(**opts)
+
+    if 'template_opt_file' in template:
+        template_output, filename = _apply_template_opts(template,
+                                         template_output,
+                                         opts)
+        destination_file = "/".join(destination_file.split("/")[:-1]) + "/" +\
+                           filename
+
+    if not force:
+        if os.path.isfile(destination_file):
+            raise OKConfigError("Destination file '%s' already exists." %
+                                destination_file)
+
+
+    open(destination_file,'w').write( template_output )
     return [destination_file]
+
+def _apply_template_opts(template, template_output, opts):
+    template_opts = _parse_template_opts(template['template_opt_file'])
+
+    for k in template_opts['parms']:
+        opt = template_opts['parms'][k]
+        v = ""
+        if k in opts:
+            v = opts[k]
+            template_output = template_output.replace("#__" + k, "__" + k)
+        else:
+            if opt['default']:
+                v = str(opt['default'])
+            if v[:2] == "k:":
+                v = opts[v[2:]]
+            if not v and 'mandatory' in opt and opt['mandatory'] == True:
+                raise OKConfigError('Missing template parameter ' + k)
+            opts[k] = v
+    template_output = template_output.format(**opts)
+
+    if 'filename' not in template_opts:
+        raise OKConfigError("Missing filename in template option file")
+
+    filename = template_opts['filename'].format(**opts)
+    return template_output, filename
+
+def _parse_template_opts(opt_file):
+
+    fh = open(opt_file, "r")
+    template_opts = yaml.load(fh)
+    return template_opts
 
 def _git_commit(filelist, message):
     """ If config.git_commit_changes is enabled, then commit "filelist" to the repository using message """
