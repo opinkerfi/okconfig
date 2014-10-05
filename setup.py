@@ -53,5 +53,6 @@ if __name__ == "__main__":
         license='GPL',
         scripts=['usr/bin/okconfig'],
         packages=['okconfig'],
+        install_requires=['paramiko','pynag'],
         data_files=data_files,
     )
