@@ -37,7 +37,10 @@ __status__ = "Development"
 
 import socket
 import os
-import paramiko
+try:
+    import paramiko
+except ImportError:
+    paramiko = None
 
 import pynag.Model
 import pynag.Utils
@@ -484,6 +487,8 @@ def install_nrpe(remote_host, username, password=None):
     Returns:
      True if operation was successful.
     """
+    if not paramiko:
+        raise OKConfigError('You need to install python module: paramiko')
     if not network_scan.check_tcp(remote_host, 22, timeout=5):
         raise OKConfigError('Cannot reach remote_host on port 22, aborting...')
     ssh = paramiko.SSHClient()
