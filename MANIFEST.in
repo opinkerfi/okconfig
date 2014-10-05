@@ -5,5 +5,3 @@ include AUTHORS
 include LICENSE
 include README.md
 include CHANGES
-include okconfig.spec
-include usr/share/okconfig/testfile
