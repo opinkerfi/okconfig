@@ -35,24 +35,24 @@ __email__ = "palli@opensource.is"
 __status__ = "Development"
 
 
-from okconfig import network_scan
+import socket
+import os
+import paramiko
 
+import pynag.Model
+import pynag.Utils
+
+import network_scan
 import config
+import helper_functions
+
 nagios_config = config.nagios_config
 template_directory =config.template_directory
 examples_directory= config.examples_directory
 examples_directory_local= config.examples_directory_local
 destination_directory = config.destination_directory
-import socket
-
-import pynag
-import pynag.Model
-import pynag.Utils
-import paramiko
 pynag.Model.pynag_directory = destination_directory
 
-import os
-import helper_functions
 required_gateways = []
 
 pynag.Model.cfg_file = config.nagios_config
