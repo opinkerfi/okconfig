@@ -23,6 +23,8 @@ import sys
 import okconfig
 import os
 import getpass
+import pynag.Parsers
+
 import okconfig.migration_tool
 
 # Parse some Arguments
@@ -199,16 +201,15 @@ def verify():
 def init():
     """ Initilize nagios configuration to use okconfig """
     print "Initilizating nagios to use okconfig..."
-    maincfg = okconfig.config.nagios_config
+    maincfg = pynag.Parsers.Config().guess_cfg_file()
     template_dir = okconfig.config.template_directory
     dest_dir = okconfig.config.destination_directory
-    print "Using configuration file %s" % (okconfig.config.config_file, )
+    print "Using configuration file %s" % (maincfg, )
     if not os.path.exists(maincfg):
         raise okconfig.OKConfigError(
             'Error: Nagios configuration file not found under %s' % (maincfg, ))
     print "Using Nagios configuration file %s" % (maincfg, )
 
-    import pynag.Parsers
     c = pynag.Parsers.config(cfg_file=maincfg)
     c._edit_static_file(
         attribute="cfg_dir", new_value=dest_dir, filename=maincfg)
