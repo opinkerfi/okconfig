@@ -492,5 +492,7 @@ Run %prog removehost --help for full list of command line arguments.
 if __name__ == '__main__':
     try:
         parse_arguments()
+        sys.exit(0)
     except Exception, e:
             print "Error: ", e
+            sys.exit(1)
