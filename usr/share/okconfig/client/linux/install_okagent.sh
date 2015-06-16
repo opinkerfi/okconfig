@@ -29,6 +29,7 @@ fatal_error() {
 if [ -f "/etc/os-release" ]; then
 	DISTRO=$(get_os_release)
 else
+	grep -q "release 7" /etc/redhat-release 2>/dev/null && DISTRO=rhel7
 	grep -q "release 6" /etc/redhat-release 2>/dev/null && DISTRO=rhel6
 	grep -q "release 5" /etc/redhat-release 2>/dev/null && DISTRO=rhel5
 	grep -q "openSUSE 11" /etc/SuSE-release 2>/dev/null && DISTRO=opensuse
@@ -79,37 +80,46 @@ install_opensuse() {
 
 install_rhel() {
 
+        if [[ $DISTRO =~ centos[567] ]]; then
+                REPO=$(echo $DISTRO | sed 's/centos/rhel/g')
+        else
+                REPO=$DISTRO
+        fi
+
 	cat << EOF > /etc/yum.repos.d/ok.repo || fatal_error "Failed to install ok-release yum repository"
 [ok]
 name=Opin Kerfi Public Repo - \$basearch
-baseurl=http://opensource.is/repo/$DISTRO/\$basearch
+baseurl=http://opensource.is/repo/$REPO/\$basearch
 failovermethod=priority
 enabled=1
 gpgcheck=0
 
 [ok-testing]
 name=Opin Kerfi Public Repo - Testing - \$basearch
-baseurl=http://opensource.is/repo/testing/$DISTRO/\$basearch
+baseurl=http://opensource.is/repo/testing/$REPO/\$basearch
 failovermethod=priority
 enabled=0
 gpgcheck=0
 EOF
 
-	if [[ "$DISTRO" =~ rhel ]]; then
-		echo "Installing epel repository"
-		rpm -q epel-release || yum install -y epel-release || fatal_error "Failed to install EPEL yum repositories"
-	fi
-
-	echo "Running: yum install -y nagios-okconfig-nrpe"
-	rpm -q nagios-okconfig-nrpe || yum install -y nagios-okconfig-nrpe || fatal_error "Failed to yum install nagios-okconfig-nrpe package"
-
-	clean_nrpe ;
-
-	service nrpe start
-	chkconfig nrpe on
-
-	echo "Install Complete"
-	exit  0
+        echo "Installing epel repository"
+        rpm -q epel-release || yum install -y epel-release || fatal_error "Failed to install EPEL yum repositories"
+        
+        echo "Running: yum install -y nagios-okconfig-nrpe"
+        rpm -q nagios-okconfig-nrpe || yum install -y nagios-okconfig-nrpe || fatal_error "Failed to yum install nagios-okconfig-nrpe package"
+        
+        clean_nrpe ;
+        
+        if [[ $DISTRO = rhel7 || $DISTRO = centos7 ]]; then
+                systemctl start nrpe
+                systemctl enable nrpe
+        else
+                service nrpe start
+                chkconfig nrpe on
+        fi
+         
+        echo "Install Complete"
+        exit  0
 }
 
 clean_nrpe() {
@@ -412,7 +422,7 @@ elif [[ "$DISTRO" =~ fedora1[78] ]]; then
 	fi	
 	NRPE_D=/etc/nrpe.d/
 	install_rhel;
-elif [[ "$DISTRO" =~ rhel[56] ]]; then
+elif [[ "$DISTRO" =~ rhel[567] ]]; then
 	PLUGINDIR=/usr/lib64/nagios/plugins/
 	NRPE_USER=nrpe
 	if [ $HOSTTYPE == "i686" ]; then
@@ -420,6 +430,15 @@ elif [[ "$DISTRO" =~ rhel[56] ]]; then
 	fi	
 	NRPE_D=/etc/nrpe.d/
 	install_rhel;
+elif [[ "$DISTRO" =~ centos[567] ]]; then
+        REPO=
+        PLUGINDIR=/usr/lib64/nagios/plugins/
+        NRPE_USER=nrpe
+        if [ $HOSTTYPE == "i686" ]; then
+                PLUGINDIR=`echo $PLUGINDIR | sed 's/lib64/lib/'`
+        fi
+        NRPE_D=/etc/nrpe.d/
+        install_rhel;
 elif [[ "$DISTRO" =~ "debian" ]]; then
 	PLUGINDIR=/usr/lib/nagios/plugins/
 	NRPE_D=/etc/nrpe.d
