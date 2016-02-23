@@ -82,6 +82,8 @@ install_rhel() {
 
         if [[ $DISTRO =~ centos[567] ]]; then
                 REPO=$(echo $DISTRO | sed 's/centos/rhel/g')
+        elif [[ $DISTRO =~ rhel[567] ]]; then
+                REPO=$(echo $DISTRO | egrep -o "[a-z]+[0-9]") #not sure if OK repo broken or this broken
         else
                 REPO=$DISTRO
         fi
