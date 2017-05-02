@@ -446,6 +446,11 @@ elif [[ "$DISTRO" =~ "debian" ]]; then
 	NRPE_D=/etc/nrpe.d
 	NRPE_USER=nagios
 	install_debian
+elif [[ "$DISTRO" =~ "raspbian" ]]; then
+	PLUGINDIR=/usr/lib/nagios/plugins/
+	NRPE_D=/etc/nrpe.d
+	NRPE_USER=nagios
+	install_debian
 elif [[ "$DISTRO" =~ "ubuntu" ]]; then
 	PLUGINDIR=/usr/lib/nagios/plugins/
 	NRPE_D=/etc/nrpe.d
