@@ -30,6 +30,7 @@ define service {
 # windows-check_uptime
 # Warns if device has recently been rebooted
 # __WARNING = warning threshold (default = 1h)
+# __CRITICAL = critical threshold (default = 0m)
 define service {
 	use			okc-windows-check_uptime
 	host_name		HOSTNAME
@@ -37,6 +38,7 @@ define service {
 
 	#service_description	Uptime
 	#__WARNING		1h
+	#__CRITICAL		0m
 }
 
 # windows-check_services
