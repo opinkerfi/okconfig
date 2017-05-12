@@ -4,24 +4,24 @@
 
 define service {
   service_description     UPS - Hardware Health
-  use                     okc-ups-service
-	host_name               HOSTNAME
-    	contact_groups          GROUP
-        __MODE              	hardware-health
+    use                     okc-ups-service
+    host_name               HOSTNAME
+    contact_groups          GROUP
+    __MODE              	hardware-health
 }
 
 define service {
-        service_description     UPS - Battery Health
-        use                     okc-ups-service
-	host_name               HOSTNAME
-    	contact_groups          GROUP
-        __MODE                  battery-health
+  service_description     UPS - Battery Health
+    use                     okc-ups-service
+    host_name               HOSTNAME
+    contact_groups          GROUP
+    __MODE                  battery-health
 }
 
 define service {
-        service_description     UPS - Uptime
-        use                     okc-ups-service
-	host_name               HOSTNAME
-    	contact_groups          GROUP
-        __MODE                  uptime
+  service_description     UPS - Uptime
+    use                     okc-ups-service
+    host_name               HOSTNAME
+    contact_groups          GROUP
+    __MODE                  uptime
 }
