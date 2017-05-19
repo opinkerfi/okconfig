@@ -1,0 +1,27 @@
+# Plugin info
+# https://github.com/lausser/check_ups_health
+#
+
+define service {
+  service_description     UPS - Hardware Health
+    use                     okc-ups-service
+    host_name               HOSTNAME
+    contact_groups          GROUP
+    __MODE              	hardware-health
+}
+
+define service {
+  service_description     UPS - Battery Health
+    use                     okc-ups-service
+    host_name               HOSTNAME
+    contact_groups          GROUP
+    __MODE                  battery-health
+}
+
+define service {
+  service_description     UPS - Uptime
+    use                     okc-ups-service
+    host_name               HOSTNAME
+    contact_groups          GROUP
+    __MODE                  uptime
+}
