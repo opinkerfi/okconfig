@@ -3,10 +3,10 @@ python:
   - "2.6"
   - "2.7"
 install:
-  - pip install 'pynag<=0.8.9' --use-mirrors
-  - pip install unittest2==0.5.1 --use-mirrors
-  - pip install coveralls --use-mirrors
-  - pip install paramiko --use-mirrors
+  - pip install 'pynag<=0.8.9'
+  - pip install unittest2==0.5.1
+  - pip install coveralls
+  - pip install paramiko
   - python setup.py build
 before_script:
   - env
