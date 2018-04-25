@@ -1,0 +1,175 @@
+# Qstack monitoring service checks template by Opin Kerfi - OKconfig
+# https://github.com/greenqloud/monitoring-qstack-scripts
+#
+
+#SERVICE=apache
+define service {
+	use			okc-qstack-check_apache
+	host_name		HOSTNAME
+	contact_groups		GROUP
+
+#	service_description	Qstack - apache
+#	_QSTACKSERVICE		apache
+}
+
+#SERVICE=authentication
+define service {
+	use			okc-qstack-check_authentication
+	host_name		HOSTNAME
+	contact_groups		GROUP
+
+#	service_description	Qstack - Authentication
+#	_QSTACKSERVICE		authentication
+}
+
+#SERVICE=cloudstack
+define service {
+	use			okc-qstack-check_cloudstack
+	host_name		HOSTNAME
+	contact_groups		GROUP
+
+#	service_description	Qstack - Authentication
+#	_QSTACKSERVICE		cloudstack
+}
+
+#SERVICE=elasticsearch
+define service {
+	use			okc-qstack-check_elasticsearch
+	host_name		HOSTNAME
+	contact_groups		GROUP
+
+#	service_description	Qstack - elasticsearch
+#	_QSTACKSERVICE		elasticsearch
+}
+
+#SERVICE=etcd
+define service {
+	use			okc-qstack-check_etcd
+	host_name		HOSTNAME
+	contact_groups		GROUP
+
+#	service_description	Qstack - etcd
+#	_QSTACKSERVICE		etcd
+}
+
+#SERVICE=guacamole
+define service {
+	use			okc-qstack-check_guacamole
+	host_name		HOSTNAME
+	contact_groups		GROUP
+
+#	service_description	Qstack - guacamole
+#	_QSTACKSERVICE		guacamole
+}
+
+#SERVICE=haproxy
+define service {
+	use			okc-qstack-check_haproxy
+	host_name		HOSTNAME
+	contact_groups		GROUP
+
+#	service_description	Qstack - haproxy
+#	_QSTACKSERVICE		haproxy
+}
+
+#SERVICE=health
+define service {
+	use			okc-qstack-check_health
+	host_name		HOSTNAME
+	contact_groups		GROUP
+
+#	service_description	Qstack - health
+#	_QSTACKSERVICE		health
+}
+
+
+#SERVICE=hybrid
+define service {
+	use			okc-qstack-check_hybrid
+	host_name		HOSTNAME
+	contact_groups		GROUP
+
+#	service_description	Qstack - hybrid
+#	_QSTACKSERVICE		hybrid
+}
+
+#SERVICE=jira
+define service {
+	use			okc-qstack-check_jira
+	host_name		HOSTNAME
+	contact_groups		GROUP
+
+#	service_description	Qstack - jira
+#	_QSTACKSERVICE		jira
+}
+
+#SERVICE=logstash
+define service {
+	use			okc-qstack-check_logstash
+	host_name		HOSTNAME
+	contact_groups		GROUP
+
+#	service_description	Qstack - logstash
+#	_QSTACKSERVICE		logstash
+}
+
+#SERVICE=meteorqloud
+define service {
+	use			okc-qstack-check_meteorqloud
+	host_name		HOSTNAME
+	contact_groups		GROUP
+
+#	service_description	Qstack - meteorqloud
+#	_QSTACKSERVICE		meteorqloud
+}
+
+#SERVICE=mongodb/replSetGetStatus
+define service {
+	use			okc-qstack-check_mongodb_replSetGetStatus
+	host_name		HOSTNAME
+	contact_groups		GROUP
+
+#	service_description	Qstack - mongodb - replSetGetStatus
+#	_QSTACKSERVICE		mongodb/replSetGetStatus
+}
+
+#SERVICE=mongodb/serverStatus
+define service {
+	use			okc-qstack-check_mongodb_serverStatus
+	host_name		HOSTNAME
+	contact_groups		GROUP
+
+#	service_description	Qstack - mongodb - serverStatus
+#	_QSTACKSERVICE		mongodb/serverStatus
+}
+
+#SERVICE=mysql
+define service {
+	use			okc-qstack-check_mysql
+	host_name		HOSTNAME
+	contact_groups		GROUP
+
+#	service_description	Qstack - mysql
+#	_QSTACKSERVICE		mysql	
+}
+
+#SERVICE=rabbitmq
+define service {
+	use			okc-qstack-check_rabbitmq
+	host_name		HOSTNAME
+	contact_groups		GROUP
+
+#	service_description	Qstack - rabbitmq
+#	_QSTACKSERVICE		rabbitmq
+}
+
+#SERVICE=s3
+define service {
+	use			okc-qstack-check_skydns
+	host_name		HOSTNAME
+	contact_groups		GROUP
+
+#	service_description	Qstack - Skydns
+#	_QSTACKSERVICE		skydns
+}
+
