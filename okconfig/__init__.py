@@ -29,9 +29,9 @@ __author__ = "Pall Sigurdsson"
 __copyright__ = "Copyright 2011, Pall Sigurdsson"
 __credits__ = ["Pall Sigurdsson"]
 __license__ = "GPL"
-__version__ = "1.3.2"
-__maintainer__ = "Pall Sigurdsson"
-__email__ = "palli@opensource.is"
+__version__ = "1.3.3"
+__maintainer__ = "Gardar Thorsteinsson"
+__email__ = "gardar@ok.is"
 __status__ = "Development"
 
 
