@@ -34,6 +34,7 @@ Url: http://github.com/opinkerfi/okconfig
 BuildArch: noarch 
 Requires: pynag python-paramiko winexe
 Requires: nagios-plugins-nrpe  nagios-plugins-ping nagios-plugins-ssh
+Requires: nagios-okplugin-apc nagios-okplugin-brocade nagios-okplugin-mailblacklist
 Requires: nagios-okplugin-check_disks nagios-okplugin-check_time nagios-plugins-fping
 
 %description
