@@ -7,8 +7,8 @@ define service {
         
 	#service_description     Dataprotector Backup Stats
         #check_command           okc-check_nrpe!check_dp_backups
-        #normal_check_interval   240
-        #retry_check_interval    240
+        #check_interval   240
+        #retry_interval    240
 }
 
 
@@ -22,7 +22,7 @@ define service {
 	#service_description	Dataprotector IDB Backup
 	#check_command		okc-check_nrpe!check_dp_idb
 	#normal_check_internal	600
-	#retry_check_interval	600
+	#retry_interval	600
 }
 
 # Dataprotector Mediapools
@@ -58,6 +58,6 @@ define service {
         
 	#service_description     Dataprotector Tablespaces
         #check_command           okc-check_nrpe!check_dp_tablespace
-        #normal_check_interval   600
-        #retry_check_interval    600
+        #check_interval   600
+        #retry_interval    600
 }

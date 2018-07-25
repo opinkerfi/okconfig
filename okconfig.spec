@@ -6,7 +6,7 @@
 
 Summary: Python Nagios Template management and configuration power tools
 Name: okconfig
-Version: 1.3.2
+Version: 1.3.3
 Release: %{release}%{?dist}
 Source0: https://github.com/opinkerfi/okconfig/archive/%{name}-%{version}-%{release}.tar.gz
 License: GPLv2
@@ -34,7 +34,7 @@ Url: http://github.com/opinkerfi/okconfig
 BuildArch: noarch 
 Requires: pynag python-paramiko winexe
 Requires: nagios-plugins-nrpe  nagios-plugins-ping nagios-plugins-ssh
-Requires: nagios-okplugin-apc nagios-okplugin-brocade nagios-okplugin-mailblacklist 
+Requires: nagios-okplugin-apc nagios-okplugin-brocade nagios-okplugin-mailblacklist
 Requires: nagios-okplugin-check_disks nagios-okplugin-check_time nagios-plugins-fping
 
 %description
@@ -103,6 +103,10 @@ fi
 
 
 %changelog
+* Fri Apr 04 2018 Gardar Thorsteinsson <gardar@ok.is> 1.3.3-1
+- Updated dependency list - removed nagios-okplugin-apc nagios-okplugin-brocade nagios-okplugin-mailblacklist
+- Template upgrades
+
 * Wed Dec 06 2017 Gardar Thorsteinsson <gardar@ok.is> 1.3.2-1
 - Template upgrades
 
