@@ -1,0 +1,10 @@
+define service {
+	host_name		HOSTNAME
+	contact_groups		GROUP
+	service_description           SFB Services Health
+    use                            okc-windows-v5-check_services
+    __EXCLUDED            exclude=TBS exclude=ShellHWDetection exclude=clr_optimization_v4.0.30319_32 exclude=clr_optimization_v4.0.30319_64 exclude=sppsvc exclude=spupdsvc exclude=MMCSS exclude=gupdate exclude=gupdatem exclude=TrustedInstaller exclude=RemoteRegistry exclude=wscsvc exclude=SysmonLog exclude=MapsBroker exclude=WbioSrvc exclude=MSExchangeNotificationsBroker
+    __FILTERS                    "filter=name not like 'OneSyncSvc'"
+    __EXTRAOPTS          service=W3SVC service=REPLICA service=RTCCLSAGT service=FabricHostSvc service=RTCSRV service=RTCCAA service=RTCCAS service=RTCRGS service=RTCPDPAUTH service=RTCPDPCORE service=RTCCPS service=RTCATS service=RTCIMMCU service=RTCDATAMCU service=RTCAVMCU service=RTCASMCU service=RTCMEDSRV service=LYNCBACKUP service=RTCXMPPTGW service=RTCHA
+    check_command                 okc-check_nrpe!check_service -a $_SERVICE_FILTERS$ $_SERVICE_EXCLUDED$ $_SERVICE_EXTRAOPTS$
+}
