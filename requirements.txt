@@ -1,2 +1,2 @@
-pynag>=0.4.6
+pynag>=0.9.1
 paramiko
