@@ -16,6 +16,8 @@
 
 """ This module provides helper functions for okconfig """
 
+from __future__ import absolute_import
+from __future__ import print_function
 import re
 import fcntl
 import os
@@ -142,7 +144,7 @@ class clientInstall:
             flags = fcntl.fcntl(fd, fcntl.F_GETFL)
             fcntl.fcntl(fd, fcntl.F_SETFL, flags | os.O_NONBLOCK)
 
-        except Exception, e:
+        except Exception as e:
             raise okconfig.OKConfigError(e)
 
     def get_state(self):
@@ -185,4 +187,4 @@ define service {
 '''
 
 if __name__ == '__main__':
-    print add_defaultservice_to_host('host1')
+    print(add_defaultservice_to_host('host1'))

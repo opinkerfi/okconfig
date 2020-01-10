@@ -14,10 +14,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import absolute_import
+from __future__ import print_function
 import subprocess
 import socket
 from pynag import Model
-from helper_functions import runCommand
+from .helper_functions import runCommand
 import okconfig
 
 class ScannedHost:
@@ -185,7 +187,7 @@ def traceroute(host="localhost"):
     """
     result = []
     returncode,stdout,stderr = runCommand("traceroute -n '%s'" % host)
-    print stdout
+    print(stdout)
     if returncode > 0:
         raise okconfig.OKConfigError("Failed to traceroute host %s, error: %s" % (host, stderr))
     for line in stdout.split("\n"):
@@ -200,12 +202,12 @@ def set_network_parents(host_name, method="traceroute"):
     """ Autocreates network parents for a given host """
     if method == 'traceroute':
         parents = traceroute(host=host_name)
-        print len(parents), "parents found"
+        print(len(parents), "parents found")
         previous_host = None
         for i in parents:
             hosts = Model.Host.objects.filter(address=i)
             if len(hosts) == 0:
-                print "adding host ", i
+                print("adding host ", i)
                 dnsname = get_hostname(i)
                 if dnsname is None:
                     dnsname = i
@@ -213,11 +215,11 @@ def set_network_parents(host_name, method="traceroute"):
                 hosts = Model.Host.objects.filter(address=i)
             host = hosts[0]
             if previous_host is not None:
-                print previous_host.address, "->", host.address
+                print(previous_host.address, "->", host.address)
                 host.parents = previous_host.host_name
                 host.save()
             previous_host = host
 
 
 if __name__ == '__main__':
-    print set_network_parents('mbl.is')
+    print(set_network_parents('mbl.is'))

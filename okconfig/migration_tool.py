@@ -56,6 +56,8 @@ TEMPLATE_VERSION HISTORY
 """
 
 
+from __future__ import absolute_import
+from __future__ import print_function
 from pynag import Model
 import okconfig
 
@@ -77,15 +79,15 @@ def get_template_version():
 
 def upgrade_to_version_1_1():
     """ Hosts created with older addhost, might have some registered template services """
-    print "Upgrading to config version 1.1 ...",
+    print("Upgrading to config version 1.1 ...", end=' ')
     all_hosts = okconfig.get_hosts()
     my_services = Model.Service.objects.filter(register="1",name__contains='')
     for service in my_services:
         if service.name in all_hosts and not service['service_description']:
             service['register'] = 0
-            print "Default service for %s updated" % service.name
+            print("Default service for %s updated" % service.name)
             service.save()
-    print "ok"
+    print("ok")
 def upgrade_to_version_2():
     """ Upgrades all nagios configuration file according to new okconfig templates
     
@@ -93,9 +95,9 @@ def upgrade_to_version_2():
     
     We have to find all services that have invalid parents.
     """
-    print "Upgrading to config version 2.0 ...",
+    print("Upgrading to config version 2.0 ...", end=' ')
     all_templates = Model.Service.objects.filter(name__contains='')
-    all_templates = map(lambda x: x.name, all_templates)
+    all_templates = [x.name for x in all_templates]
     my_services = Model.Service.objects.filter(use__contains="")
     for service in my_services:
         old_use = service.use.split(',')
@@ -109,9 +111,9 @@ def upgrade_to_version_2():
         #new_use = ','.join(new_use)
         if old_use != new_use:
             service.use = ','.join(new_use)
-            print ".. %s updated" % new_use
+            print(".. %s updated" % new_use)
             service.save()
-    print "ok"
+    print("ok")
 def upgrade_to_version_2_1():
     """ Upgrades all nagios configuration file according to new okconfig templates
     
@@ -119,13 +121,13 @@ def upgrade_to_version_2_1():
     
     We have to find all services that have invalid check_command.
     """
-    print "Upgrading to config version 2.1 ...",
+    print("Upgrading to config version 2.1 ...", end=' ')
     all_commands = Model.Command.objects.all
-    all_commands = map(lambda x: x.command_name, all_commands)
+    all_commands = [x.command_name for x in all_commands]
     my_services = Model.Service.objects.all
     for i in my_services:
         # Only work on services that actually define check_command
-        if not i._defined_attributes.has_key('check_command'): continue
+        if 'check_command' not in i._defined_attributes: continue
         
         # We only need the actual command, not any parameters
         check_command = i.check_command.split('!',1)[0]
@@ -137,7 +139,7 @@ def upgrade_to_version_2_1():
         if "okc-%s"%check_command in all_commands:
             i.check_command = "okc-%s"%i.check_command
             i.save()
-            print "%s renamed to okc-%s"%(check_command,check_command)
+            print("%s renamed to okc-%s"%(check_command,check_command))
 
     # Update notification commands on all contacts
     for i in Model.Contact.objects.all:
@@ -154,7 +156,7 @@ def upgrade_to_version_2_1():
     new_hostname = "okc-default-host"
     
     all_templates = Model.Host.objects.filter(name__contains='')
-    all_templates = map(lambda x: x.name, all_templates)
+    all_templates = [x.name for x in all_templates]
     my_hosts = Model.Host.objects.filter(use__contains="")
     for host in my_hosts:
         old_use = host.use.split(',')
@@ -170,16 +172,16 @@ def upgrade_to_version_2_1():
         #new_use = ','.join(new_use)
         if old_use != new_use:
             host.use = ','.join(new_use)
-            print ".. %s updated" % old_use
+            print(".. %s updated" % old_use)
             host.save() 
-    print "ok"
+    print("ok")
 def upgrade_to_version_2_2():
     """ Upgrades all nagios configuration file according to new okconfig templates
 
     Biggest Change here is that brocade templates previously had macro _SNMP_COMMUNITY which has been
     renamed to __SNMP_COMMUNITY
     """
-    print "Upgrading to config version 2.2 ...",
+    print("Upgrading to config version 2.2 ...", end=' ')
     my_services = Model.Service.objects.filter(use__contains='okc-brocade')
     for service in my_services:
         if service.host_name is None:
@@ -188,14 +190,14 @@ def upgrade_to_version_2_2():
             continue
         if not service['__SNMP_COMMUNITY'] == 'public':
             continue
-        print "..", service.get_description(), "renamed _SNMP_COMMUNITY %s to __SNMP_COMMUNITY" % (service['_SNMP_COMMUNITY'])
-    print "ok"
+        print("..", service.get_description(), "renamed _SNMP_COMMUNITY %s to __SNMP_COMMUNITY" % (service['_SNMP_COMMUNITY']))
+    print("ok")
 
 def upgrade_to_version_2_3():
     """ Upgrade to version 2.3
      okc-emc_check_port_state now has a username and password field implied
     """
-    print "Upgrading to config version 2.3 ...",
+    print("Upgrading to config version 2.3 ...", end=' ')
     my_services = Model.Service.objects.filter(check_command="okc-emc-check_portstate", __USERNAME=None, register=1)
     for i in my_services:
         if i.get('__USERNAME') is None:
@@ -203,7 +205,7 @@ def upgrade_to_version_2_3():
         if i.get('__PASSWORD') is None:
             i['__PASSWORD'] = 'not set'
         i.save()
-        print "Updated: ", i.get_shortname()
+        print("Updated: ", i.get_shortname())
 
     # Add missing macros to okc-check_http
     my_services = Model.Service.objects.filter(check_command="okc-check_http", __VIRTUAL_HOST=None, register=1)
@@ -213,7 +215,7 @@ def upgrade_to_version_2_3():
         if i.get('__PORT') is None:
             i['__PORT'] = "80"
         i.save()
-        print "Updated: ", i.get_shortname()
+        print("Updated: ", i.get_shortname())
 
     my_services = Model.Service.objects.filter(check_command="okc-check_https", __VIRTUAL_HOST=None, register=1)
     for i in my_services:
@@ -222,15 +224,15 @@ def upgrade_to_version_2_3():
         if i.get('__PORT') is None:
             i['__PORT'] = "443"
         i.save()
-        print "Updated: ", i.get_shortname()
+        print("Updated: ", i.get_shortname())
 
     my_services = Model.Service.objects.filter(check_command="okc-check_https_certificate", __PORT=None, register=1)
     for i in my_services:
         if i.get('__PORT') is None:
             i['__PORT'] = "443"
         i.save()
-        print "Updated: ", i.get_shortname()
-    print "ok"
+        print("Updated: ", i.get_shortname())
+    print("ok")
 
 def upgrade_to_version_2_4():
     """ Upgrade to version 2.4
@@ -244,7 +246,7 @@ def upgrade_to_version_2_4():
     * servicegroup linux-services
     * servicegroup mssql-services
     """
-    print "Upgrading to config version 2.4 ...",
+    print("Upgrading to config version 2.4 ...", end=' ')
     dest_file = okconfig.config.destination_directory + "/backwards-compatibility.cfg"
     hostgroups = ['cisco-hostgroup']
     servicegroups = ['proliant-services', 'eva-services', 'windows-services', 'linux-services', 'mssql-services']
@@ -258,7 +260,7 @@ def upgrade_to_version_2_4():
             h['alias'] = i
             h.set_filename(dest_file)
             h.save()
-            print "Created hostgroup", i
+            print("Created hostgroup", i)
     for i in servicegroups:
         sg = Model.Servicegroup.objects.filter(servicegroup_name=i)
         sg_services = Model.Service.objects.filter(service_groups__has_field=i)
@@ -268,7 +270,7 @@ def upgrade_to_version_2_4():
             s['alias'] = i
             s.set_filename(dest_file)
             s.save()
-            print "Created servicegroup", i
+            print("Created servicegroup", i)
     for i in contactgroups:
         cg = Model.Contactgroup.objects.filter(contactgroup_name=i)
         cg_contacts = Model.Contact.objects.filter(contactgroups__has_field=i)
@@ -280,8 +282,8 @@ def upgrade_to_version_2_4():
             c['alias'] = i
             c.set_filename(dest_file)
             c.save()
-            print "Created contactgroup", i
-    print "ok"
+            print("Created contactgroup", i)
+    print("ok")
 
 def upgrade_to_version_2_5():
     """ Upgrade to version 2.5
@@ -290,12 +292,12 @@ def upgrade_to_version_2_5():
     * okc-check_http* has a new service variable __ON_REDIRECT
 
     """
-    print "Upgrading to config version 2.5 ...",
+    print("Upgrading to config version 2.5 ...", end=' ')
     services = Model.Service.objects.filter(check_command__startswith='okc-check_http', __ON_REDIRECT__exists=False)
     for i in services:
         i['__ON_REDIRECT'] = "follow"
         i.save()
-    print "ok"
+    print("ok")
 
 
 
@@ -313,7 +315,7 @@ def rename_oktemplate_services():
 def upgrade_okconfig():
     """Upgrades nagios configuration to match the level of current oktemplates format"""
     template_version = get_template_version()
-    print "Upgrading to version %s" % template_version
+    print("Upgrading to version %s" % template_version)
     if template_version >= 1:
         # "We dont need to do anything, the tools have been upgraded"
 		pass

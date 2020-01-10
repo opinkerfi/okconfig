@@ -1,6 +1,7 @@
 # !/usr/bin/env python
 """Test adding objects"""
 
+from __future__ import absolute_import
 import os.path
 import sys
 
