@@ -25,6 +25,7 @@ okconfig.nagios_config="/etc/nagios/nagios.cfg"
 okconfig.addhost("myhost.example.com", group_name="databases", templates=["linux","mysql"]) 
 """
 
+from __future__ import absolute_import
 __author__ = "Pall Sigurdsson"
 __copyright__ = "Copyright 2011, Pall Sigurdsson"
 __credits__ = ["Pall Sigurdsson"]
@@ -45,9 +46,9 @@ except ImportError:
 import pynag.Model
 import pynag.Utils
 
-import network_scan
-import config
-import helper_functions
+from . import network_scan
+from . import config
+from . import helper_functions
 
 nagios_config = config.nagios_config
 template_directory =config.template_directory
@@ -173,7 +174,7 @@ def addhost(host_name, address=None, group_name=None, templates=None, use=None, 
             filename = pynag.Model.Host.objects.get_by_shortname(host_name)._meta['filename']
             raise OKConfigError("Host named '%s' already exists in %s" % (host_name, filename))
     # Do sanity checking of all templates before we add anything
-    all_templates = get_templates().keys()
+    all_templates = list(get_templates().keys())
     if host_template not in all_templates:
         raise OKConfigError("Host Template %s not found" % host_template)
     for i in templates:
@@ -210,7 +211,7 @@ def addtemplate(host_name, template_name, group_name=None,force=False):
 
     if hostfile is None:
         raise OKConfigError("Host '%s' was not found" % host_name)
-    if template_name not in get_templates().keys():
+    if template_name not in list(get_templates().keys()):
         raise OKConfigError("Template '%s' was not found" % template_name)
     hostdir = os.path.dirname(hostfile)
     # Check if host has the required "default service"
@@ -535,7 +536,7 @@ def _apply_template(template_name,destination_file, **kwargs):
         List of filenames that have been written to
     """
     all_examples = get_templates()
-    if not all_examples.has_key(template_name):
+    if template_name not in all_examples:
         raise OKConfigError('Template %s cannot be found' % template_name)
     sourcefile = all_examples[template_name]['filename']
 
