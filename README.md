@@ -42,7 +42,7 @@ With over 60 plugins and 380 service templates there are limits to how many
 platforms we can support. Currently we support running the nagios server on:
 
 * RHEL 6.x / 7.x
-* Centos 6.x / 7.x
+* Centos 6.x / 7.x / 8.x
 
 If anyone is willing to provide decent quality packages for debian or
 other distros we are happy to build and host them.
