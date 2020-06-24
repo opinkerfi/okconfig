@@ -29,6 +29,7 @@ fatal_error() {
 if [ -f "/etc/os-release" ]; then
 	DISTRO=$(get_os_release)
 else
+	grep -q "release 8" /etc/redhat-release 2>/dev/null && DISTRO=rhel8
 	grep -q "release 7" /etc/redhat-release 2>/dev/null && DISTRO=rhel7
 	grep -q "release 6" /etc/redhat-release 2>/dev/null && DISTRO=rhel6
 	grep -q "release 5" /etc/redhat-release 2>/dev/null && DISTRO=rhel5
@@ -80,9 +81,9 @@ install_opensuse() {
 
 install_rhel() {
 
-        if [[ $DISTRO =~ centos[567] ]]; then
+        if [[ $DISTRO =~ centos[5678] ]]; then
                 REPO=$(echo $DISTRO | sed 's/centos/rhel/g')
-        elif [[ $DISTRO =~ rhel[567] ]]; then
+        elif [[ $DISTRO =~ rhel[5678] ]]; then
                 REPO=$(echo $DISTRO | egrep -o "[a-z]+[0-9]") #not sure if OK repo broken or this broken
         else
                 REPO=$DISTRO
@@ -112,7 +113,7 @@ EOF
         
         clean_nrpe ;
         
-        if [[ $DISTRO = rhel7 || $DISTRO = centos7 ]]; then
+        if [[ $DISTRO = rhel7 || $DISTRO = centos7 || $DISTRO = centos8 || $DISTRO = rhel8 ]]; then
                 systemctl start nrpe
                 systemctl enable nrpe
         else
@@ -424,7 +425,7 @@ elif [[ "$DISTRO" =~ fedora1[78] ]]; then
 	fi	
 	NRPE_D=/etc/nrpe.d/
 	install_rhel;
-elif [[ "$DISTRO" =~ rhel[567] ]]; then
+elif [[ "$DISTRO" =~ rhel[5678] ]]; then
 	PLUGINDIR=/usr/lib64/nagios/plugins/
 	NRPE_USER=nrpe
 	if [ $HOSTTYPE == "i686" ]; then
@@ -432,7 +433,7 @@ elif [[ "$DISTRO" =~ rhel[567] ]]; then
 	fi	
 	NRPE_D=/etc/nrpe.d/
 	install_rhel;
-elif [[ "$DISTRO" =~ centos[567] ]]; then
+elif [[ "$DISTRO" =~ centos[5678] ]]; then
         REPO=
         PLUGINDIR=/usr/lib64/nagios/plugins/
         NRPE_USER=nrpe
