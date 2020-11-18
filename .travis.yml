@@ -21,7 +21,7 @@ deploy:
   provider: pypi
   user: gardart
   password:
-    secure: Gs/t8tpslCAULwE5DozujxQ2/q+diDVGc6C/WYWcar97bYdL+E1xPb0xS8hsUIOkBO0oDalkYQoBl2P0TlGh33jtysrVYqrlEqMpdmvnmQO39DajjwRHNjOBlu9AlNy856VBg3oQK2EaYRjuBq3uC/A7Uv3lKOxCOxf0P14L5uU=
+    secure: E/DXi3f91+dAoe6+ENQgxEnLMz68oJ5GBlGT/xSD2par0NUQ93sWeIWpXBjxi3ZRRBU4NIaFWfSei/cX81JDLA2h6PmOIer01tByqBlRFDsoPAtQzFgY9lHO8IknbMc59GXZF7vzA71qJaRjxYH8BXowqISTOJnqPJ0qzjC2LDI=
   on:
     tags: true
     branch: master
