@@ -1,4 +1,9 @@
+Changes in 1.3.4-1
+    - Support for Python 3
+    - Dependency fix
+
 Changes in 1.3.3-1
+    - Dependency fix
     - Dependency fix
     - Template upgrades
 
@@ -17,8 +22,6 @@ Changes in 1.1.0 (unreleased)
     - Added support for installing clients on fedora 16-18
     - okconfig tools can now commit to git automatically (for adagios) 
 
-
 1.0
-
 
 Initial release

@@ -28,5 +28,5 @@ git tag okconfig-${new_version}-${current_release} -a -m "Bumped version number 
 echo "### Pushing commit to github"
 git push origin master || exit 1
 git push --tags origin master || exit 1
-echo "Building package and uploading to pypi"
+#echo "Building package and uploading to pypi"
 #python setup.py build sdist upload || exit 1

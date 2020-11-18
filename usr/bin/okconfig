@@ -20,7 +20,7 @@
 from __future__ import print_function
 from builtins import str
 from builtins import input
-version = "1.3.3"
+version = "1.3.4"
 
 import sys
 import okconfig
