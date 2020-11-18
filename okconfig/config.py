@@ -17,6 +17,7 @@
 """ This module provides access to default configuration values in /etc/okconfig.conf """
 
 from __future__ import absolute_import
+from builtins import str
 import os
 
 # This is the main configuration file

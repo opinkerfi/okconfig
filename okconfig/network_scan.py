@@ -16,13 +16,14 @@
 
 from __future__ import absolute_import
 from __future__ import print_function
+from builtins import object
 import subprocess
 import socket
 from pynag import Model
 from .helper_functions import runCommand
 import okconfig
 
-class ScannedHost:
+class ScannedHost(object):
     """Simple datastructure for a recently portscanned host"""
     def __init__(self, ipaddress=None, hostname=None,ismonitored=None):
         self.ipaddress = ipaddress

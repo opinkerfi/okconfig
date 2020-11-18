@@ -318,7 +318,7 @@ def upgrade_okconfig():
     print("Upgrading to version %s" % template_version)
     if template_version >= 1:
         # "We dont need to do anything, the tools have been upgraded"
-		pass
+        pass
     if template_version >= 1.1:
         upgrade_to_version_1_1()
     if template_version >= 2:

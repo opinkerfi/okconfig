@@ -18,6 +18,7 @@
 
 from __future__ import absolute_import
 from __future__ import print_function
+from builtins import object
 import re
 import fcntl
 import os
@@ -96,7 +97,7 @@ def runCommand(command):
         return result
 
 
-class clientInstall:
+class clientInstall(object):
     import okconfig.config
     def __init__(self,
                  script=okconfig.config.nsclient_installfiles + "/install_nsclient.sh",
