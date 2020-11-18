@@ -56,6 +56,6 @@ if __name__ == "__main__":
         scripts=['usr/bin/okconfig'],
         packages=['okconfig'],
         requires=['unittest2'],
-        install_requires=['paramiko','pynag','six'],
+        install_requires=['paramiko','pynag','six','future'],
         data_files=data_files,
     )
