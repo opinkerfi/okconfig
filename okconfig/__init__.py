@@ -70,7 +70,7 @@ def is_valid():
     See verify() for more details
     """
     checks = verify()
-    for result in checks.values():
+    for result in list(checks.values()):
         if result is False: return False
     return True
 
@@ -550,7 +550,7 @@ def _apply_template(template_name,destination_file, **kwargs):
     if not os.path.exists(dirname): os.makedirs(dirname)
 
     fd = open(sourcefile).read()
-    for old_string,new_string in kwargs.items():
+    for old_string,new_string in list(kwargs.items()):
         fd = fd.replace(old_string,new_string)
     open(destination_file,'w').write( fd )
     return [destination_file]

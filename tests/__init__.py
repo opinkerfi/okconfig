@@ -58,7 +58,7 @@ class OKConfigTest(unittest.TestCase):
         Tear down the fake nagios environment and restore okconfig variables
         """
         _environment.terminate()
-        for var, value in _okconfig_overridden_vars.items():
+        for var, value in list(_okconfig_overridden_vars.items()):
             setattr(okconfig, var, value)
 
     def runTest(*args, **kwargs):
