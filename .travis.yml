@@ -17,14 +17,6 @@ script:
 - coverage run --source=okconfig tests/test.py
 after_success:
 - coveralls
-deploy:
-  provider: pypi
-  user: gardart
-  password:
-    secure: E/DXi3f91+dAoe6+ENQgxEnLMz68oJ5GBlGT/xSD2par0NUQ93sWeIWpXBjxi3ZRRBU4NIaFWfSei/cX81JDLA2h6PmOIer01tByqBlRFDsoPAtQzFgY9lHO8IknbMc59GXZF7vzA71qJaRjxYH8BXowqISTOJnqPJ0qzjC2LDI=
-  on:
-    tags: true
-    branch: master
 notifications:
   email: false
   irc:
