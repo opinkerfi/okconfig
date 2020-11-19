@@ -1,7 +1,8 @@
 # setup.py ###
 from __future__ import absolute_import
 from __future__ import print_function
-from distutils.core import setup
+#from distutils.core import setup
+from setuptools import setup
 import os
 
 NAME = "okconfig"
@@ -51,6 +52,8 @@ if __name__ == "__main__":
         description=SHORT_DESC,
         long_description=LONG_DESC,
         author_email='palli@opensource.is',
+        maintainer='Gardar Thorsteinsson',
+        maintainer_email='gardar@ok.is',
         url='http://okconfig.org',
         license='GPL',
         scripts=['usr/bin/okconfig'],
