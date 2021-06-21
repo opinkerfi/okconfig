@@ -1,0 +1,87 @@
+
+define service {
+	use			okc-check_http
+	host_name		HOSTNAME
+	contact_groups		GROUP
+	service_description	XRD - tcp/80 - HTTP
+
+	__URI			/
+	__SEARCH_STRING
+	__RESPONSE_WARNING	8
+	__RESPONSE_CRITICAL	10
+	__VIRTUAL_HOST      	HOSTNAME
+	__EXTRAOPTIONS		-e 403
+	__PORT			80
+
+}
+
+define service {
+        host_name               HOSTNAME
+        contact_groups          GROUP
+        service_description     XRD - tcp/4000 - NGINX Admin GUI
+        use                     okc-check_https
+
+        __URI                   /
+        __SEARCH_STRING
+        __RESPONSE_WARNING      8
+        __RESPONSE_CRITICAL     10
+        __VIRTUAL_HOST          HOSTNAME
+        __PORT                  4000
+
+}
+
+define service {
+	host_name		HOSTNAME
+	contact_groups		GROUP
+	service_description	XRD - tcp/4000 - NGINX Admin GUI - Certificate
+	use			okc-check_https_certificate
+
+	__CERTIFICATE_AGE_WARNING	21
+	__CERTIFICATE_AGE_CRITICAL	2
+	__RESPONSE_WARNING		8
+	__RESPONSE_CRITICAL		10
+	__PORT				4000
+}
+
+define service {
+        use                     okc-check_tcp
+        host_name               HOSTNAME
+	contact_groups		GROUP
+        service_description     XRD - tcp/4001 - Central Server Communication
+        __PORT                  4001
+}
+
+define service {
+        use                    okc-linux-check_proc
+        host_name              HOSTNAME
+	contact_groups		GROUP
+        __NAME                  nginx
+        __WARNING               1:
+        __CRITICAL              :50
+        service_description     XRD - Process - nginx
+}
+
+define service {
+    	use			okc-linux-check_service
+        host_name		HOSTNAME
+	contact_groups		GROUP
+    	service_description	XRD - Service - nginx
+    	__NAME			nginx
+}
+
+define service {
+    	use			okc-linux-check_service
+        host_name		HOSTNAME
+	contact_groups		GROUP
+    	service_description	XRD - Service - xroad-jetty
+    	__NAME			xroad-jetty
+}
+
+define service {
+    	use			okc-linux-check_service
+        host_name		HOSTNAME
+	contact_groups		GROUP
+    	service_description	XRD - Service - xroad-signer
+    	__NAME			xroad-signer
+}
+

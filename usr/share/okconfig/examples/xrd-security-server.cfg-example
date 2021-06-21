@@ -1,0 +1,92 @@
+
+define service {
+        host_name               HOSTNAME
+        contact_groups          GROUP
+        service_description     XRD - tcp/4000 - Admin GUI
+        use                     okc-check_https
+
+        __URI                   /
+        __SEARCH_STRING
+        __RESPONSE_WARNING      8
+        __RESPONSE_CRITICAL     10
+        __VIRTUAL_HOST          HOSTNAME
+        __PORT                  4000
+
+}
+
+define service {
+	host_name		HOSTNAME
+	contact_groups		GROUP
+	service_description	XRD - tcp/4000 - Admin GUI - Certificate
+	use			okc-check_https_certificate
+
+	__CERTIFICATE_AGE_WARNING	21
+	__CERTIFICATE_AGE_CRITICAL	2
+	__RESPONSE_WARNING		8
+	__RESPONSE_CRITICAL		10
+	__PORT				4000
+}
+
+define service {
+    	use			okc-linux-check_service
+        host_name		HOSTNAME
+	contact_groups		GROUP
+    	service_description	XRD - Service - xroad-signer
+    	__NAME			xroad-signer
+}
+
+define service {
+    	use			okc-linux-check_service
+        host_name		HOSTNAME
+	contact_groups		GROUP
+    	service_description	XRD - Service - xroad-proxy
+    	__NAME			xroad-proxy
+}
+
+define service {
+    	use			okc-linux-check_service
+        host_name		HOSTNAME
+	contact_groups		GROUP
+    	service_description	XRD - Service - xroad-confclient
+    	__NAME			xroad-confclient
+}
+
+define service {
+    	use			okc-linux-check_service
+        host_name		HOSTNAME
+	contact_groups		GROUP
+    	service_description	XRD - Service - xroad-proxy-ui-api
+    	__NAME			xroad-proxy-ui-api
+}
+
+define service {
+    	use			okc-linux-check_service
+        host_name		HOSTNAME
+	contact_groups		GROUP
+    	service_description	XRD - Service - xroad-monitor
+    	__NAME			xroad-monitor
+}
+
+define service {
+    	use			okc-linux-check_service
+        host_name		HOSTNAME
+	contact_groups		GROUP
+    	service_description	XRD - Service - xroad-opmonitor
+    	__NAME			xroad-opmonitor
+}
+
+define service {
+        use			okc-check_tcp
+        host_name		HOSTNAME
+	contact_groups		GROUP
+        service_description	XRD - tcp/5500 - Message Transport
+        __PORT			5500
+}
+
+define service {
+        use			okc-check_tcp
+        host_name		HOSTNAME
+	contact_groups		GROUP
+        service_description	XRD - tcp/5577 - Message Transport OCSP
+        __PORT			5577
+}
