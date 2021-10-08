@@ -1,2 +1,4 @@
 pynag>=0.9.1
 paramiko
+unittest2
+setuptools_rust

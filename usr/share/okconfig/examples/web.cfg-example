@@ -1,0 +1,44 @@
+define service {
+    use                     okc-check_http
+    host_name               HOSTNAME
+    contact_groups          GROUP
+    service_description     HTTP Response
+
+    __URI                   /
+    __SEARCH_STRING
+    __RESPONSE_WARNING      2
+    __RESPONSE_CRITICAL     10
+    __VIRTUAL_HOST      HOSTNAME
+    __PORT              80
+}
+
+define service {
+	host_name		HOSTNAME
+	contact_groups		GROUP
+	service_description	HTTPS Response
+	check_command		okc-check_https
+	use			okc-check_https
+
+	__URI			/
+	__SEARCH_STRING
+	__RESPONSE_WARNING	2
+	__RESPONSE_CRITICAL	10
+	__VIRTUAL_HOST		HOSTNAME
+	__PORT			443
+
+}
+
+
+define service {
+	host_name		HOSTNAME
+	contact_groups		GROUP
+    service_description     SSL Certificate
+    check_command           okc-check_ssl_cert
+    use                     okc-check_ssl_cert
+
+    __CERTIFICATE_AGE_WARNING       21
+    __CERTIFICATE_AGE_CRITICAL      2
+    __PORT                          443
+    __PROTOCOL                      https
+    __CERTOPTIONS                  -N
+} 

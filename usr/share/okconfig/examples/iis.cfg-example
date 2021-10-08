@@ -1,0 +1,13 @@
+define service {
+    use                     okc-windows-check_eventlog
+    host_name               HOSTNAME
+    contact_groups          GROUP
+    service_description     Event ID 15021 - HTTP Service SSL Availability
+    __FILE                          "file=System"
+    __SCANRANGE                     "scan-range=-24h"
+    __FILTER                        "filter=id = 15021"
+    __CRITICAL                      "critical=count gt 0"
+    __EXTRAOPTS                     show-all
+
+}
+
