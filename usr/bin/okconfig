@@ -20,7 +20,7 @@
 from __future__ import print_function
 from builtins import str
 from builtins import input
-version = "1.3.4"
+version = "1.3.5"
 
 import sys
 import okconfig
@@ -315,8 +315,8 @@ def addcontact():
     parser.usage = ''' %prog addcontact <contact_name> [options]
 
 Examples:
-  # %prog addcontact "webmasters" --email "webmaster@example.com" 
-  # %prog addcontact "admin" --email "admin@local" --alias "sysadmin group" 
+  # %prog addcontact "webmasters" --email "webmaster@example.com"
+  # %prog addcontact "admin" --email "admin@local" --alias "sysadmin group"
 
 Run %prog addcontact --help for full list of command line arguments.
 '''
@@ -441,7 +441,7 @@ def addservice():
     parser.usage = ''' %prog addservice [attribute1=value1] [attribute2=value2] ...
 
 Examples:
-  # %prog addservice host_name=myhost use=okc-windows-updates service_description="My service check" 
+  # %prog addservice host_name=myhost use=okc-windows-updates service_description="My service check"
 
 Run %prog addservice --help for full list of command line arguments.
 '''

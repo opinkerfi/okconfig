@@ -6,7 +6,7 @@
 
 Summary: Python Nagios Template management and configuration power tools
 Name: okconfig
-Version: 1.3.4
+Version: 1.3.5
 Release: %{release}%{?dist}
 Source0: https://github.com/opinkerfi/okconfig/archive/%{name}-%{version}-%{release}.tar.gz
 License: GPLv2
@@ -31,7 +31,7 @@ BuildRequires: python-setuptools
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Url: http://github.com/opinkerfi/okconfig
-BuildArch: noarch 
+BuildArch: noarch
 Requires: pynag python-paramiko winexe
 Requires: nagios-plugins-nrpe  nagios-plugins-ping nagios-plugins-ssh
 Requires: nagios-okplugin-apc nagios-okplugin-brocade nagios-okplugin-mailblacklist
@@ -39,7 +39,7 @@ Requires: nagios-okplugin-check_disks nagios-okplugin-check_time nagios-plugins-
 
 %description
 A robust template mechanism for Nagios configuration files. Providing
-standardized set of configuration templates and select quality plugins 
+standardized set of configuration templates and select quality plugins
 to enterprise quality monitoring.
 
 
@@ -103,6 +103,9 @@ fi
 
 
 %changelog
+* Fri Oct 15 2021 Gardar Thorsteinsson <gardar@ok.is> 1.3.5-1
+- Template upgrades
+
 * Fri Apr 04 2018 Gardar Thorsteinsson <gardar@ok.is> 1.3.3-1
 - Updated dependency list - removed nagios-okplugin-apc nagios-okplugin-brocade nagios-okplugin-mailblacklist
 - Template upgrades
@@ -115,13 +118,13 @@ fi
 - Added new service exclusions to windows template
 
 * Tue Apr 30 2013 Pall Sigurdsson <palli@opensource.is> 1.1.1-1
-- Version bump 
+- Version bump
 
 * Tue Apr 30 2013 Pall Sigurdsson <palli@opensource.is> 1.1.0-1
-- New release 
+- New release
 
 * Tue Apr 30 2013 Pall Sigurdsson <palli@opensource.is>
-- Version bump 
+- Version bump
 
 * Tue Apr 30 2013 Pall Sigurdsson <palli@opensource.is> 1.0.11-1
 - CHANGES updated (palli@opensource.is)
@@ -282,7 +285,7 @@ fi
 - manpages commented out (palli@opensource.is)
 
 * Mon Mar 12 2012 Pall Sigurdsson <palli@opensource.is> 1.0.2-1
-- 
+-
 
 * Mon Mar 12 2012 Pall Sigurdsson <palli@opensource.is> 1.0.1-1
 - new package built with tito
