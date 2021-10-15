@@ -22,11 +22,14 @@ echo "${new_version}-${current_release} /" > rel-eng/packages/okconfig
 
 echo "### commiting and tagging current git repo"
 git commit okconfig/__init__.py rel-eng/packages/okconfig okconfig.spec -m "Bumped version number to $new_version" > /dev/null
-git tag okconfig-${new_version}-${current_release} -a -m "Bumped version number to $new_version" 
+git tag okconfig-${new_version}-${current_release} -a -m "Bumped version number to $new_version"
 
 # The following 2 require access to git repositories and pypi
 echo "### Pushing commit to github"
 git push origin master || exit 1
 git push --tags origin master || exit 1
-#echo "Building package and uploading to pypi"
+
+echo "Building package and uploading to pypi"
 #python setup.py build sdist upload || exit 1
+python -m build || exit 1
+python -m twine upload dist/* || exit 1

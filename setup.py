@@ -5,7 +5,7 @@ from setuptools import setup
 import os
 
 NAME = "okconfig"
-VERSION = '1.3.5'
+VERSION = '1.3.7'
 SHORT_DESC = "%s - Powertools to generate Nagios configuration files" % NAME
 LONG_DESC = """
 %s contains tools and templates for enterprise quality nagios configuration.
