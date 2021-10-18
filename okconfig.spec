@@ -103,6 +103,9 @@ fi
 
 
 %changelog
+* Fri Oct 15 2021 Gardar Thorsteinsson <gardar@ok.is> 1.3.9-1
+- pip build process upgraded
+
 * Fri Oct 15 2021 Gardar Thorsteinsson <gardar@ok.is> 1.3.7-1
 - pip build process upgraded
 
