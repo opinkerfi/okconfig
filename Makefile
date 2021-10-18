@@ -1,5 +1,5 @@
-VERSION		= 1.0
-RELEASE		= 9
+VERSION		= 1.3.9
+RELEASE		= 1
 DATE		= $(shell date)
 NEWRELEASE	= $(shell echo $$(($(RELEASE) + 1)))
 PYTHON		= /usr/bin/python
@@ -7,7 +7,7 @@ PYTHON		= /usr/bin/python
 TOPDIR = $(shell pwd)
 DIRS	= build docs etc okconfig usr
 PYDIRS	= okconfig bin
-EXAMPLEDIR = 
+EXAMPLEDIR =
 MANPAGES = okconfig
 
 all: rpms
@@ -19,7 +19,7 @@ versionfile:
 	#echo "git commit:" $(shell git log -n 1 --pretty="format:%H") >> etc/version
 	#echo "git date:" $(shell git log -n 1 --pretty="format:%cd") >> etc/version
 
-#	echo $(shell git log -n 1 --pretty="format:git commit: %H from \(%cd\)") >> etc/version 
+#	echo $(shell git log -n 1 --pretty="format:git commit: %H from \(%cd\)") >> etc/version
 manpage:
 	for manpage in $(MANPAGES); do (pod2man --center=$$manpage --release="" ./docs/$$manpage.pod | gzip -c > ./docs/$$manpage.1.gz); done
 
@@ -37,7 +37,7 @@ clean:
 	#-for d in $(DIRS); do ($(MAKE) -C $$d clean ); done
 
 clean_hard:
-	-rm -rf $(shell $(PYTHON) -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")/okconfig 
+	-rm -rf $(shell $(PYTHON) -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")/okconfig
 
 
 clean_hardest: clean_rpms
@@ -50,27 +50,27 @@ install_hard: clean_hard install
 
 install_harder: clean_harder install
 
-install_hardest: clean_harder clean_rpms rpms install_rpm 
+install_hardest: clean_harder clean_rpms rpms install_rpm
 
 install_rpm:
 	-rpm -Uvh rpm-build/okconfig-$(VERSION)-$(NEWRELEASE)$(shell rpm -E "%{?dist}").noarch.rpm
 
 
-recombuild: install_harder 
+recombuild: install_harder
 
 clean_rpms:
 	-rpm -e okconfig
 
-sdist: 
+sdist:
 	$(PYTHON) setup.py sdist
 
 pychecker:
-	-for d in $(PYDIRS); do ($(MAKE) -C $$d pychecker ); done   
+	-for d in $(PYDIRS); do ($(MAKE) -C $$d pychecker ); done
 pyflakes:
-	-for d in $(PYDIRS); do ($(MAKE) -C $$d pyflakes ); done	
+	-for d in $(PYDIRS); do ($(MAKE) -C $$d pyflakes ); done
 
 money: clean
-	-sloccount --addlang "makefile" $(TOPDIR) $(PYDIRS) $(EXAMPLEDIR) 
+	-sloccount --addlang "makefile" $(TOPDIR) $(PYDIRS) $(EXAMPLEDIR)
 
 testit: clean
 	-cd test; sh test-it.sh

@@ -22,7 +22,7 @@ Example Usage:
 
 import okconfig
 okconfig.nagios_config="/etc/nagios/nagios.cfg"
-okconfig.addhost("myhost.example.com", group_name="databases", templates=["linux","mysql"]) 
+okconfig.addhost("myhost.example.com", group_name="databases", templates=["linux","mysql"])
 """
 
 from __future__ import absolute_import
@@ -30,7 +30,7 @@ __author__ = "Pall Sigurdsson"
 __copyright__ = "Copyright 2011, Pall Sigurdsson"
 __credits__ = ["Pall Sigurdsson"]
 __license__ = "GPL"
-__version__ = "1.3.5"
+__version__ = '1.3.9'
 __maintainer__ = "Gardar Thorsteinsson"
 __email__ = "gardar@ok.is"
 __status__ = "Development"
