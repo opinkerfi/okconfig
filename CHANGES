@@ -1,3 +1,6 @@
+Changes in 1.4.1-1
+    - Automated pypi uploads with Github Actions
+
 Changes in 1.3.9-1
     - fixed versioning for Github Actions
 
