@@ -32,7 +32,7 @@ main() {
 
     git_push || echo FAIL
 
-#    upload_to_pypi || echo FAIL
+    upload_to_pypi || echo FAIL
 
     echo "### All Done"
 }
@@ -42,10 +42,17 @@ update_changes() {
     ${EDITOR} CHANGES || return 1
 }
 
-#upload_to_pypi() {
-#    ask "Upload to pypi?" || return 0
+upload_to_pypi() {
+    ask "Upload to pypi?" || return 0
+	 	echo "To build and upload to PyPI, run the following:"
+	 	echo "pip install build"
+		echo "pip install twine"
+   	echo "python3 -m build"
+		echo "twine check dist/*"
+    echo "python3 -m twine upload --repository testpypi dist/*"
+    echo "python3 -m twine upload dist/*"
 #    python setup.py build sdist upload || return 1
-#}
+}
 
 git_push() {
     ask "Upload to github?" || return 0
