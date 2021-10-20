@@ -1,3 +1,6 @@
+Changes in 1.4.2-1
+    - Added template for okc-windows-check_iis
+
 Changes in 1.4.1-1
     - Automated pypi uploads with Github Actions
 
