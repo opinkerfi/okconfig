@@ -13,11 +13,6 @@ if [ -z "$EDITOR" ]; then
     EDITOR=vi
 fi
 
-#if [ -z $BASH ]; then
-#    echo "You need /bin/bash to run this script"
-#    exit 1
-#fi
-
 main() {
 
     update_changes || echo FAIL
