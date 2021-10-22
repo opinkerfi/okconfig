@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/opinkerfi/okconfig.png?branch=master)](https://travis-ci.org/opinkerfi/okconfig)
-[![Coverage Status](https://coveralls.io/repos/opinkerfi/okconfig/badge.png?branch=master)](https://coveralls.io/r/opinkerfi/okconfig?branch=master)
+![Build status](https://github.com/opinkerfi/okconfig/actions/workflows/Python-CI.yml/badge.svg?branch=main)
+
 
 About
 =====
@@ -7,7 +7,6 @@ About
 okconfig a robust template mechanism for Nagios configuration files. Providing
 standardized set of configuration templates and select quality plugins 
 to enterprise quality monitoring.
-
 
 
 Getting Started
@@ -41,8 +40,8 @@ service checks work and don't break when okconfig is upgraded.
 With over 60 plugins and 380 service templates there are limits to how many
 platforms we can support. Currently we support running the nagios server on:
 
-* RHEL 6.x / 7.x
-* Centos 6.x / 7.x / 8.x
+* RHEL 7.x / 8.x
+* Centos 7.x / 8.x
 
 If anyone is willing to provide decent quality packages for debian or
 other distros we are happy to build and host them.
@@ -61,8 +60,8 @@ Requirements
 ============
 At the very least okconfig needs the following:
 
-* python-2.6
-* pynag-0.4.9
+* python-3.6
+* pynag
 * python-paramiko (for deploying remote agents via ssh)
 * winexe (for deploying remote agents to windows servers)
 
