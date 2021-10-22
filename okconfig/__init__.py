@@ -166,13 +166,13 @@ def addhost(
     Returns:
      String message with result of addhost
     """
-    if group_name == None or group_name == "":
+    if group_name is None or group_name == "":
         group_name = "default"
     if templates is None:
         templates = []
     if alias is None:
         alias = host_name
-    if address == None or address == "":
+    if address is None or address == "":
         try:
             address = socket.gethostbyname(host_name)
         except BaseException:
@@ -337,7 +337,7 @@ def addcontact(
     Returns:
      True if operation was successful
     """
-    if group_name == None or group_name == "":
+    if group_name is None or group_name == "":
         group_name = "default"
     # Check if contact already exists
     try:
